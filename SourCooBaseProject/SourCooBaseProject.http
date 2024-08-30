@@ -1,0 +1,6 @@
+@SourCooBaseProject_HostAddress = http://localhost:5276
+
+GET {{SourCooBaseProject_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

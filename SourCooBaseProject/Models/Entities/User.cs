@@ -1,0 +1,16 @@
+﻿
+
+namespace SourCooBaseProject.Models.Entities
+{
+    public class User
+    {
+        public int Id { get; set; }
+        public string Email { get; set; } = default!;
+        public string Password { get; set; } = default!;
+        public int RoleId { get; set; }
+        public Role Role { get; set; } = default!;
+        public int PersonId { get; set; }
+        public Person Person { get; set; } = default!;
+        public List<UserPermission> UserPermissions { get; set; } = default!;
+    }
+}
