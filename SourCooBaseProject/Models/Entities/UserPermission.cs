@@ -1,5 +1,5 @@
 ﻿
-namespace SourCooBaseProject.Models.Entities
+namespace QuinielasApi.Models.Entities
 {
     public class UserPermission
     {

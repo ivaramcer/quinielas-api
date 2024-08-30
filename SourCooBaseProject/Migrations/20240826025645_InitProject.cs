@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace SourCooBaseProject.Migrations
+namespace QuinielasApi.Migrations
 {
     /// <inheritdoc />
     public partial class InitProject : Migration

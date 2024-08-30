@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Xml;
-using SourCooBaseProject.Models.Entities;
+using QuinielasApi.Models.Entities;
 
-namespace BaseSourcoo.Models.DatabaseContext
+namespace QuinielasApi.Models.DatabaseContext
 {
     public class DatabaseContext : DbContext
     {

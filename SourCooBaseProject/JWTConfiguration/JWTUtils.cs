@@ -1,11 +1,11 @@
-﻿using SourCooBaseProject.Models.Entities;
+﻿using QuinielasApi.Models.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace SourCooBaseProject.JWTConfiguration
+namespace QuinielasApi.JWTConfiguration
 {
     public class JWTUtils
     {

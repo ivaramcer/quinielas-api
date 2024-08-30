@@ -1,4 +1,4 @@
-﻿namespace SourCooBaseProject.IRepository.Configuration
+﻿namespace QuinielasApi.IRepository.Configuration
 {
     public interface IRepositoryWrapper
     {

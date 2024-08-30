@@ -1,11 +1,11 @@
-using BaseSourcoo.Models.DatabaseContext;
+using QuinielasApi.Models.DatabaseContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using SourCooBaseProject.IRepository.Configuration;
-using SourCooBaseProject.JWTConfiguration;
-using SourCooBaseProject.MappingProfile;
-using SourCooBaseProject.Repository.Configuration;
+using QuinielasApi.IRepository.Configuration;
+using QuinielasApi.JWTConfiguration;
+using QuinielasApi.MappingProfile;
+using QuinielasApi.Repository.Configuration;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);

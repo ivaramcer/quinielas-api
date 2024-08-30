@@ -1,9 +1,9 @@
-﻿using BaseSourcoo.Models.DatabaseContext;
+﻿using QuinielasApi.Models.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
-using SourCooBaseProject.IRepository;
-using SourCooBaseProject.IRepository.Configuration;
+using QuinielasApi.IRepository;
+using QuinielasApi.IRepository.Configuration;
 
-namespace SourCooBaseProject.Repository.Configuration
+namespace QuinielasApi.Repository.Configuration
 {
     public class RepositoryWrapper : IRepositoryWrapper
     {

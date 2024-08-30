@@ -1,4 +1,4 @@
-﻿namespace SourCooBaseProject.Models.DTOs.Access
+﻿namespace QuinielasApi.Models.DTOs.Access
 {
     public class LoginDTO
     {

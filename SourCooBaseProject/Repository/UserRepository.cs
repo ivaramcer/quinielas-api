@@ -1,11 +1,11 @@
-﻿using BaseSourcoo.Models.DatabaseContext;
-using SourCooBaseProject.Models.Entities;
+﻿using QuinielasApi.Models.DatabaseContext;
+using QuinielasApi.Models.Entities;
 using Microsoft.EntityFrameworkCore;
-using SourCooBaseProject.IRepository;
-using SourCooBaseProject.Repository.Configuration;
+using QuinielasApi.IRepository;
+using QuinielasApi.Repository.Configuration;
 using System;
 
-namespace SourCooBaseProject.Repository
+namespace QuinielasApi.Repository
 {
     public class UserRepository : RepositoryBase<User>, IUserRepository
     {

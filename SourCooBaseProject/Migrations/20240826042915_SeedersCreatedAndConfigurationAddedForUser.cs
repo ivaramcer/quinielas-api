@@ -4,7 +4,7 @@
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace SourCooBaseProject.Migrations
+namespace QuinielasApi.Migrations
 {
     /// <inheritdoc />
     public partial class SeedersCreatedAndConfigurationAddedForUser : Migration

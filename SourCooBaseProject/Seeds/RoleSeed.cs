@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SourCooBaseProject.Models.Entities;
+using QuinielasApi.Models.Entities;
 
 public static class ModelBuilderExtensions
 {

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using SourCooBaseProject.Models.DTOs;
-using SourCooBaseProject.Models.Entities;
+using QuinielasApi.Models.DTOs;
+using QuinielasApi.Models.Entities;
 
-namespace SourCooBaseProject.MappingProfile
+namespace QuinielasApi.MappingProfile
 {
     public class MappingProfile : Profile
     {

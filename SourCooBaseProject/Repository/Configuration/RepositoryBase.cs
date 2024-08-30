@@ -1,9 +1,9 @@
-﻿using BaseSourcoo.Models.DatabaseContext;
+﻿using QuinielasApi.Models.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
-using SourCooBaseProject.IRepository.Configuration;
+using QuinielasApi.IRepository.Configuration;
 using System.Linq.Expressions;
 
-namespace SourCooBaseProject.Repository.Configuration
+namespace QuinielasApi.Repository.Configuration
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {

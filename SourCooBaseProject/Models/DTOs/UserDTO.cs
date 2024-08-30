@@ -1,6 +1,6 @@
-﻿using SourCooBaseProject.Models.Entities;
+﻿using QuinielasApi.Models.Entities;
 
-namespace BaseSourcoo.Models.DTOs
+namespace QuinielasApi.Models.DTOs
 {
     public class UserDTO
     {

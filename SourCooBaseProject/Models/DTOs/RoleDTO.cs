@@ -1,4 +1,4 @@
-﻿namespace SourCooBaseProject.Models.DTOs
+﻿namespace QuinielasApi.Models.DTOs
 {
     public class RoleDTO
     {

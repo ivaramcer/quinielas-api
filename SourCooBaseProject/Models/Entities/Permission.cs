@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SourCooBaseProject.Models.Entities
+namespace QuinielasApi.Models.Entities
 {
     public class Permission
     {

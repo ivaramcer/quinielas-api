@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using BaseSourcoo.Models.DatabaseContext;
-using SourCooBaseProject.Models.Entities;
+using QuinielasApi.Models.DatabaseContext;
+using QuinielasApi.Models.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using SourCooBaseProject.Models.DTOs;
+using QuinielasApi.Models.DTOs;
 using AutoMapper;
 
-namespace SourCooBaseProject.Controllers
+namespace QuinielasApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

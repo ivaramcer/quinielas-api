@@ -1,16 +1,16 @@
-﻿using BaseSourcoo.Models.DatabaseContext;
-using BaseSourcoo.Models.DTOs;
-using SourCooBaseProject.Models.Entities;
+﻿using QuinielasApi.Models.DatabaseContext;
+using QuinielasApi.Models.DTOs;
+using QuinielasApi.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
-using SourCooBaseProject.IRepository.Configuration;
-using SourCooBaseProject.JWTConfiguration;
-using SourCooBaseProject.Models.DTOs.Access;
+using QuinielasApi.IRepository.Configuration;
+using QuinielasApi.JWTConfiguration;
+using QuinielasApi.Models.DTOs.Access;
 
-namespace SourCooBaseProject.Controllers
+namespace QuinielasApi.Controllers
 {
     [Route("api/[controller]")]
     [AllowAnonymous]

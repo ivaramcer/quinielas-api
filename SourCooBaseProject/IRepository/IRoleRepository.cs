@@ -1,6 +1,6 @@
-﻿using SourCooBaseProject.Models.Entities;
+﻿using QuinielasApi.Models.Entities;
 
-namespace SourCooBaseProject.IRepository
+namespace QuinielasApi.IRepository
 {
     public interface IRoleRepository
     {

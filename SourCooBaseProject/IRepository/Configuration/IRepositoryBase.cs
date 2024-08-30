@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace SourCooBaseProject.IRepository.Configuration
+namespace QuinielasApi.IRepository.Configuration
 {
     public interface IRepositoryBase<T>
     {
