@@ -9,6 +9,7 @@ using NuGet.Protocol.Core.Types;
 using QuinielasApi.IRepository.Configuration;
 using QuinielasApi.JWTConfiguration;
 using QuinielasApi.Models.DTOs.Access;
+using AutoMapper;
 
 namespace QuinielasApi.Controllers
 {
@@ -19,10 +20,14 @@ namespace QuinielasApi.Controllers
     {
         private readonly JWTUtils _jwtUtils;
         private IRepositoryWrapper _repository;
-        public AccessController(IRepositoryWrapper repository, JWTUtils jwtUtils)
+        private readonly IMapper _mapper;
+
+        public AccessController(IRepositoryWrapper repository, JWTUtils jwtUtils, IMapper mapper)
         {
             _jwtUtils = jwtUtils;
             _repository = repository;
+            _mapper = mapper;
+
 
         }
 
@@ -78,7 +83,11 @@ namespace QuinielasApi.Controllers
             if (successUser == null)
                 return StatusCode(StatusCodes.Status200OK, new { isSuccess = false, response = "The password it's incorrect" });
 
-            return StatusCode(StatusCodes.Status200OK, new { isSuccess = true, response = _jwtUtils.generateToken(successUser)   });
+            Person? person = await _repository.Person.GetPersonByIdAsync(successUser.PersonId);
+
+            PersonNameDTO successPerson = _mapper.Map<PersonNameDTO>(person);
+
+            return StatusCode(StatusCodes.Status200OK, new { isSuccess = true, response = _jwtUtils.generateToken(successUser), person = successPerson });
 
         }
 

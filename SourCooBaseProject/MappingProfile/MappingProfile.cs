@@ -10,6 +10,13 @@ namespace QuinielasApi.MappingProfile
         {
             CreateMap<Role, RoleDTO>();
             CreateMap<RoleDTO, Role>();
+
+            CreateMap<PersonDTO, Person>();
+            CreateMap<Person, PersonDTO>();
+
+            CreateMap<PersonNameDTO, Person>();
+            CreateMap<Person, PersonNameDTO>();
+
         }
     }
 }
