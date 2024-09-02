@@ -9,7 +9,6 @@ using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
 using QuinielasApi.IRepository.Configuration;
 using QuinielasApi.JWTConfiguration;
-using QuinielasApi.Models.DatabaseContext;
 using QuinielasApi.Models.Entities;
 
 namespace QuinielasApi.Controllers

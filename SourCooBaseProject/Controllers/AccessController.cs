@@ -1,5 +1,4 @@
-﻿using QuinielasApi.Models.DatabaseContext;
-using QuinielasApi.Models.DTOs;
+﻿using QuinielasApi.Models.DTOs;
 using QuinielasApi.Models.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
