@@ -17,6 +17,9 @@ namespace QuinielasApi.MappingProfile
             CreateMap<PersonNameDTO, Person>();
             CreateMap<Person, PersonNameDTO>();
 
+            CreateMap<SportDTO, Sport>();
+            CreateMap<Sport, SportDTO>();
+
         }
     }
 }

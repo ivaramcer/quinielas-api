@@ -24,7 +24,7 @@ namespace QuinielasApi.Controllers
         }
 
         [HttpGet]
-        [Route("AllUsers")]
+        [Route("GetAllUsers")]
         public async Task<IActionResult> AllUsers()
         {
             var users = await _databaseContext.Users.ToListAsync();

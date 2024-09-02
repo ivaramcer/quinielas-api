@@ -6,6 +6,7 @@
         Task SaveAsync();
         void Clear();
         IUserRepository User { get; }
+        ISportRepository Sport { get; }
         IPermissionRepository Permission { get; }
         IPersonRepository Person { get; }
 
