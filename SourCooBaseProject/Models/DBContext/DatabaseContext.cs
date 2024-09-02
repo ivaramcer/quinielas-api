@@ -48,6 +48,7 @@ namespace QuinielasApi.Models.DatabaseContext
         public DbSet<Role> Role { get; set; } = default!;
         public DbSet<Permission> Permission { get; set; } = default!;
         public DbSet<UserPermission> UserPermissions { get; set; } = default!;
+        public DbSet<QuinielasApi.Models.Entities.Sport> Sport { get; set; } = default!;
 
     }
 }

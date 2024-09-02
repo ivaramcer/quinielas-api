@@ -1,14 +1,18 @@
-﻿namespace QuinielasApi.Models.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace QuinielasApi.Models.Entities
 {
     public class State
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string ISOCode { get; set; } // Código ISO 3166-2
+        [Required]
+        public string Name { get; set; } = string.Empty;
+        [Required]
+        public string ISOCode { get; set; } = string.Empty;// Código ISO 3166-2
 
         public int CountryId { get; set; }
-        public Country Country { get; set; }
+        public Country Country { get; set; } = default!;
 
-        public List<City> Cities { get; set; }
+        public List<City> Cities { get; set; } = default!;
     }
 }
