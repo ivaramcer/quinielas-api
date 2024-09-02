@@ -10,6 +10,7 @@ namespace QuinielasApi.Models.Entities
         public DateTime DateOfBirthday { get; set; }
         public int? AddressId { get; set; }
         public Address? Address { get; set; }
+        public IEnumerable<Preference> Preferences { get; set; } = default!;
 
     }
 }

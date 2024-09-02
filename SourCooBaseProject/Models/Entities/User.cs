@@ -11,6 +11,6 @@ namespace QuinielasApi.Models.Entities
         public Role Role { get; set; } = default!;
         public int PersonId { get; set; }
         public Person Person { get; set; } = default!;
-        public List<UserPermission> UserPermissions { get; set; } = default!;
+        public IEnumerable<UserPermission> UserPermissions { get; set; } = default!;
     }
 }

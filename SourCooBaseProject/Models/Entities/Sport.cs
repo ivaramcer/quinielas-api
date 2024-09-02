@@ -2,13 +2,12 @@
 
 namespace QuinielasApi.Models.Entities
 {
-    public class Permission
+    public class Sport
     {
         [Key]
         public int Id { get; set; }
         public string Name { get; set; } = default!;
         public string Description { get; set; } = default!;
-        public IEnumerable<UserPermission> UserPermissions { get; set; } = default!;
 
     }
 }
