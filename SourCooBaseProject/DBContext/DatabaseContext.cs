@@ -2,7 +2,7 @@
 using System.Xml;
 using QuinielasApi.Models.Entities;
 
-namespace QuinielasApi.Models.DatabaseContext
+namespace QuinielasApi.DBContext
 {
     public class DatabaseContext : DbContext
     {
@@ -18,6 +18,7 @@ namespace QuinielasApi.Models.DatabaseContext
 
             //Seeds
             modelBuilder.SeedRole();
+            modelBuilder.SeedSport();
 
 
             //Rules for our entities
@@ -26,7 +27,7 @@ namespace QuinielasApi.Models.DatabaseContext
             .IsUnique();
 
             modelBuilder.Entity<UserPermission>()
-                .HasKey(up => new { up.UserId, up.PermissionId }); 
+                .HasKey(up => new { up.UserId, up.PermissionId });
 
             modelBuilder.Entity<UserPermission>()
                 .HasOne(up => up.User)

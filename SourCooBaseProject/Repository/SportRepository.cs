@@ -6,36 +6,36 @@ using QuinielasApi.DBContext;
 
 namespace QuinielasApi.Repository
 {
-    public class PersonRepository : RepositoryBase<Person>, IPersonRepository
+    public class SportRepository : RepositoryBase<Sport>, ISportRepository
     {
-        public PersonRepository(DatabaseContext dbContext) : base(dbContext)
+        public SportRepository(DatabaseContext dbContext) : base(dbContext)
         {
         }
-        public async Task<List<Person>> GetAllPersonsAsync()
+        public async Task<List<Sport>> GetAllSportsAsync()
         {
             return await FindAll()
                 .OrderBy(p => p.Name)
                 .ToListAsync();
         }
 
-        public async Task<Person?> GetPersonByIdAsync(int id)
+        public async Task<Sport?> GetSportByIdAsync(int id)
         {
             return await FindAll()
                 .FirstOrDefaultAsync(u => u.Id == id); 
         }
 
 
-        public void CreatePerson(Person person)
+        public void CreateSport(Sport sport)
         {
-            Create(person);
+            Create(sport);
         }
-        public void UpdatePerson(Person person)
+        public void UpdateSport(Sport sport)
         {
-            Update(person);
+            Update(sport);
         }
-        public void DeletePerson(Person person)
+        public void DeleteSport(Sport sport)
         {
-            Delete(person);
+            Delete(sport);
         }
     }
 }

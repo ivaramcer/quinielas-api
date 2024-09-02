@@ -1,5 +1,4 @@
-﻿using QuinielasApi.Models.DatabaseContext;
-using QuinielasApi.Models.DTOs;
+﻿using QuinielasApi.Models.DTOs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -7,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using QuinielasApi.JWTConfiguration;
 using QuinielasApi.Models.Entities;
+using QuinielasApi.DBContext;
 
 namespace QuinielasApi.Controllers
 {

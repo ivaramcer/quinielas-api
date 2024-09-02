@@ -1,9 +1,9 @@
-﻿using QuinielasApi.Models.DatabaseContext;
-using QuinielasApi.Models.Entities;
+﻿using QuinielasApi.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using QuinielasApi.IRepository;
 using QuinielasApi.Repository.Configuration;
 using System;
+using QuinielasApi.DBContext;
 
 namespace QuinielasApi.Repository
 {

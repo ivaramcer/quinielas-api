@@ -1,4 +1,3 @@
-using QuinielasApi.Models.DatabaseContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -7,6 +6,7 @@ using QuinielasApi.JWTConfiguration;
 using QuinielasApi.MappingProfile;
 using QuinielasApi.Repository.Configuration;
 using System.Text;
+using QuinielasApi.DBContext;
 
 var builder = WebApplication.CreateBuilder(args);
 

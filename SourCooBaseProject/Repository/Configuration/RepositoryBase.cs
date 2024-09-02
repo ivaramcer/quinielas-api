@@ -1,7 +1,7 @@
-﻿using QuinielasApi.Models.DatabaseContext;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using QuinielasApi.IRepository.Configuration;
 using System.Linq.Expressions;
+using QuinielasApi.DBContext;
 
 namespace QuinielasApi.Repository.Configuration
 {
