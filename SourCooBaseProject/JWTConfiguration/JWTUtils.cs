@@ -74,6 +74,7 @@ namespace QuinielasApi.JWTConfiguration
             }
             catch(Exception ex)
             {
+                Console.WriteLine(ex);
                 return false;
             }
 

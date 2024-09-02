@@ -7,10 +7,10 @@ namespace QuinielasApi.Repository.Configuration
 {
     public class RepositoryWrapper : IRepositoryWrapper
     {
-        private DatabaseContext _dbContext;
-        private IUserRepository _user;
-        private IPersonRepository _person;
-        private IPermissionRepository _permission;
+        private DatabaseContext _dbContext = default!;
+        private IUserRepository _user = default!;
+        private IPersonRepository _person = default!;
+        private IPermissionRepository _permission = default!;
 
         public IUserRepository User
         {

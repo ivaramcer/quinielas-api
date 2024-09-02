@@ -45,10 +45,17 @@ namespace QuinielasApi.Models.DatabaseContext
         public DbSet<City> Cities { get; set; } = default!;
         public DbSet<State> States { get; set; } = default!;
         public DbSet<Country> Countries { get; set; } = default!;
-        public DbSet<Role> Role { get; set; } = default!;
-        public DbSet<Permission> Permission { get; set; } = default!;
+        public DbSet<Role> Roles { get; set; } = default!;
+        public DbSet<Permission> Permissions { get; set; } = default!;
         public DbSet<UserPermission> UserPermissions { get; set; } = default!;
-        public DbSet<QuinielasApi.Models.Entities.Sport> Sport { get; set; } = default!;
+        public DbSet<Sport> Sports { get; set; } = default!;
+        public DbSet<OperationType> OperationTypes { get; set; } = default!;
+        public DbSet<Preference> Preferences { get; set; } = default!;
+        public DbSet<Quiniela> Quinielas { get; set; } = default!;
+        public DbSet<QuinielaType> QuinielaTypes { get; set; } = default!;
+        public DbSet<QuinielaTypeConfiguration> QuinielaTypeConfigurations { get; set; } = default!;
+        public DbSet<SportTeam> SportTeams { get; set; } = default!;
+        public DbSet<Status> Status { get; set; } = default!;
 
     }
 }

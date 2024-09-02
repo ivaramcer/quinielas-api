@@ -19,7 +19,7 @@ namespace QuinielasApi.Controllers
     public class AccessController : ControllerBase
     {
         private readonly JWTUtils _jwtUtils;
-        private IRepositoryWrapper _repository;
+        private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
 
         public AccessController(IRepositoryWrapper repository, JWTUtils jwtUtils, IMapper mapper)

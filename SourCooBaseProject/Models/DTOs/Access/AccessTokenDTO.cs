@@ -2,7 +2,7 @@
 {
     public class AccessTokenDTO
     {
-        public string AccessToken { get; set; }
-        public bool isSuccess { get; set; }
+        public string AccessToken { get; set; } = string.Empty;
+        public bool isSuccess { get; set; } = false;
     }
 }
