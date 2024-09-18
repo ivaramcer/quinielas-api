@@ -19,6 +19,7 @@ namespace QuinielasApi.DBContext
             //Seeds
             modelBuilder.SeedRole();
             modelBuilder.SeedSport();
+            modelBuilder.SeedQuinielaType();
 
 
             //Rules for our entities

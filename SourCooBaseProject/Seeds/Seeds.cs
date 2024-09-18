@@ -18,4 +18,13 @@ public static class ModelBuilderExtensions
             new Role { Id = 2, Name = "NFL", Description = "The NFL (National Football League) is a professional American football league consisting of 32 teams." }
         );
     }
+
+    public static void SeedQuinielaType(this ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<QuinielaType>().HasData(
+            new Role { Id = 1, Name = "Regular", Description = "Participants predict the outcomes of multiple sports matches or races." },
+            new Role { Id = 2, Name = "Survivor", Description = "A survivor-type quiniela involves picking a winner for each round, with elimination upon incorrect predictions until one remains." },
+            new Role { Id = 3, Name = "Spread", Description = "A spread-type quiniela requires predicting the point difference (spread) between teams, not just the match winner." }
+        );
+    }
 }
