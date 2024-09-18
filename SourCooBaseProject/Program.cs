@@ -7,6 +7,7 @@ using QuinielasApi.MappingProfile;
 using QuinielasApi.Repository.Configuration;
 using System.Text;
 using QuinielasApi.DBContext;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,6 +55,9 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 //Repository
 builder.Services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
 
+//Add support to logging with SERILOG
+builder.Host.UseSerilog((context, configuration) =>
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddAuthorization();
 builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
@@ -96,6 +100,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+//Add support to logging request with SERILOG
+app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 
