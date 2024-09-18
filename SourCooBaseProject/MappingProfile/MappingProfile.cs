@@ -20,6 +20,15 @@ namespace QuinielasApi.MappingProfile
             CreateMap<SportDTO, Sport>();
             CreateMap<Sport, SportDTO>();
 
+
+            CreateMap<QuinielaInsertDTO, Quiniela>();
+            CreateMap<Quiniela, QuinielaInsertDTO>();
+
+
+            CreateMap<QuinielaDTO, Quiniela>();
+            CreateMap<Quiniela, QuinielaDTO>();
+
+
         }
     }
 }

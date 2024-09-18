@@ -2,6 +2,7 @@
 using QuinielasApi.IRepository.Configuration;
 using System.Linq.Expressions;
 using QuinielasApi.DBContext;
+using EFCore.BulkExtensions;
 
 namespace QuinielasApi.Repository.Configuration
 {
@@ -18,5 +19,10 @@ namespace QuinielasApi.Repository.Configuration
         public void Create(T entity) => RepositoryContext.Set<T>().Add(entity);
         public void Update(T entity) => RepositoryContext.Set<T>().Update(entity);
         public void Delete(T entity) => RepositoryContext.Set<T>().Remove(entity);
+
+        public async Task BulkInsertAsync(List<T> entities)
+        {
+            await RepositoryContext.BulkInsertAsync(entities);
+        }
     }
 }

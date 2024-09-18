@@ -9,5 +9,6 @@ namespace QuinielasApi.IRepository.Configuration
         void Create(T entity);
         void Update(T entity);
         void Delete(T entity);
+        Task BulkInsertAsync(List<T> entities);
     }
 }

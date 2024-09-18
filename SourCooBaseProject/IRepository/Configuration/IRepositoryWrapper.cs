@@ -9,6 +9,7 @@
         ISportRepository Sport { get; }
         IPermissionRepository Permission { get; }
         IPersonRepository Person { get; }
+        IQuinielaRepository Quiniela { get; }
 
     }
 }

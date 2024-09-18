@@ -12,7 +12,20 @@ namespace QuinielasApi.Repository.Configuration
         private IPersonRepository _person = default!;
         private IPermissionRepository _permission = default!;
         private ISportRepository _sport = default!;
+        private IQuinielaRepository _quiniela = default!;
 
+        public IQuinielaRepository Quiniela
+        {
+            get
+            {
+                if (_quiniela == null)
+                {
+                    _quiniela = new QuinielaRepository(_dbContext);
+                }
+
+                return _quiniela;
+            }
+        }
         public ISportRepository Sport
         {
             get
