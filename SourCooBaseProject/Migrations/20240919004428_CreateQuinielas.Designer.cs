@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using QuinielasApi.DBContext;
@@ -11,9 +12,11 @@ using QuinielasApi.DBContext;
 namespace QuinielasApi.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240919004428_CreateQuinielas")]
+    partial class CreateQuinielas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -279,57 +282,6 @@ namespace QuinielasApi.Migrations
                     b.HasIndex("QuinielaTypeId");
 
                     b.ToTable("QuinielaDuration");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Participants predict outcomes for that specific set of matches or events.",
-                            Name = "Round",
-                            QuinielaTypeId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Participants predicting outcomes across multiple rounds or events throughout the season.",
-                            Name = "Season",
-                            QuinielaTypeId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Allows participants to choose specific matches.",
-                            Name = "Custom",
-                            QuinielaTypeId = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "Participants predicting outcomes across multiple rounds or events throughout the season.",
-                            Name = "Season",
-                            QuinielaTypeId = 2
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Description = "Participants predict outcomes for that specific set of matches or events.",
-                            Name = "Round",
-                            QuinielaTypeId = 3
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Description = "Participants predicting outcomes across multiple rounds or events throughout the season.",
-                            Name = "Season",
-                            QuinielaTypeId = 3
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Description = "Allows participants to choose specific matches.",
-                            Name = "Custom",
-                            QuinielaTypeId = 3
-                        });
                 });
 
             modelBuilder.Entity("QuinielasApi.Models.Entities.QuinielaPickDuration", b =>
@@ -357,232 +309,6 @@ namespace QuinielasApi.Migrations
                     b.HasIndex("QuinielaDurationId");
 
                     b.ToTable("QuinielaPickDuration");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Before first game",
-                            QuinielaDurationId = 1,
-                            Value = "beforeFirst"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Before each game",
-                            QuinielaDurationId = 1,
-                            Value = "beforeEach"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Before first game",
-                            QuinielaDurationId = 2,
-                            Value = "beforeFirst"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Before each game",
-                            QuinielaDurationId = 2,
-                            Value = "beforeEach"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Before first game",
-                            QuinielaDurationId = 3,
-                            Value = "beforeFirst"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "Before each game",
-                            QuinielaDurationId = 3,
-                            Value = "beforeEach"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Name = "First",
-                            QuinielaDurationId = 4,
-                            Value = "viudaOne"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Name = "Second",
-                            QuinielaDurationId = 4,
-                            Value = "viudaTwo"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Name = "Third",
-                            QuinielaDurationId = 4,
-                            Value = "viudaThree"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Name = "Fourth",
-                            QuinielaDurationId = 4,
-                            Value = "viudaFour"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Name = "Fifth",
-                            QuinielaDurationId = 4,
-                            Value = "viudaFive"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            Name = "Sixth",
-                            QuinielaDurationId = 4,
-                            Value = "viudaSix"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Name = "Seventh",
-                            QuinielaDurationId = 4,
-                            Value = "viudaSeven"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Name = "Eighth",
-                            QuinielaDurationId = 4,
-                            Value = "viudaEight"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Name = "Ninth",
-                            QuinielaDurationId = 4,
-                            Value = "viudaNine"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Name = "Tenth",
-                            QuinielaDurationId = 4,
-                            Value = "viudaTen"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Name = "Eleventh",
-                            QuinielaDurationId = 4,
-                            Value = "viudaEleven"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Name = "Twelfth",
-                            QuinielaDurationId = 4,
-                            Value = "viudaTwelve"
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Name = "Thirteenth",
-                            QuinielaDurationId = 4,
-                            Value = "viudaThirteen"
-                        },
-                        new
-                        {
-                            Id = 20,
-                            Name = "Fourteenth",
-                            QuinielaDurationId = 4,
-                            Value = "viudaFourteen"
-                        },
-                        new
-                        {
-                            Id = 21,
-                            Name = "Fifteenth",
-                            QuinielaDurationId = 4,
-                            Value = "viudaFifteen"
-                        },
-                        new
-                        {
-                            Id = 22,
-                            Name = "Sixteenth",
-                            QuinielaDurationId = 4,
-                            Value = "viudaSixteen"
-                        },
-                        new
-                        {
-                            Id = 23,
-                            Name = "Seventeenth",
-                            QuinielaDurationId = 4,
-                            Value = "viudaSeventeen"
-                        },
-                        new
-                        {
-                            Id = 24,
-                            Name = "Eighteenth",
-                            QuinielaDurationId = 4,
-                            Value = "viudaEighteen"
-                        },
-                        new
-                        {
-                            Id = 25,
-                            Name = "Nineteenth",
-                            QuinielaDurationId = 4,
-                            Value = "viudaNineteen"
-                        },
-                        new
-                        {
-                            Id = 26,
-                            Name = "Twentieth",
-                            QuinielaDurationId = 4,
-                            Value = "viudaTwenty"
-                        },
-                        new
-                        {
-                            Id = 27,
-                            Name = "Before first game",
-                            QuinielaDurationId = 5,
-                            Value = "beforeFirst"
-                        },
-                        new
-                        {
-                            Id = 28,
-                            Name = "Before each game",
-                            QuinielaDurationId = 5,
-                            Value = "beforeEach"
-                        },
-                        new
-                        {
-                            Id = 29,
-                            Name = "Before first game",
-                            QuinielaDurationId = 6,
-                            Value = "beforeFirst"
-                        },
-                        new
-                        {
-                            Id = 30,
-                            Name = "Before each game",
-                            QuinielaDurationId = 6,
-                            Value = "beforeEach"
-                        },
-                        new
-                        {
-                            Id = 31,
-                            Name = "Before first game",
-                            QuinielaDurationId = 7,
-                            Value = "beforeFirst"
-                        },
-                        new
-                        {
-                            Id = 32,
-                            Name = "Before each game",
-                            QuinielaDurationId = 7,
-                            Value = "beforeEach"
-                        });
                 });
 
             modelBuilder.Entity("QuinielasApi.Models.Entities.QuinielaType", b =>
