@@ -6,19 +6,42 @@ namespace QuinielasApi.Models.Entities
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
         [MaxLength(100)]
         public string Name { get; set; } = string.Empty;
-        public double Price { get; set; }
-        public bool IsActive { get; set; } = true;
-        public string Code { get; set; } = GenerateRandomCode();
-        public int QuotaPeople { get; set; }
-        public DateTime Created { get; set; }
-        public int QuinielaTypeId { get; set; }
-        public QuinielaType QuinielaType { get; set; } = default!;
-        public int StatusId { get; set; }
-        public Status Status{ get; set; } = default!;
 
+        public double Price { get; set; }
+
+        public bool IsActive { get; set; } = true;
+
+        public string Code { get; set; }
+
+        public int QuotaPeople { get; set; }
+        public double ViudaPrice { get; set; }
+
+        public DateTime Created { get; set; } = DateTime.UtcNow;
+
+        public int QuinielaTypeId { get; set; }
+
+        public virtual QuinielaType QuinielaType { get; set; } = default!;
+
+
+        public int QuinielaDurationId { get; set; }
+
+        public virtual QuinielaDuration QuinielaDuration { get; set; } = default!;
+        public int QuinielaPickDurationId { get; set; }
+
+        public virtual QuinielaPickDuration QuinielaPickDuration { get; set; } = default!;
+
+        public int StatusId { get; set; }
+
+        public virtual Status Status { get; set; } = default!;
+
+        public Quiniela()
+        {
+            Code = GenerateRandomCode();
+        }
 
         private static string GenerateRandomCode()
         {
