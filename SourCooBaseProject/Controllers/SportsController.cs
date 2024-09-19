@@ -26,14 +26,15 @@ namespace QuinielasApi.Controllers
         private readonly JWTUtils _jwtUtils;
         private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
+        private readonly ILogger<SportsController> _logger;
 
-        public SportsController(IRepositoryWrapper repository, JWTUtils jwtUtils, IMapper mapper)
+
+        public SportsController(IRepositoryWrapper repository, JWTUtils jwtUtils, IMapper mapper, ILogger<SportsController> logger)
         {
             _jwtUtils = jwtUtils;
             _repository = repository;
             _mapper = mapper;
-
-
+            _logger = logger;
         }
 
         [HttpGet]
@@ -54,8 +55,7 @@ namespace QuinielasApi.Controllers
             catch (Exception ex)
             {
                 // Log the exception details for debugging
-                // _logger.LogError(ex, "Error fetching sports");
-
+                 _logger.LogError(ex, "Error fetching sports");
                 return StatusCode(500, "An error occurred while fetching sports.");
             }
         }

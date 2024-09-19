@@ -2,6 +2,9 @@
 using QuinielasApi.IRepository;
 using QuinielasApi.IRepository.Configuration;
 using QuinielasApi.DBContext;
+using QuinielaDurationsApi.IRepository;
+using QuinielaPickDurationsApi.IRepository;
+using QuinielaTypesApi.IRepository;
 
 namespace QuinielasApi.Repository.Configuration
 {
@@ -13,7 +16,46 @@ namespace QuinielasApi.Repository.Configuration
         private IPermissionRepository _permission = default!;
         private ISportRepository _sport = default!;
         private IQuinielaRepository _quiniela = default!;
+        private IQuinielaDurationRepository _quinielaDuration = default!;
+        private IQuinielaPickDurationRepository _quinielaPickDuration = default!;
+        private IQuinielaTypeRepository _quinielaType = default!;
 
+        public IQuinielaDurationRepository QuinielaDuration
+        {
+            get
+            {
+                if (_quinielaDuration == null)
+                {
+                    _quinielaDuration = new QuinielaDurationRepository(_dbContext);
+                }
+
+                return _quinielaDuration;
+            }
+        }
+        public IQuinielaPickDurationRepository QuinielaPickDuration
+        {
+            get
+            {
+                if (_quinielaPickDuration == null)
+                {
+                    _quinielaPickDuration = new QuinielaPickDurationRepository(_dbContext);
+                }
+
+                return _quinielaPickDuration;
+            }
+        }
+        public IQuinielaTypeRepository QuinielaType
+        {
+            get
+            {
+                if (_quinielaType == null)
+                {
+                    _quinielaType = new QuinielaTypeRepository(_dbContext);
+                }
+
+                return _quinielaType;
+            }
+        }
         public IQuinielaRepository Quiniela
         {
             get

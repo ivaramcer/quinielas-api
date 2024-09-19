@@ -1,4 +1,8 @@
-﻿namespace QuinielasApi.IRepository.Configuration
+﻿using QuinielaDurationsApi.IRepository;
+using QuinielaPickDurationsApi.IRepository;
+using QuinielaTypesApi.IRepository;
+
+namespace QuinielasApi.IRepository.Configuration
 {
     public interface IRepositoryWrapper
     {
@@ -10,6 +14,9 @@
         IPermissionRepository Permission { get; }
         IPersonRepository Person { get; }
         IQuinielaRepository Quiniela { get; }
+        IQuinielaDurationRepository QuinielaDuration { get; }
+        IQuinielaPickDurationRepository QuinielaPickDuration { get; }
+        IQuinielaTypeRepository QuinielaType { get; }
 
     }
 }

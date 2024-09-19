@@ -28,6 +28,23 @@ namespace QuinielasApi.MappingProfile
             CreateMap<QuinielaDTO, Quiniela>();
             CreateMap<Quiniela, QuinielaDTO>();
 
+            CreateMap<QuinielaType, QuinielaTypeDTO>();
+            CreateMap<QuinielaTypeDTO, QuinielaType>();
+
+            CreateMap<QuinielaType, QuinielaTypeInsertDTO>();
+            CreateMap<QuinielaTypeInsertDTO, QuinielaType>();
+
+            CreateMap<QuinielaDuration, QuinielaDurationDTO>();
+            CreateMap<QuinielaDurationDTO, QuinielaDuration>();
+
+            CreateMap<QuinielaDuration, QuinielaDurationInsertDTO>();
+            CreateMap<QuinielaDurationInsertDTO, QuinielaDuration>();
+
+            CreateMap<QuinielaPickDurationInsertDTO, QuinielaPickDuration>();
+            CreateMap<QuinielaPickDuration, QuinielaPickDurationInsertDTO>();
+
+            CreateMap<QuinielaPickDurationDTO, QuinielaPickDuration>();
+            CreateMap<QuinielaPickDuration, QuinielaPickDurationDTO>();
 
         }
     }
