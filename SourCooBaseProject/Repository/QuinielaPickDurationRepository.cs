@@ -30,7 +30,7 @@ namespace QuinielasApi.IRepository
         public async Task<List<QuinielaPickDuration>> GetListByDurationIdAsync(int durationId)
         {
             return await FindByCondition(qpd => qpd.QuinielaDurationId == durationId)
-                .OrderBy(p => p.Name)
+                .OrderBy(p => p.Id)
                 .ToListAsync();
         }
 
