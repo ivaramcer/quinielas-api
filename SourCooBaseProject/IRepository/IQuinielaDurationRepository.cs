@@ -6,6 +6,7 @@ namespace QuinielaDurationsApi.IRepository
     {
         Task<List<QuinielaDuration>> GetAllAsync();
         Task<QuinielaDuration?> GetByIdAsync(int id);
+        Task<List<QuinielaDuration>> GetListByQuinielaTypeIdAsync(int quinielaTypeId);
         Task BulkInsert(List<QuinielaDuration> entities);
         void Create(QuinielaDuration entity);
         void Update(QuinielaDuration entity);

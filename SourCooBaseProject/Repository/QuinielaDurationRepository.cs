@@ -24,6 +24,12 @@ namespace QuinielaDurationsApi.IRepository
             return await FindAll()
                 .FirstOrDefaultAsync(q => q.Id == id);
         }
+        public async Task<List<QuinielaDuration>> GetListByQuinielaTypeIdAsync(int quinielaTypeId)
+        {
+            return await FindByCondition( qt => qt.QuinielaTypeId == quinielaTypeId)
+                .OrderBy(p => p.Name)
+                .ToListAsync();
+        }
 
         public async Task BulkInsert(List<QuinielaDuration> entities)
         {
