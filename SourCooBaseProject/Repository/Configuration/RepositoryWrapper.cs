@@ -5,6 +5,7 @@ using QuinielasApi.DBContext;
 using QuinielaDurationsApi.IRepository;
 using QuinielaPickDurationsApi.IRepository;
 using QuinielaTypesApi.IRepository;
+using StatusApi.IRepository;
 
 namespace QuinielasApi.Repository.Configuration
 {
@@ -19,6 +20,20 @@ namespace QuinielasApi.Repository.Configuration
         private IQuinielaDurationRepository _quinielaDuration = default!;
         private IQuinielaPickDurationRepository _quinielaPickDuration = default!;
         private IQuinielaTypeRepository _quinielaType = default!;
+        private IStatusRepository _status = default!;
+
+        public IStatusRepository Status
+        {
+            get
+            {
+                if (_status == null)
+                {
+                    _status = new StatusRepository(_dbContext);
+                }
+
+                return _status;
+            }
+        }
 
         public IQuinielaDurationRepository QuinielaDuration
         {

@@ -4,42 +4,43 @@ using QuinielasApi.IRepository;
 using QuinielasApi.Repository.Configuration;
 using System;
 using QuinielasApi.DBContext;
+using StatusApi.IRepository;
 
 
 namespace QuinielasApi.IRepository
 {
-    public class QuinielaRepository : RepositoryBase<Quiniela>, IQuinielaRepository
+    public class StatusRepository : RepositoryBase<Status>, IStatusRepository
     {
-        public QuinielaRepository(DatabaseContext dbContext) : base(dbContext)
+        public StatusRepository(DatabaseContext dbContext) : base(dbContext)
         {
         }
-        public async Task<List<Quiniela>> GetAllAsync()
+        public async Task<List<Status>> GetAllAsync()
         {
             return await FindAll()
                 .OrderBy(p => p.Name)
                 .ToListAsync();
         }
 
-        public async Task<Quiniela?> GetByIdAsync(int id)
+        public async Task<Status?> GetByIdAsync(int id)
         {
             return await FindAll()
                 .FirstOrDefaultAsync(q => q.Id == id);
         }
 
-        public async Task BulkInsert(List<Quiniela> entities)
+        public async Task BulkInsert(List<Status> entities)
         {
             await BulkInsertAsync(entities);
         }
 
-        public new void Create(Quiniela entity)
+        public new void Create(Status entity)
         {
             base.Create(entity);
         }
-        public new void Update(Quiniela entity)
+        public new void Update(Status entity)
         {
             base.Update(entity);
         }
-        public new void Delete(Quiniela entity)
+        public new void Delete(Status entity)
         {
             base.Delete(entity);
         }

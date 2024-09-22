@@ -2,14 +2,13 @@
 
 namespace QuinielasApi.Models.Entities
 {
-    public class QuinielaInsertDTO
+    public class StatusInsertDTO
     {
         [Required]
         [MaxLength(100)]
         public string Name { get; set; } = string.Empty;
-        public double Price { get; set; }
-        public int QuotaPeople { get; set; }
-        public int QuinielaTypeId { get; set; }
-
+        [Required]
+        [MaxLength(250)]
+        public string Description { get; set; } = string.Empty;
     }
 }

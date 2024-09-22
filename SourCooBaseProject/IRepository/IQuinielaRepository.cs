@@ -4,11 +4,11 @@ namespace QuinielasApi.IRepository
 {
     public interface IQuinielaRepository
     {
-        Task<List<Quiniela>> GetAllQuinielasAsync();
-        Task<Quiniela?> GetQuinielaByIdAsync(int id);
+        Task<List<Quiniela>> GetAllAsync();
+        Task<Quiniela?> GetByIdAsync(int id);
         Task BulkInsert(List<Quiniela> entities);
-        void CreateQuiniela(Quiniela Quiniela);
-        void UpdateQuiniela(Quiniela Quiniela);
-        void DeleteQuiniela(Quiniela Quiniela);
+        void Create(Quiniela entity);
+        void Update(Quiniela entity);
+        void Delete(Quiniela entity);
     }
 }

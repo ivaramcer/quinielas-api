@@ -46,6 +46,12 @@ namespace QuinielasApi.MappingProfile
             CreateMap<QuinielaPickDurationDTO, QuinielaPickDuration>();
             CreateMap<QuinielaPickDuration, QuinielaPickDurationDTO>();
 
+            CreateMap<StatusDTO, Status>();
+            CreateMap<Status, StatusDTO>();
+
+            CreateMap<StatusInsertDTO, Status>();
+            CreateMap<Status, StatusInsertDTO>();
+
         }
     }
 }
