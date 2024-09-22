@@ -28,7 +28,7 @@ namespace QuinielasApi.Controllers
 
         }
 
-        [HttpGet("GetAllQuinielaDuration")]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllQuinielaDuration()
         {
             try
@@ -44,7 +44,7 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpGet("GetQuinielaDurationById/{id}")]
+        [HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetQuinielaDurationById(int id)
         {
             try
@@ -66,7 +66,24 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpPost("CreateQuinielaDuration")]
+        [HttpGet("GetListByQuinielaTypeId/{quinielaTypeId}")]
+        public async Task<IActionResult> GetListByQuinielaTypeId(int quinielaTypeId)
+        {
+            try
+            {
+                var QuinielaDurations = await _repository.QuinielaDuration.GetListByQuinielaTypeIdAsync(quinielaTypeId);
+
+                var QuinielaDurationDTOs = _mapper.Map<IEnumerable<QuinielaDurationDTO>>(QuinielaDurations);
+                return Ok(QuinielaDurationDTOs);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside GetQuinielaDurationById action: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPost("Create")]
         public async Task<IActionResult> CreateQuinielaDuration([FromBody] QuinielaDurationDTO QuinielaDurationDTO)
         {
             try
@@ -92,7 +109,7 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpPost("CreateBulkQuinielaDuration")]
+        [HttpPost("CreateBulk")]
         public async Task<IActionResult> CreateBulkQuinielaDuration(List<QuinielaDurationDTO> QuinielaDurations)
         {
             try
@@ -118,7 +135,7 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpPut("UpdateQuinielaDuration/{id}")]
+        [HttpPut("Update/{id}")]
         public async Task<IActionResult> UpdateQuinielaDuration(int id, [FromBody] QuinielaDurationDTO QuinielaDurationDTO)
         {
             try
@@ -149,7 +166,7 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpDelete("DeleteQuinielaDuration/{id}")]
+        [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteQuinielaDuration(int id)
         {
             try

@@ -28,7 +28,7 @@ namespace QuinielasApi.Controllers
 
         }
 
-        [HttpGet("GetAllQuiniela")]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllQuiniela()
         {
             try
@@ -44,7 +44,7 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpGet("GetQuinielaById/{id}")]
+        [HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetQuinielaById(int id)
         {
             try
@@ -66,7 +66,7 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpPost("CreateQuiniela")]
+        [HttpPost("Create")]
         public async Task<IActionResult> CreateQuiniela([FromBody] QuinielaInsertDTO QuinielaDTO)
         {
             try
@@ -92,7 +92,7 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpPost("CreateBulkQuiniela")]
+        [HttpPost("CreateBulk")]
         public async Task<IActionResult> CreateBulkQuiniela(List<QuinielaInsertDTO> Quiniela)
         {
             try
@@ -118,7 +118,7 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpPut("UpdateQuiniela/{id}")]
+        [HttpPut("Update/{id}")]
         public async Task<IActionResult> UpdateQuiniela(int id, [FromBody] QuinielaDTO QuinielaDTO)
         {
             try
@@ -149,7 +149,7 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpDelete("DeleteQuiniela/{id}")]
+        [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteQuiniela(int id)
         {
             try
