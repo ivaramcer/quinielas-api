@@ -60,6 +60,7 @@ namespace QuinielasApi.DBContext
         public DbSet<QuinielaTypeConfiguration> QuinielaTypeConfigurations { get; set; } = default!;
         public DbSet<SportTeam> SportTeams { get; set; } = default!;
         public DbSet<Status> Status { get; set; } = default!;
+        public DbSet<SoccerLeague> SoccerLeagues { get; set; } = default!;
 
     }
 }

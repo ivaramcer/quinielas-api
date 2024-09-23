@@ -6,6 +6,7 @@ using QuinielaDurationsApi.IRepository;
 using QuinielaPickDurationsApi.IRepository;
 using QuinielaTypesApi.IRepository;
 using StatusApi.IRepository;
+using SoccerLeaguesApi.IRepository;
 
 namespace QuinielasApi.Repository.Configuration
 {
@@ -21,7 +22,21 @@ namespace QuinielasApi.Repository.Configuration
         private IQuinielaPickDurationRepository _quinielaPickDuration = default!;
         private IQuinielaTypeRepository _quinielaType = default!;
         private IStatusRepository _status = default!;
+        private ISoccerLeagueRepository _soccerLeague = default!;
 
+
+        public ISoccerLeagueRepository SoccerLeague
+        {
+            get
+            {
+                if (_soccerLeague == null)
+                {
+                    _soccerLeague = new SoccerLeagueRepository(_dbContext);
+                }
+
+                return _soccerLeague;
+            }
+        }
         public IStatusRepository Status
         {
             get
