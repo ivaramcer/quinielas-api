@@ -38,7 +38,7 @@ namespace QuinielasApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetAllSports")]
+        [Route("GetAll")]
         public async Task<ActionResult<IEnumerable<SportDTO>>> GetAllSports()
         {
             try

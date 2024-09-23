@@ -52,6 +52,12 @@ namespace QuinielasApi.MappingProfile
             CreateMap<StatusInsertDTO, Status>();
             CreateMap<Status, StatusInsertDTO>();
 
+            CreateMap<SoccerLeagueDTO, SoccerLeague>();
+            CreateMap<SoccerLeague, SoccerLeagueDTO>();
+
+            CreateMap<SoccerLeagueInsertDTO, SoccerLeague>();
+            CreateMap<SoccerLeague, SoccerLeagueInsertDTO>();
+
         }
     }
 }

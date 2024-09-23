@@ -68,7 +68,7 @@ namespace QuinielasApi.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> CreateQuinielaType([FromBody] QuinielaTypeDTO QuinielaTypeDTO)
+        public async Task<IActionResult> CreateQuinielaType([FromBody] QuinielaTypeInsertDTO QuinielaTypeDTO)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace QuinielasApi.Controllers
         }
 
         [HttpPost("CreateBulk")]
-        public async Task<IActionResult> CreateBulkQuinielaType(List<QuinielaTypeDTO> QuinielaTypes)
+        public async Task<IActionResult> CreateBulkQuinielaType(List<QuinielaTypeInsertDTO> QuinielaTypes)
         {
             try
             {

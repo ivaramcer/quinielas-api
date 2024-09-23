@@ -29,7 +29,7 @@ namespace QuinielasApi.Controllers
         }
 
 
-        [HttpGet("GetAllStatus")]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllStatus()
         {
             try
@@ -45,7 +45,7 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpGet("GetStatusById/{id}")]
+        [HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetStatusById(int id)
         {
             try
@@ -67,7 +67,7 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpPost("CreateStatus")]
+        [HttpPost("Create")]
         public async Task<IActionResult> CreateStatus([FromBody] StatusInsertDTO StatusDTO)
         {
             try
@@ -93,7 +93,7 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpPost("CreateBulkStatus")]
+        [HttpPost("CreateBulk")]
         public async Task<IActionResult> CreateBulkStatus(List<StatusInsertDTO> status)
         {
             try
@@ -119,7 +119,7 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpPut("UpdateStatus/{id}")]
+        [HttpPut("Update/{id}")]
         public async Task<IActionResult> UpdateStatus(int id, [FromBody] StatusDTO StatusDTO)
         {
             try
@@ -150,7 +150,7 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpDelete("DeleteStatus/{id}")]
+        [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteStatus(int id)
         {
             try

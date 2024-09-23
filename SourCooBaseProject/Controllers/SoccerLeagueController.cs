@@ -67,7 +67,7 @@ namespace QuinielasApi.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> CreateSoccerLeague([FromBody] SoccerLeagueDTO SoccerLeagueDTO)
+        public async Task<IActionResult> CreateSoccerLeague([FromBody] SoccerLeagueInsertDTO SoccerLeagueDTO)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace QuinielasApi.Controllers
         }
 
         [HttpPost("CreateBulk")]
-        public async Task<IActionResult> CreateBulkSoccerLeague(List<SoccerLeagueDTO> SoccerLeagues)
+        public async Task<IActionResult> CreateBulkSoccerLeague(List<SoccerLeagueInsertDTO> SoccerLeagues)
         {
             try
             {

@@ -84,7 +84,7 @@ namespace QuinielasApi.Controllers
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> CreateQuinielaPickDuration([FromBody] QuinielaPickDurationDTO QuinielaPickDurationDTO)
+        public async Task<IActionResult> CreateQuinielaPickDuration([FromBody] QuinielaPickDurationInsertDTO QuinielaPickDurationDTO)
         {
             try
             {
@@ -110,7 +110,7 @@ namespace QuinielasApi.Controllers
         }
 
         [HttpPost("CreateBulk")]
-        public async Task<IActionResult> CreateBulkQuinielaPickDuration(List<QuinielaPickDurationDTO> QuinielaPickDurations)
+        public async Task<IActionResult> CreateBulkQuinielaPickDuration(List<QuinielaPickDurationInsertDTO> QuinielaPickDurations)
         {
             try
             {
