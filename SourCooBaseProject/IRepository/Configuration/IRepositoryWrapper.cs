@@ -1,4 +1,5 @@
-﻿using QuinielaDurationsApi.IRepository;
+﻿using GamesApi.IRepository;
+using QuinielaDurationsApi.IRepository;
 using QuinielaPickDurationsApi.IRepository;
 using QuinielaTypesApi.IRepository;
 using SoccerLeaguesApi.IRepository;
@@ -19,6 +20,7 @@ namespace QuinielasApi.IRepository.Configuration
         IQuinielaDurationRepository QuinielaDuration { get; }
         IQuinielaPickDurationRepository QuinielaPickDuration { get; }
         IQuinielaTypeRepository QuinielaType { get; }
+        IGameRepository Game { get; }
         IStatusRepository Status{ get; }
         ISoccerLeagueRepository SoccerLeague { get; }
 
