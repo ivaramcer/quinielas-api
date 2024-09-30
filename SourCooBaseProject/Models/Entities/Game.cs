@@ -7,6 +7,7 @@ namespace QuinielasApi.Models.Entities
     {
         [Key]
         public int Id { get; set; }
+        public int ExternalId { get; set; }
         public DateTime Schedule { get; set; }
         public string Venue { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
