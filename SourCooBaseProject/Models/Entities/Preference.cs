@@ -10,7 +10,7 @@ namespace QuinielasApi.Models.Entities
         public Sport Sport { get; set; } = default!;
         public int PersonId { get; set; }
         public Person Person { get; set; } = default!;
-        public int SportTeamId { get; set; }
-        public SportTeam SportTeam { get; set; } = default!;
+        public int TeamId { get; set; }
+        public Team Team { get; set; } = default!;
     }
 }

@@ -41,6 +41,30 @@ namespace QuinielasApi.DBContext
                 .HasOne(up => up.Permission)
                 .WithMany(p => p.UserPermissions)
                 .HasForeignKey(up => up.PermissionId);
+
+            modelBuilder.Entity<Team>()
+                       .HasMany(t => t.HomeGames)
+                       .WithOne(g => g.HomeTeam)
+                       .HasForeignKey(g => g.HomeTeamId)
+                       .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Team>()
+                .HasMany(t => t.AwayGames)
+                .WithOne(g => g.AwayTeam)
+                .HasForeignKey(g => g.AwayTeamId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Team>()
+                .HasMany(t => t.WinnerGames)
+                .WithOne(g => g.WinnerTeam)
+                .HasForeignKey(g => g.WinnerTeamId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Game>()
+                .HasOne(g => g.WinnerTeam)
+                .WithMany()
+                .HasForeignKey(g => g.WinnerTeamId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
 
         public DbSet<Person> Persons { get; set; } = default!;
@@ -58,9 +82,11 @@ namespace QuinielasApi.DBContext
         public DbSet<Quiniela> Quinielas { get; set; } = default!;
         public DbSet<QuinielaType> QuinielaTypes { get; set; } = default!;
         public DbSet<QuinielaTypeConfiguration> QuinielaTypeConfigurations { get; set; } = default!;
-        public DbSet<SportTeam> SportTeams { get; set; } = default!;
+        public DbSet<Models.Entities.Team> SportTeams { get; set; } = default!;
         public DbSet<Status> Status { get; set; } = default!;
         public DbSet<SoccerLeague> SoccerLeagues { get; set; } = default!;
+        public DbSet<Team> Teams { get; set; }
+        public DbSet<Game> Games { get; set; }
 
     }
 }

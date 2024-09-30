@@ -2,7 +2,7 @@
 
 namespace QuinielasApi.Models.Entities
 {
-    public class SportTeam
+    public class Team
     {
         [Key]
         public int Id { get; set; }
@@ -12,5 +12,9 @@ namespace QuinielasApi.Models.Entities
         public string ImageURL { get; set; } = string.Empty;
         public int SportId { get; set; }
         public Sport Sport { get; set; } = default!;
+        public ICollection<Game> HomeGames { get; set; } = default!;
+        public ICollection<Game> AwayGames { get; set; } = default!;
+        public ICollection<Game> WinnerGames { get; set; } = default!;
+
     }
 }
