@@ -7,10 +7,11 @@ namespace QuinielasApi.Utils.NFL
     public static class APIClientNFL
     {
         public static int currentYear = DateTime.Now.Year;
+        public static int league = 1;
 
         public static async Task<string> GetSeasons()
         {
-            string responseFromNagico = "";
+            string responseFromAPI= "";
             string endpoint = $"teams?season={currentYear}";
             try
             {
@@ -38,7 +39,7 @@ namespace QuinielasApi.Utils.NFL
                     }
                     else
                     {
-                        throw new ApiServiceException("The system from Nagico is not working");
+                        throw new ApiServiceException("The external system is not working");
                     }
                 }
 
@@ -49,13 +50,13 @@ namespace QuinielasApi.Utils.NFL
                 throw;
             }
 
-            return responseFromNagico;
+            return responseFromAPI;
         }
 
 
         public static async Task<string> GetLeagues()
         {
-            string responseFromNagico = "";
+            string responseFromAPI= "";
             string endpoint = $"teams?league=0&season={currentYear}";
             try
             {
@@ -78,7 +79,7 @@ namespace QuinielasApi.Utils.NFL
                     }
                     else
                     {
-                        throw new ApiServiceException("The system from Nagico is not working");
+                        throw new ApiServiceException("The external system is not working");
                     }
                 }
 
@@ -89,10 +90,48 @@ namespace QuinielasApi.Utils.NFL
                 throw;
             }
 
-            return responseFromNagico;
+            return responseFromAPI;
         }
 
+        public static async Task<List<GetGamesDTO>?> GetGames()
+        {
+            List<GetGamesDTO>? games = new List<GetGamesDTO>();
+            string endpoint = $"games?league={league}&season={currentYear}";
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    client.Timeout = TimeSpan.FromSeconds(300);
+                    string apiUrl = "https://v1.american-football.api-sports.io" +
+                                    $"/{endpoint}";
 
+                    client.DefaultRequestHeaders.Add("x-rapidapi-key", "88a41c229f0606d7c268a4db6244b052");
+                    client.DefaultRequestHeaders.Add("x-rapidapi-host", "v1.american-football.api-sports.io");
+
+                    HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseBody = await response.Content.ReadAsStringAsync();
+
+                         games = JsonConvert.DeserializeObject<List<GetGamesDTO>>(responseBody);
+
+                    }
+                    else
+                    {
+                        throw new ApiServiceException("The external system is not working");
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                throw;
+            }
+
+            return games;
+        }
         public class ApiServiceException : Exception
         {
             public ApiServiceException(string message) : base(message)
