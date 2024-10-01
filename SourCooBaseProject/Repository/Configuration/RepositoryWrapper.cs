@@ -8,6 +8,7 @@ using QuinielaTypesApi.IRepository;
 using StatusApi.IRepository;
 using SoccerLeaguesApi.IRepository;
 using GamesApi.IRepository;
+using TeamsApi.IRepository;
 
 namespace QuinielasApi.Repository.Configuration
 {
@@ -25,8 +26,20 @@ namespace QuinielasApi.Repository.Configuration
         private IStatusRepository _status = default!;
         private ISoccerLeagueRepository _soccerLeague = default!;
         private IGameRepository _game = default!;
+        private ITeamRepository _team = default!;
 
+        public ITeamRepository Team
+        {
+            get
+            {
+                if (_team == null)
+                {
+                    _team = new TeamRepository(_dbContext);
+                }
 
+                return _team;
+            }
+        }
 
         public IGameRepository Game
         {
