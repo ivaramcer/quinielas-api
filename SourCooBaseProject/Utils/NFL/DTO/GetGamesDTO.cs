@@ -40,10 +40,10 @@
         public string Name { get; set; } = default!;
         public string Season { get; set; } = default!;
         public string Logo { get; set; } = default!;
-        public Country Country { get; set; } = default!;
+        public CountryGamesDTO Country { get; set; } = default!;
     }
 
-    public class Country
+    public class CountryGamesDTO
     {
         public string Name { get; set; } = default!;
         public string Code { get; set; } = default!;
@@ -52,11 +52,11 @@
 
     public class Teams
     {
-        public Team Home { get; set; } = default!;
-        public Team Away { get; set; } = default!;
+        public TeamGamesDTO Home { get; set; } = default!;
+        public TeamGamesDTO Away { get; set; } = default!;
     }
 
-    public class Team
+    public class TeamGamesDTO
     {
         public int Id { get; set; }
         public string Name { get; set; } = default!;

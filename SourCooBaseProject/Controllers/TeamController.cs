@@ -6,6 +6,8 @@ using QuinielasApi.IRepository.Configuration;
 using QuinielasApi.JWTConfiguration;
 using QuinielasApi.Models.DTOs;
 using QuinielasApi.Models.Entities;
+using QuinielasApi.Utils.NFL;
+using QuinielasApi.Utils.NFL.DTO;
 
 namespace QuinielasApi.Controllers
 {
@@ -14,6 +16,8 @@ namespace QuinielasApi.Controllers
     [ApiController]
     public class TeamController : ControllerBase
     {
+        private const int NFLId = 2;
+        private const int SoccerId = 1;
         private readonly JWTUtils _jwtUtils;
         private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
@@ -175,24 +179,49 @@ namespace QuinielasApi.Controllers
         }
 
 
-        [HttpPost("GetBulk")]
-        public async Task<IActionResult> GetBulk(List<TeamInsertDTO> Teams)
+        [HttpPost("GetBulkNFL")]
+        public async Task<IActionResult> GetBulkNFL()
         {
             try
             {
-                if (Teams == null || !Teams.Any())
+                List<GetTeamsDTO>? teamsFromAPI = await APIClientNFL.GetTeams();
+
+                List<Team> bulkType = new List<Team>();
+                List<Team> ourTeams = await _repository.Team.GetAllAsync();
+
+                foreach (var item in teamsFromAPI!)
                 {
-                    _logger.LogError($"The server doesn't receive any object from the client");
-                    return StatusCode(500, "The server doesn't receive any object from the client");
+                    if (ourTeams.Any(t => t.Id == item.Id))
+                    {
+                        continue; 
+                    }
+
+                    if (item.Id.HasValue == false)
+                    {
+                        continue;
+                    }
+                    Team newTeam = new Team
+                    {
+                        Id =  item.Id.Value,
+                        SportId = NFLId,
+                        Name = item.Name,
+                        Abbreviation = string.IsNullOrEmpty(item.Code) ? "" : item.Code,
+                        ImageURL = string.IsNullOrEmpty(item.Logo) ? "" : item.Logo,
+                        City = string.IsNullOrEmpty(item.City) ? "" : item.City
+                    };
+
+
+                    bulkType.Add(newTeam);
                 }
 
-                List<Team> bulkType = _mapper.Map<List<Team>>(Teams);
+                if (bulkType.Any())
+                {
+                    await _repository.Team.BulkInsert(bulkType);
+                }
 
+                List<TeamDTO> teamDTO = _mapper.Map<List<TeamDTO>>(bulkType);
 
-                await _repository.Team.BulkInsert(bulkType);
-                await _repository.SaveAsync();
-
-                return Ok();
+                return Ok(teamDTO);
             }
             catch (Exception ex)
             {
