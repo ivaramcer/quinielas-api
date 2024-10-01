@@ -67,6 +67,15 @@ namespace QuinielasApi.MappingProfile
             CreateMap<Game, GameUpdateDTO>();
             CreateMap<GameUpdateDTO, Game>();
 
+            CreateMap<Team, TeamDTO>();
+            CreateMap<TeamDTO, Team>();
+
+            CreateMap<Team, TeamInsertDTO>();
+            CreateMap<TeamInsertDTO, Team>();
+
+            CreateMap<Team, TeamUpdateDTO>();
+            CreateMap<TeamUpdateDTO, Team>();
+
 
         }
     }
