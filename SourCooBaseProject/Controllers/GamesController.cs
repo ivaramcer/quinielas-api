@@ -6,6 +6,9 @@ using QuinielasApi.IRepository.Configuration;
 using QuinielasApi.JWTConfiguration;
 using QuinielasApi.Models.DTOs;
 using QuinielasApi.Models.Entities;
+using QuinielasApi.Utils.NFL.DTO;
+using QuinielasApi.Utils.NFL;
+using System.Globalization;
 
 namespace QuinielasApi.Controllers
 {
@@ -175,24 +178,148 @@ namespace QuinielasApi.Controllers
         }
 
 
-        [HttpPost("GetBulk")]
-        public async Task<IActionResult> GetBulk(List<GameInsertDTO> Games)
+        [HttpPost("GetBulkNFL")]
+        public async Task<IActionResult> GetBulkNFL()
         {
             try
             {
-                if (Games == null || !Games.Any())
+                List<GetGamesDTO>? teamsFromAPI = await APIClientNFL.GetGames();
+
+                List<Game> bulkGames = new List<Game>();
+                List<Game> ourGames = await _repository.Game.GetAllAsync();
+                foreach (var item in teamsFromAPI!)
                 {
-                    _logger.LogError($"The server doesn't receive any object from the client");
-                    return StatusCode(500, "The server doesn't receive any object from the client");
+                    if (ourGames.Any(t => t.Id == item.Game.Id))
+                    {
+                        continue;
+                    }
+
+                    int awayId = 0;
+                    int homeId = 0;
+
+                    if (item.Teams.Home.Id != 0 )
+                    {
+                        homeId = item.Teams.Home.Id;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+                    if (item.Teams.Away.Id != 0)
+                    {
+                        awayId = item.Teams.Away.Id;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+                    var dateObj = item.Game.Date;
+                    // Combine the date and time strings
+                    string dateTimeString = $"{dateObj.Date} {dateObj.Time}";
+
+                    // Parse into DateTime
+                    DateTime parsedDateTime = DateTime.ParseExact(
+                        dateTimeString,
+                        "yyyy-MM-dd HH:mm",
+                        CultureInfo.InvariantCulture,
+                        DateTimeStyles.AssumeUniversal // Treats it as UTC
+                    );
+
+                    parsedDateTime = DateTime.SpecifyKind(parsedDateTime, DateTimeKind.Utc);
+
+                    // If you need to adjust from UTC to another timezone, use DateTimeOffset
+                    DateTimeOffset dateTimeOffset = DateTimeOffset.ParseExact(
+                        dateTimeString,
+                        "yyyy-MM-dd HH:mm",
+                        CultureInfo.InvariantCulture,
+                        DateTimeStyles.AssumeUniversal
+                    ).ToOffset(TimeSpan.Zero);  // Adjust offset based on timezone if needed
+
+                    int awayScore = 0;
+                    int homeScore = 0;
+
+                    if (item.Scores.Home.Total.HasValue)
+                    {
+                        homeScore = item.Scores.Home.Total.Value;
+                    }
+
+                    if (item.Scores.Away.Total.HasValue)
+                    {
+                        awayScore = item.Scores.Away.Total.Value;
+                    }
+
+                    int? weekNumber = null;
+
+                    if (item.Game.Week.StartsWith("Week "))
+                    {
+                        if (int.TryParse(item.Game.Week.Substring(5), out int result) && result >= 1 && result <= 18)
+                        {
+                            weekNumber = result;
+                        }
+                    }
+
+                    string statusGame = "Pending";
+                    if (item.Game.Status != null)
+                    {
+                        if (item.Game.Status.Long != null)
+                        {
+                            statusGame = item.Game.Status.Long;
+                        }
+                    }
+
+                    string venueGame = "Pending";
+                    if (item.Game.Venue != null)
+                    {
+                        if (item.Game.Venue.Name != null)
+                        {
+                            venueGame = item.Game.Venue.Name;
+                        }
+                    }
+                    //Console.WriteLine($"Parsed DateTime: {parsedDateTime}");
+                    //Console.WriteLine($"Parsed DateTimeOffset (UTC): {dateTimeOffset}");
+                    int? WinnerId = null;
+                    if (item.Scores.Home.Total.HasValue && item.Scores.Away.Total.HasValue)
+                    {
+                        if (item.Scores.Home.Total.Value > item.Scores.Away.Total.Value)
+                        {
+                            WinnerId = item.Teams.Home.Id;
+                        }
+                        else if (item.Scores.Home.Total.Value < item.Scores.Away.Total.Value)
+                        {
+                            WinnerId = item.Teams.Away.Id;
+                        }
+                        // Si son iguales, WinnerId se mantiene como null
+                    }
+                    Game newGame = new Game
+                    {
+                        Id = item.Game.Id,
+                        Schedule = parsedDateTime,  
+                        Venue = venueGame,
+                        Status = statusGame,
+                        WeekString = item.Game.Week,
+                        Week = weekNumber,
+                        HomeTeamId = homeId,  
+                        AwayTeamId = awayId,
+                        HomeScore = homeScore,
+                        AwayScore = awayScore,
+                        WinnerTeamId = WinnerId
+                    };
+
+                    _repository.Game.Create(newGame);
+                    bulkGames.Add(newGame);
                 }
 
-                List<Game> bulkType = _mapper.Map<List<Game>>(Games);
+                
+                if (bulkGames.Any())
+                {
+                    await _repository.SaveAsync();
+                }
 
+                List<GameDTO> teamDTO = _mapper.Map<List<GameDTO>>(bulkGames);
 
-                await _repository.Game.BulkInsert(bulkType);
-                await _repository.SaveAsync();
-
-                return Ok();
+                return Ok(teamDTO);
             }
             catch (Exception ex)
             {

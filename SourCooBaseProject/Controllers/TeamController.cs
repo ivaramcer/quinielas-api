@@ -210,13 +210,13 @@ namespace QuinielasApi.Controllers
                         City = string.IsNullOrEmpty(item.City) ? "" : item.City
                     };
 
-
+                    _repository.Team.Create(newTeam);
                     bulkType.Add(newTeam);
                 }
 
                 if (bulkType.Any())
                 {
-                    await _repository.Team.BulkInsert(bulkType);
+                    await _repository.SaveAsync();
                 }
 
                 List<TeamDTO> teamDTO = _mapper.Map<List<TeamDTO>>(bulkType);
