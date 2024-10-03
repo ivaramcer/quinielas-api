@@ -10,6 +10,7 @@ namespace QuinielasApi.Models.Entities
         public DateTime Schedule { get; set; }
         public string Venue { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
+        public string WeekString { get; set; } = string.Empty;
         public int Week { get; set; }
 
         public int HomeTeamId { get; set; }

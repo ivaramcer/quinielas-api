@@ -1,81 +1,83 @@
-﻿namespace QuinielasApi.Utils.NFL.DTO
+﻿public class GetGamesDTO
 {
-    public class GetGamesDTO
-    {
-        public int Id { get; set; } = default!;
-        public string Stage { get; set; } = default!;
-        public string Week { get; set; } = default!;
-        public GameDate Date { get; set; } = default!;
-        public Venue Venue { get; set; } = default!;
-        public GameStatus Status { get; set; } = default!;
-        public League League { get; set; } = default!;
-        public Teams Teams { get; set; } = default!;
-        public Scores Scores { get; set; } = default!;
-    }
+    public GameDetailDto Game { get; set; }
+    public LeagueDto League { get; set; }
+    public TeamsDto Teams { get; set; }
+    public ScoresDto Scores { get; set; }
+}
 
-    public class GameDate
-    {
-        public string Timezone { get; set; } = default!;
-        public string Date { get; set; } = default!;
-        public string Time { get; set; } = default!;
-        public long Timestamp { get; set; } = default!;
-    }
+public class GameDetailDto
+{
+    public int Id { get; set; }
+    public string Stage { get; set; }
+    public string Week { get; set; }
+    public GameDateDto Date { get; set; }
+    public VenueDto Venue { get; set; }
+    public StatusDto Status { get; set; }
+}
 
-    public class Venue
-    {
-        public string Name { get; set; } = default!;
-        public string City { get; set; } = default!;
-    }
+public class GameDateDto
+{
+    public string Timezone { get; set; }
+    public string Date { get; set; }
+    public string Time { get; set; }
+    public long Timestamp { get; set; }
+}
 
-    public class GameStatus
-    {
-        public string Short { get; set; } = default!;
-        public string Long { get; set; } = default!;
-        public string Timer { get; set; } = default!;
-    }
+public class VenueDto
+{
+    public string Name { get; set; }
+    public string City { get; set; }
+}
 
-    public class League
-    {
-        public int Id { get; set; }
-        public string Name { get; set; } = default!;
-        public string Season { get; set; } = default!;
-        public string Logo { get; set; } = default!;
-        public CountryGamesDTO Country { get; set; } = default!;
-    }
+public class StatusDto
+{
+    public string Short { get; set; }
+    public string Long { get; set; }
+    public string Timer { get; set; } // Nullable, hence string
+}
 
-    public class CountryGamesDTO
-    {
-        public string Name { get; set; } = default!;
-        public string Code { get; set; } = default!;
-        public string Flag { get; set; } = default!;
-    }
+public class LeagueDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public int Season { get; set; }
+    public string Logo { get; set; }
+    public CountryDto Country { get; set; }
+}
 
-    public class Teams
-    {
-        public TeamGamesDTO Home { get; set; } = default!;
-        public TeamGamesDTO Away { get; set; } = default!;
-    }
+public class CountryDto
+{
+    public string Name { get; set; }
+    public string Code { get; set; }
+    public string Flag { get; set; }
+}
 
-    public class TeamGamesDTO
-    {
-        public int Id { get; set; }
-        public string Name { get; set; } = default!;
-        public string Logo { get; set; } = default!;
-    }
+public class TeamsDto
+{
+    public TeamDetailDto Home { get; set; }
+    public TeamDetailDto Away { get; set; }
+}
 
-    public class Scores
-    {
-        public Score Home { get; set; } = default!;
-        public Score Away { get; set; } = default!;
-    }
+public class TeamDetailDto
+{
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Logo { get; set; }
+}
 
-    public class Score
-    {
-        public int? Quarter_1 { get; set; }
-        public int? Quarter_2 { get; set; }
-        public int? Quarter_3 { get; set; }
-        public int? Quarter_4 { get; set; }
-        public int? Overtime { get; set; }
-        public int Total { get; set; }
-    }
+public class ScoresDto
+{
+    public ScoreDetailDto Home { get; set; }
+    public ScoreDetailDto Away { get; set; }
+}
+
+public class ScoreDetailDto
+{
+    public int? Quarter1 { get; set; }
+    public int? Quarter2 { get; set; }
+    public int? Quarter3 { get; set; }
+    public int? Quarter4 { get; set; }
+    public int? Overtime { get; set; }
+    public int? Total { get; set; }
 }

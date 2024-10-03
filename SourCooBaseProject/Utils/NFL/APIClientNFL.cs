@@ -1,5 +1,6 @@
 ﻿using Microsoft.DotNet.MSIdentity.Shared;
 using Newtonsoft.Json;
+using QuinielasApi.Models.Entities;
 using QuinielasApi.Utils.NFL.DTO;
 
 namespace QuinielasApi.Utils.NFL
@@ -112,9 +113,13 @@ namespace QuinielasApi.Utils.NFL
 
                     if (response.IsSuccessStatusCode)
                     {
-                        string responseBody = await response.Content.ReadAsStringAsync();
 
-                         games = JsonConvert.DeserializeObject<List<GetGamesDTO>>(responseBody);
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        ApiResponse<GetGamesDTO> apiResponse = JsonConvert.DeserializeObject<ApiResponse<GetGamesDTO>>(responseBody);
+
+                        games = apiResponse.Response;
+
+
 
                     }
                     else
@@ -152,7 +157,6 @@ namespace QuinielasApi.Utils.NFL
                     if (response.IsSuccessStatusCode)
                     {
                         string responseBody = await response.Content.ReadAsStringAsync();
-                        // Deserialize into ApiResponse<GetTeamsDTO>
                         ApiResponse<GetTeamsDTO> apiResponse = JsonConvert.DeserializeObject<ApiResponse<GetTeamsDTO>>(responseBody);
 
                         teams = apiResponse.Response;

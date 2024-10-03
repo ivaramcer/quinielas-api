@@ -22,7 +22,10 @@ namespace QuinielasApi.Repository.Configuration
 
         public async Task BulkInsertAsync(List<T> entities)
         {
-            await RepositoryContext.BulkInsertAsync(entities);
+            await RepositoryContext.BulkInsertAsync(entities, options =>
+            {
+                options.SetOutputIdentity = true;
+            });
         }
     }
 }
