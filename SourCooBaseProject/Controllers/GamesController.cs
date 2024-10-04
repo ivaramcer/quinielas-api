@@ -72,6 +72,33 @@ namespace QuinielasApi.Controllers
             }
         }
 
+
+        [HttpGet("GetFullNextGames/{pagination}")]
+        public async Task<IActionResult> GetFullNextGames(int pagination)
+        {
+            try
+            {
+                int pageSize = 10;
+                var games = await _repository.Game.GetAllAsync();
+                DateTime time = DateTime.Now;
+
+                // Filter the games for today's date and take the first 5
+                var filteredGames = games
+                    .Where(g => g.Schedule.Day >= time.Day && g.Schedule.Month == time.Month && g.Schedule.Year == time.Year)
+                    .Skip(pageSize * (pagination - 1 ))
+                    .Take(pageSize)
+                    .ToList();
+
+                var gameDTOs = _mapper.Map<IEnumerable<GameDTO>>(filteredGames);
+                return Ok(gameDTOs);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside GetAllGame action: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetGameById(int id)
         {
