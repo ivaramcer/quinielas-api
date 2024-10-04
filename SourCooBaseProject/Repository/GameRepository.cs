@@ -17,6 +17,9 @@ namespace QuinielasApi.IRepository
         public async Task<List<Game>> GetAllAsync()
         {
             return await FindAll()
+                .Include(g => g.WinnerTeam)
+                .Include(g => g.HomeTeam)
+                .Include(g => g.AwayTeam)
                 .ToListAsync();
         }
 
