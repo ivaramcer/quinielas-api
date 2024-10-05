@@ -15,14 +15,14 @@ namespace QuinielasApi.Controllers
     [Route("api/[controller]")]
     [AllowAnonymous]
     [ApiController]
-    public class GameController : ControllerBase
+    public class NFLGameController : ControllerBase
     {
         private readonly JWTUtils _jwtUtils;
         private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
-        private readonly ILogger<GameController> _logger;
+        private readonly ILogger<NFLGameController> _logger;
 
-        public GameController(IRepositoryWrapper repository, JWTUtils jwtUtils, IMapper mapper, ILogger<GameController> logger)
+        public NFLGameController(IRepositoryWrapper repository, JWTUtils jwtUtils, IMapper mapper, ILogger<NFLGameController> logger)
         {
             _jwtUtils = jwtUtils;
             _repository = repository;
@@ -33,197 +33,197 @@ namespace QuinielasApi.Controllers
 
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllGame()
+        public async Task<IActionResult> GetAllNFLGame()
         {
             try
             {
-                var Games = await _repository.Game.GetAllAsync();
-                var GameDTOs = _mapper.Map<IEnumerable<GameDTO>>(Games);
-                return Ok(GameDTOs);
+                var NFLGames = await _repository.NFLGame.GetAllAsync();
+                var NFLGameDTOs = _mapper.Map<IEnumerable<NFLGameDTO>>(NFLGames);
+                return Ok(NFLGameDTOs);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong inside GetAllGame action: {ex.Message}");
+                _logger.LogError($"Something went wrong inside GetAllNFLGame action: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
 
-        [HttpGet("GetNextGames")]
-        public async Task<IActionResult> GetNextGames()
+        [HttpGet("GetNextNFLGames")]
+        public async Task<IActionResult> GetNextNFLGames()
         {
             try
             {
-                var games = await _repository.Game.GetAllAsync();
+                var NFLGames = await _repository.NFLGame.GetAllAsync();
                 DateTime time = DateTime.Now;
 
-                // Filter the games for today's date and take the first 5
-                var filteredGames = games
+                // Filter the NFLGames for today's date and take the first 5
+                var filteredNFLGames = NFLGames
                     .Where(g => g.Schedule.Day >= time.Day && g.Schedule.Month == time.Month && g.Schedule.Year == time.Year)
                     .Take(5)
                     .ToList();
 
-                var gameDTOs = _mapper.Map<IEnumerable<GameDTO>>(filteredGames);
-                return Ok(gameDTOs);
+                var NFLGameDTOs = _mapper.Map<IEnumerable<NFLGameDTO>>(filteredNFLGames);
+                return Ok(NFLGameDTOs);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong inside GetAllGame action: {ex.Message}");
+                _logger.LogError($"Something went wrong inside GetAllNFLGame action: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
 
 
-        [HttpGet("GetFullNextGames/{pagination}")]
-        public async Task<IActionResult> GetFullNextGames(int pagination)
+        [HttpGet("GetFullNextNFLGames/{pagination}")]
+        public async Task<IActionResult> GetFullNextNFLGames(int pagination)
         {
             try
             {
                 int pageSize = 10;
-                var games = await _repository.Game.GetAllAsync();
+                var NFLGames = await _repository.NFLGame.GetAllAsync();
                 DateTime time = DateTime.Now;
 
-                // Filter the games for today's date and take the first 5
-                var filteredGames = games
+                // Filter the NFLGames for today's date and take the first 5
+                var filteredNFLGames = NFLGames
                     .Where(g => g.Schedule.Day >= time.Day && g.Schedule.Month == time.Month && g.Schedule.Year == time.Year)
                     .Skip(pageSize * (pagination - 1 ))
                     .Take(pageSize)
                     .ToList();
 
-                var gameDTOs = _mapper.Map<IEnumerable<GameDTO>>(filteredGames);
-                return Ok(gameDTOs);
+                var NFLGameDTOs = _mapper.Map<IEnumerable<NFLGameDTO>>(filteredNFLGames);
+                return Ok(NFLGameDTOs);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong inside GetAllGame action: {ex.Message}");
+                _logger.LogError($"Something went wrong inside GetAllNFLGame action: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
 
         [HttpGet("GetById/{id}")]
-        public async Task<IActionResult> GetGameById(int id)
+        public async Task<IActionResult> GetNFLGameById(int id)
         {
             try
             {
-                var Game = await _repository.Game.GetByIdAsync(id);
-                if (Game == null)
+                var NFLGame = await _repository.NFLGame.GetByIdAsync(id);
+                if (NFLGame == null)
                 {
-                    _logger.LogError($"Game with id: {id} hasn't been found in db.");
-                    return NotFound($"No Game with the id: {id}");
+                    _logger.LogError($"NFLGame with id: {id} hasn't been found in db.");
+                    return NotFound($"No NFLGame with the id: {id}");
                 }
 
-                var GameDTO = _mapper.Map<GameDTO>(Game);
-                return Ok(GameDTO);
+                var NFLGameDTO = _mapper.Map<NFLGameDTO>(NFLGame);
+                return Ok(NFLGameDTO);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong inside GetGameById action: {ex.Message}");
+                _logger.LogError($"Something went wrong inside GetNFLGameById action: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> CreateGame([FromBody] GameInsertDTO GameDTO)
+        public async Task<IActionResult> CreateNFLGame([FromBody] NFLGameInsertDTO NFLGameDTO)
         {
             try
             {
-                if (GameDTO == null)
+                if (NFLGameDTO == null)
                 {
-                    _logger.LogError("Game object sent from client is null.");
-                    return BadRequest("Game object is null");
+                    _logger.LogError("NFLGame object sent from client is null.");
+                    return BadRequest("NFLGame object is null");
                 }
 
-                var GameEntity = _mapper.Map<Game>(GameDTO);
-                _repository.Game.Create(GameEntity);
+                var NFLGameEntity = _mapper.Map<NFLGame>(NFLGameDTO);
+                _repository.NFLGame.Create(NFLGameEntity);
                 await _repository.SaveAsync();
 
-                var createdGame = _mapper.Map<GameDTO>(GameEntity);
+                var createdNFLGame = _mapper.Map<NFLGameDTO>(NFLGameEntity);
 
-                return CreatedAtRoute("GetGameById", new { id = GameEntity.Id }, createdGame);
+                return CreatedAtRoute("GetNFLGameById", new { id = NFLGameEntity.Id }, createdNFLGame);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong inside CreateGame action: {ex.Message}");
+                _logger.LogError($"Something went wrong inside CreateNFLGame action: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
 
         [HttpPost("CreateBulk")]
-        public async Task<IActionResult> CreateBulkGame(List<GameInsertDTO> Games)
+        public async Task<IActionResult> CreateBulkNFLGame(List<NFLGameInsertDTO> NFLGames)
         {
             try
             {
-                if (Games == null || !Games.Any())
+                if (NFLGames == null || !NFLGames.Any())
                 {
                     _logger.LogError($"The server doesn't receive any object from the client");
                     return StatusCode(500, "The server doesn't receive any object from the client");
                 }
 
-                List<Game> bulkType = _mapper.Map<List<Game>>(Games);
+                List<NFLGame> bulkType = _mapper.Map<List<NFLGame>>(NFLGames);
 
 
-                await _repository.Game.BulkInsert(bulkType);
+                await _repository.NFLGame.BulkInsert(bulkType);
                 await _repository.SaveAsync();
 
                 return Ok();
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong inside CreateBulkGame action: {ex.Message}");
+                _logger.LogError($"Something went wrong inside CreateBulkNFLGame action: {ex.Message}");
                 return StatusCode(500, "Internal server error ");
             }
         }
 
         [HttpPut("Update/{id}")]
-        public async Task<IActionResult> UpdateGame(int id, [FromBody] GameDTO GameDTO)
+        public async Task<IActionResult> UpdateNFLGame(int id, [FromBody] NFLGameDTO NFLGameDTO)
         {
             try
             {
-                if (GameDTO == null)
+                if (NFLGameDTO == null)
                 {
-                    _logger.LogError("Game object is null or mismatching ids.");
+                    _logger.LogError("NFLGame object is null or mismatching ids.");
                     return BadRequest("Invalid model object or mismatching ids");
                 }
 
-                var GameEntity = await _repository.Game.GetByIdAsync(id);
-                if (GameEntity == null)
+                var NFLGameEntity = await _repository.NFLGame.GetByIdAsync(id);
+                if (NFLGameEntity == null)
                 {
-                    _logger.LogError($"Game with id: {id} hasn't been found in db.");
-                    return NotFound($"No Game with the id: {id}");
+                    _logger.LogError($"NFLGame with id: {id} hasn't been found in db.");
+                    return NotFound($"No NFLGame with the id: {id}");
                 }
 
-                _mapper.Map(GameDTO, GameEntity);
-                _repository.Game.Update(GameEntity);
+                _mapper.Map(NFLGameDTO, NFLGameEntity);
+                _repository.NFLGame.Update(NFLGameEntity);
                 await _repository.SaveAsync();
 
                 return NoContent();
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong inside UpdateGame action: {ex.Message}");
+                _logger.LogError($"Something went wrong inside UpdateNFLGame action: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
 
         [HttpDelete("Delete/{id}")]
-        public async Task<IActionResult> DeleteGame(int id)
+        public async Task<IActionResult> DeleteNFLGame(int id)
         {
             try
             {
-                var Game = await _repository.Game.GetByIdAsync(id);
-                if (Game == null)
+                var NFLGame = await _repository.NFLGame.GetByIdAsync(id);
+                if (NFLGame == null)
                 {
-                    _logger.LogError($"Game with id: {id} hasn't been found in db.");
-                    return NotFound($"No Game with the id: {id}");
+                    _logger.LogError($"NFLGame with id: {id} hasn't been found in db.");
+                    return NotFound($"No NFLGame with the id: {id}");
                 }
 
-                _repository.Game.Delete(Game);
+                _repository.NFLGame.Delete(NFLGame);
                 await _repository.SaveAsync();
 
                 return NoContent();
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong inside DeleteGame action: {ex.Message}");
+                _logger.LogError($"Something went wrong inside DeleteNFLGame action: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -236,11 +236,11 @@ namespace QuinielasApi.Controllers
             {
                 List<GetGamesDTO>? teamsFromAPI = await APIClientNFL.GetGames();
 
-                List<Game> bulkGames = new List<Game>();
-                List<Game> ourGames = await _repository.Game.GetAllAsync();
+                List<NFLGame> bulkNFLGames = new List<NFLGame>();
+                List<NFLGame> ourNFLGames = await _repository.NFLGame.GetAllAsync();
                 foreach (var item in teamsFromAPI!)
                 {
-                    if (ourGames.Any(t => t.Id == item.Game.Id))
+                    if (ourNFLGames.Any(t => t.Id == item.Game.Id))
                     {
                         continue;
                     }
@@ -311,21 +311,21 @@ namespace QuinielasApi.Controllers
                         }
                     }
 
-                    string statusGame = "Pending";
+                    string statusNFLGame = "Pending";
                     if (item.Game.Status != null)
                     {
                         if (item.Game.Status.Long != null)
                         {
-                            statusGame = item.Game.Status.Long;
+                            statusNFLGame = item.Game.Status.Long;
                         }
                     }
 
-                    string venueGame = "Pending";
+                    string venueNFLGame = "Pending";
                     if (item.Game.Venue != null)
                     {
                         if (item.Game.Venue.Name != null)
                         {
-                            venueGame = item.Game.Venue.Name;
+                            venueNFLGame = item.Game.Venue.Name;
                         }
                     }
                     //Console.WriteLine($"Parsed DateTime: {parsedDateTime}");
@@ -343,12 +343,12 @@ namespace QuinielasApi.Controllers
                         }
                         // Si son iguales, WinnerId se mantiene como null
                     }
-                    Game newGame = new Game
+                    NFLGame newNFLGame = new NFLGame
                     {
                         Id = item.Game.Id,
                         Schedule = parsedDateTime,  
-                        Venue = venueGame,
-                        Status = statusGame,
+                        Venue = venueNFLGame,
+                        Status = statusNFLGame,
                         WeekString = item.Game.Week,
                         Week = weekNumber,
                         HomeTeamId = homeId,  
@@ -358,23 +358,23 @@ namespace QuinielasApi.Controllers
                         WinnerTeamId = WinnerId
                     };
 
-                    _repository.Game.Create(newGame);
-                    bulkGames.Add(newGame);
+                    _repository.NFLGame.Create(newNFLGame);
+                    bulkNFLGames.Add(newNFLGame);
                 }
 
                 
-                if (bulkGames.Any())
+                if (bulkNFLGames.Any())
                 {
                     await _repository.SaveAsync();
                 }
 
-                List<GameDTO> teamDTO = _mapper.Map<List<GameDTO>>(bulkGames);
+                List<NFLGameDTO> teamDTO = _mapper.Map<List<NFLGameDTO>>(bulkNFLGames);
 
                 return Ok(teamDTO);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong inside CreateBulkGame action: {ex.Message}");
+                _logger.LogError($"Something went wrong inside CreateBulkNFLGame action: {ex.Message}");
                 return StatusCode(500, "Internal server error ");
             }
         }

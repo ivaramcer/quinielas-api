@@ -2,7 +2,7 @@
 
 namespace QuinielasApi.Models.Entities
 {
-    public class TeamInsertDTO
+    public class NFLTeamUpdateDTO
     {
         [Required]
         public string Name { get; set; } = string.Empty;
@@ -12,7 +12,5 @@ namespace QuinielasApi.Models.Entities
         public string City { get; set; } = string.Empty;
         [Required]
         public string ImageURL { get; set; } = string.Empty;
-        public int SportId { get; set; }
-
     }
 }

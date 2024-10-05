@@ -7,8 +7,8 @@ using QuinielaPickDurationsApi.IRepository;
 using QuinielaTypesApi.IRepository;
 using StatusApi.IRepository;
 using SoccerLeaguesApi.IRepository;
-using GamesApi.IRepository;
-using TeamsApi.IRepository;
+using NFLGamesApi.IRepository;
+using NFLTeamsApi.IRepository;
 
 namespace QuinielasApi.Repository.Configuration
 {
@@ -25,32 +25,32 @@ namespace QuinielasApi.Repository.Configuration
         private IQuinielaTypeRepository _quinielaType = default!;
         private IStatusRepository _status = default!;
         private ISoccerLeagueRepository _soccerLeague = default!;
-        private IGameRepository _game = default!;
-        private ITeamRepository _team = default!;
+        private INFLGameRepository _NFLGame = default!;
+        private INFLTeamRepository _NFLTeam = default!;
 
-        public ITeamRepository Team
+        public INFLTeamRepository NFLTeam
         {
             get
             {
-                if (_team == null)
+                if (_NFLTeam == null)
                 {
-                    _team = new TeamRepository(_dbContext);
+                    _NFLTeam = new NFLTeamRepository(_dbContext);
                 }
 
-                return _team;
+                return _NFLTeam;
             }
         }
 
-        public IGameRepository Game
+        public INFLGameRepository NFLGame
         {
             get
             {
-                if (_game == null)
+                if (_NFLGame == null)
                 {
-                    _game = new GameRepository(_dbContext);
+                    _NFLGame = new NFLGameRepository(_dbContext);
                 }
 
-                return _game;
+                return _NFLGame;
             }
         }
 

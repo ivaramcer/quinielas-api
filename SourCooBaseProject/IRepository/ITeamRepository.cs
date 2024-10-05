@@ -1,14 +1,14 @@
 ﻿using QuinielasApi.Models.Entities;
 
-namespace TeamsApi.IRepository
+namespace NFLTeamsApi.IRepository
 {
-    public interface ITeamRepository
+    public interface INFLTeamRepository
     {
-        Task<List<Team>> GetAllAsync();
-        Task<Team?> GetByIdAsync(int id);
-        Task BulkInsert(List<Team> entities);
-        void Create(Team entity);
-        void Update(Team entity);
-        void Delete(Team entity);
+        Task<List<NFLTeam>> GetAllAsync();
+        Task<NFLTeam?> GetByIdAsync(int id);
+        Task BulkInsert(List<NFLTeam> entities);
+        void Create(NFLTeam entity);
+        void Update(NFLTeam entity);
+        void Delete(NFLTeam entity);
     }
 }

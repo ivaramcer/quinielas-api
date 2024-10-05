@@ -1,75 +1,75 @@
 ﻿public class GetGamesDTO
 {
-    public GameDetailDto Game { get; set; }
-    public LeagueDto League { get; set; }
-    public TeamsDto Teams { get; set; }
-    public ScoresDto Scores { get; set; }
+    public GameDetailDto Game { get; set; } = default!;
+    public LeagueDto League { get; set; } = default!;
+    public TeamsDto Teams { get; set; } = default!;
+    public ScoresDto Scores { get; set; } = default!;
 }
 
 public class GameDetailDto
 {
     public int Id { get; set; }
-    public string Stage { get; set; }
-    public string Week { get; set; }
-    public GameDateDto Date { get; set; }
-    public VenueDto Venue { get; set; }
-    public StatusDto Status { get; set; }
+    public string Stage { get; set; } = default!;
+    public string Week { get; set; } = default!;
+    public GameDateDto Date { get; set; } = default!;
+    public VenueDto Venue { get; set; } = default!;
+    public StatusDto Status { get; set; } = default!;
 }
 
 public class GameDateDto
 {
-    public string Timezone { get; set; }
-    public string Date { get; set; }
-    public string Time { get; set; }
+    public string Timezone { get; set; } = default!;
+    public string Date { get; set; } = default!;
+    public string Time { get; set; } = default!;
     public long Timestamp { get; set; }
 }
 
 public class VenueDto
 {
-    public string Name { get; set; }
-    public string City { get; set; }
+    public string Name { get; set; } = default!;
+    public string City { get; set; } = default!;
 }
 
 public class StatusDto
 {
-    public string Short { get; set; }
-    public string Long { get; set; }
-    public string Timer { get; set; } // Nullable, hence string
+    public string Short { get; set; } = default!;
+    public string Long { get; set; } = default!;
+    public string Timer { get; set; } = default!; // Nullable, hence string
 }
 
 public class LeagueDto
 {
     public int Id { get; set; }
-    public string Name { get; set; }
+    public string Name { get; set; } = default!;
     public int Season { get; set; }
-    public string Logo { get; set; }
-    public CountryDto Country { get; set; }
+    public string Logo { get; set; } = default!;
+    public CountryDto Country { get; set; } = default!;
 }
 
 public class CountryDto
 {
-    public string Name { get; set; }
-    public string Code { get; set; }
-    public string Flag { get; set; }
+    public string Name { get; set; } = default!;
+    public string Code { get; set; } = default!;
+    public string Flag { get; set; } = default!;
 }
 
 public class TeamsDto
 {
-    public TeamDetailDto Home { get; set; }
-    public TeamDetailDto Away { get; set; }
+    public TeamDetailDto Home { get; set; } = default!;
+    public TeamDetailDto Away { get; set; } = default!;
 }
 
 public class TeamDetailDto
 {
     public int Id { get; set; }
-    public string Name { get; set; }
-    public string Logo { get; set; }
+    public string Name { get; set; } = default!;
+    public string Logo { get; set; } = default!;
 }
 
 public class ScoresDto
 {
-    public ScoreDetailDto Home { get; set; }
-    public ScoreDetailDto Away { get; set; }
+    public ScoreDetailDto Home { get; set; } = default!;
+    public ScoreDetailDto Away { get; set; } = default!;
 }
 
 public class ScoreDetailDto

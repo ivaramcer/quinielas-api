@@ -4,43 +4,43 @@ using QuinielasApi.IRepository;
 using QuinielasApi.Repository.Configuration;
 using System;
 using QuinielasApi.DBContext;
-using TeamsApi.IRepository;
+using NFLTeamsApi.IRepository;
 
 
 namespace QuinielasApi.IRepository
 {
-    public class TeamRepository : RepositoryBase<Team>, ITeamRepository
+    public class NFLTeamRepository : RepositoryBase<NFLTeam>, INFLTeamRepository
     {
-        public TeamRepository(DatabaseContext dbContext) : base(dbContext)
+        public NFLTeamRepository(DatabaseContext dbContext) : base(dbContext)
         {
         }
-        public async Task<List<Team>> GetAllAsync()
+        public async Task<List<NFLTeam>> GetAllAsync()
         {
             return await FindAll()
                 .OrderBy(p => p.Name)
                 .ToListAsync();
         }
 
-        public async Task<Team?> GetByIdAsync(int id)
+        public async Task<NFLTeam?> GetByIdAsync(int id)
         {
             return await FindAll()
                 .FirstOrDefaultAsync(q => q.Id == id);
         }
 
-        public async Task BulkInsert(List<Team> entities)
+        public async Task BulkInsert(List<NFLTeam> entities)
         {
             await BulkInsertAsync(entities);
         }
 
-        public new void Create(Team entity)
+        public new void Create(NFLTeam entity)
         {
             base.Create(entity);
         }
-        public new void Update(Team entity)
+        public new void Update(NFLTeam entity)
         {
             base.Update(entity);
         }
-        public new void Delete(Team entity)
+        public new void Delete(NFLTeam entity)
         {
             base.Delete(entity);
         }

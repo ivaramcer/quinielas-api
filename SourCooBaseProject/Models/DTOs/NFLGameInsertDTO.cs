@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace QuinielasApi.Models.Entities
 {
-    public class GameInsertDTO
+    public class NFLGameInsertDTO
     {
         [Key]
         public int Id { get; set; }
@@ -12,16 +12,16 @@ namespace QuinielasApi.Models.Entities
         public string Status { get; set; } = string.Empty;
         public int Week { get; set; }
 
-        public int HomeTeamId { get; set; }
-        public Team HomeTeam { get; set; } = default!;
+        public int HomeNFLTeamId { get; set; }
+        public NFLTeam HomeNFLTeam { get; set; } = default!;
         public int HomeScore { get; set; }
 
-        public int AwayTeamId { get; set; }
-        public Team AwayTeam { get; set; } = default!;
+        public int AwayNFLTeamId { get; set; }
+        public NFLTeam AwayNFLTeam { get; set; } = default!;
         public int AwayScore { get; set; }
 
 
-        public int? WinnerTeamId { get; set; }
-        public Team WinnerTeam { get; set; } = default!;
+        public int? WinnerNFLTeamId { get; set; }
+        public NFLTeam WinnerNFLTeam { get; set; } = default!;
     }
 }

@@ -42,29 +42,57 @@ namespace QuinielasApi.DBContext
                 .WithMany(p => p.UserPermissions)
                 .HasForeignKey(up => up.PermissionId);
 
-            modelBuilder.Entity<Team>()
+            //NFL RELATIONS
+            modelBuilder.Entity<NFLTeam>()
                        .HasMany(t => t.HomeGames)
                        .WithOne(g => g.HomeTeam)
                        .HasForeignKey(g => g.HomeTeamId)
                        .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Team>()
+            modelBuilder.Entity<NFLTeam>()
                 .HasMany(t => t.AwayGames)
                 .WithOne(g => g.AwayTeam)
                 .HasForeignKey(g => g.AwayTeamId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Team>()
+            modelBuilder.Entity<NFLTeam>()
                 .HasMany(t => t.WinnerGames)
                 .WithOne(g => g.WinnerTeam)
                 .HasForeignKey(g => g.WinnerTeamId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Game>()
+            modelBuilder.Entity<NFLGame>()
                 .HasOne(g => g.WinnerTeam)
                 .WithMany()
                 .HasForeignKey(g => g.WinnerTeamId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            //SOCCER RELATIONS
+
+            modelBuilder.Entity<SoccerTeam>()
+                       .HasMany(t => t.HomeGames)
+                       .WithOne(g => g.HomeTeam)
+                       .HasForeignKey(g => g.HomeTeamId)
+                       .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<SoccerTeam>()
+                .HasMany(t => t.AwayGames)
+                .WithOne(g => g.AwayTeam)
+                .HasForeignKey(g => g.AwayTeamId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<SoccerTeam>()
+                .HasMany(t => t.WinnerGames)
+                .WithOne(g => g.WinnerTeam)
+                .HasForeignKey(g => g.WinnerTeamId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<SoccerGame>()
+                .HasOne(g => g.WinnerTeam)
+                .WithMany()
+                .HasForeignKey(g => g.WinnerTeamId)
+                .OnDelete(DeleteBehavior.SetNull);
+
         }
 
         public DbSet<Person> Persons { get; set; } = default!;
@@ -82,11 +110,17 @@ namespace QuinielasApi.DBContext
         public DbSet<Quiniela> Quinielas { get; set; } = default!;
         public DbSet<QuinielaType> QuinielaTypes { get; set; } = default!;
         public DbSet<QuinielaTypeConfiguration> QuinielaTypeConfigurations { get; set; } = default!;
-        public DbSet<Models.Entities.Team> SportTeams { get; set; } = default!;
         public DbSet<Status> Status { get; set; } = default!;
+
+
+        public DbSet<NFLLeague> NFLLeagues { get; set; } = default!;
+        public DbSet<NFLTeam> NFLTeams { get; set; }
+        public DbSet<NFLGame> NFLGames { get; set; }
+
+
         public DbSet<SoccerLeague> SoccerLeagues { get; set; } = default!;
-        public DbSet<Team> Teams { get; set; }
-        public DbSet<Game> Games { get; set; }
+        public DbSet<SoccerTeam> SoccerTeams { get; set; }
+        public DbSet<SoccerGame> SoccerGames { get; set; }
 
     }
 }

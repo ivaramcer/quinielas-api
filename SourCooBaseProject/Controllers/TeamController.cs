@@ -14,16 +14,16 @@ namespace QuinielasApi.Controllers
     [Route("api/[controller]")]
     [AllowAnonymous]
     [ApiController]
-    public class TeamController : ControllerBase
+    public class NFLTeamController : ControllerBase
     {
         private const int NFLId = 2;
         private const int SoccerId = 1;
         private readonly JWTUtils _jwtUtils;
         private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
-        private readonly ILogger<TeamController> _logger;
+        private readonly ILogger<NFLTeamController> _logger;
 
-        public TeamController(IRepositoryWrapper repository, JWTUtils jwtUtils, IMapper mapper, ILogger<TeamController> logger)
+        public NFLTeamController(IRepositoryWrapper repository, JWTUtils jwtUtils, IMapper mapper, ILogger<NFLTeamController> logger)
         {
             _jwtUtils = jwtUtils;
             _repository = repository;
@@ -34,146 +34,146 @@ namespace QuinielasApi.Controllers
 
 
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllTeam()
+        public async Task<IActionResult> GetAllNFLTeam()
         {
             try
             {
-                var Teams = await _repository.Team.GetAllAsync();
-                var TeamDTOs = _mapper.Map<IEnumerable<TeamDTO>>(Teams);
-                return Ok(TeamDTOs);
+                var NFLTeams = await _repository.NFLTeam.GetAllAsync();
+                var NFLTeamDTOs = _mapper.Map<IEnumerable<NFLTeamDTO>>(NFLTeams);
+                return Ok(NFLTeamDTOs);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong inside GetAllTeam action: {ex.Message}");
+                _logger.LogError($"Something went wrong inside GetAllNFLTeam action: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
 
         [HttpGet("GetById/{id}")]
-        public async Task<IActionResult> GetTeamById(int id)
+        public async Task<IActionResult> GetNFLTeamById(int id)
         {
             try
             {
-                var Team = await _repository.Team.GetByIdAsync(id);
-                if (Team == null)
+                var NFLTeam = await _repository.NFLTeam.GetByIdAsync(id);
+                if (NFLTeam == null)
                 {
-                    _logger.LogError($"Team with id: {id} hasn't been found in db.");
-                    return NotFound($"No Team with the id: {id}");
+                    _logger.LogError($"NFLTeam with id: {id} hasn't been found in db.");
+                    return NotFound($"No NFLTeam with the id: {id}");
                 }
 
-                var TeamDTO = _mapper.Map<TeamDTO>(Team);
-                return Ok(TeamDTO);
+                var NFLTeamDTO = _mapper.Map<NFLTeamDTO>(NFLTeam);
+                return Ok(NFLTeamDTO);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong inside GetTeamById action: {ex.Message}");
+                _logger.LogError($"Something went wrong inside GetNFLTeamById action: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
 
         [HttpPost("Create")]
-        public async Task<IActionResult> CreateTeam([FromBody] TeamInsertDTO TeamDTO)
+        public async Task<IActionResult> CreateNFLTeam([FromBody] NFLTeamInsertDTO NFLTeamDTO)
         {
             try
             {
-                if (TeamDTO == null)
+                if (NFLTeamDTO == null)
                 {
-                    _logger.LogError("Team object sent from client is null.");
-                    return BadRequest("Team object is null");
+                    _logger.LogError("NFLTeam object sent from client is null.");
+                    return BadRequest("NFLTeam object is null");
                 }
 
-                var TeamEntity = _mapper.Map<Team>(TeamDTO);
-                _repository.Team.Create(TeamEntity);
+                var NFLTeamEntity = _mapper.Map<NFLTeam>(NFLTeamDTO);
+                _repository.NFLTeam.Create(NFLTeamEntity);
                 await _repository.SaveAsync();
 
-                var createdTeam = _mapper.Map<TeamDTO>(TeamEntity);
+                var createdNFLTeam = _mapper.Map<NFLTeamDTO>(NFLTeamEntity);
 
-                return CreatedAtRoute("GetTeamById", new { id = TeamEntity.Id }, createdTeam);
+                return CreatedAtRoute("GetNFLTeamById", new { id = NFLTeamEntity.Id }, createdNFLTeam);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong inside CreateTeam action: {ex.Message}");
+                _logger.LogError($"Something went wrong inside CreateNFLTeam action: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
 
         [HttpPost("CreateBulk")]
-        public async Task<IActionResult> CreateBulkTeam(List<TeamInsertDTO> Teams)
+        public async Task<IActionResult> CreateBulkNFLTeam(List<NFLTeamInsertDTO> NFLTeams)
         {
             try
             {
-                if (Teams == null || !Teams.Any())
+                if (NFLTeams == null || !NFLTeams.Any())
                 {
                     _logger.LogError($"The server doesn't receive any object from the client");
                     return StatusCode(500, "The server doesn't receive any object from the client");
                 }
 
-                List<Team> bulkType = _mapper.Map<List<Team>>(Teams);
+                List<NFLTeam> bulkType = _mapper.Map<List<NFLTeam>>(NFLTeams);
 
 
-                await _repository.Team.BulkInsert(bulkType);
+                await _repository.NFLTeam.BulkInsert(bulkType);
                 await _repository.SaveAsync();
 
                 return Ok();
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong inside CreateBulkTeam action: {ex.Message}");
+                _logger.LogError($"Something went wrong inside CreateBulkNFLTeam action: {ex.Message}");
                 return StatusCode(500, "Internal server error ");
             }
         }
 
         [HttpPut("Update/{id}")]
-        public async Task<IActionResult> UpdateTeam(int id, [FromBody] TeamDTO TeamDTO)
+        public async Task<IActionResult> UpdateNFLTeam(int id, [FromBody] NFLTeamDTO NFLTeamDTO)
         {
             try
             {
-                if (TeamDTO == null)
+                if (NFLTeamDTO == null)
                 {
-                    _logger.LogError("Team object is null or mismatching ids.");
+                    _logger.LogError("NFLTeam object is null or mismatching ids.");
                     return BadRequest("Invalid model object or mismatching ids");
                 }
 
-                var TeamEntity = await _repository.Team.GetByIdAsync(id);
-                if (TeamEntity == null)
+                var NFLTeamEntity = await _repository.NFLTeam.GetByIdAsync(id);
+                if (NFLTeamEntity == null)
                 {
-                    _logger.LogError($"Team with id: {id} hasn't been found in db.");
-                    return NotFound($"No Team with the id: {id}");
+                    _logger.LogError($"NFLTeam with id: {id} hasn't been found in db.");
+                    return NotFound($"No NFLTeam with the id: {id}");
                 }
 
-                _mapper.Map(TeamDTO, TeamEntity);
-                _repository.Team.Update(TeamEntity);
+                _mapper.Map(NFLTeamDTO, NFLTeamEntity);
+                _repository.NFLTeam.Update(NFLTeamEntity);
                 await _repository.SaveAsync();
 
                 return NoContent();
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong inside UpdateTeam action: {ex.Message}");
+                _logger.LogError($"Something went wrong inside UpdateNFLTeam action: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
 
         [HttpDelete("Delete/{id}")]
-        public async Task<IActionResult> DeleteTeam(int id)
+        public async Task<IActionResult> DeleteNFLTeam(int id)
         {
             try
             {
-                var Team = await _repository.Team.GetByIdAsync(id);
-                if (Team == null)
+                var NFLTeam = await _repository.NFLTeam.GetByIdAsync(id);
+                if (NFLTeam == null)
                 {
-                    _logger.LogError($"Team with id: {id} hasn't been found in db.");
-                    return NotFound($"No Team with the id: {id}");
+                    _logger.LogError($"NFLTeam with id: {id} hasn't been found in db.");
+                    return NotFound($"No NFLTeam with the id: {id}");
                 }
 
-                _repository.Team.Delete(Team);
+                _repository.NFLTeam.Delete(NFLTeam);
                 await _repository.SaveAsync();
 
                 return NoContent();
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong inside DeleteTeam action: {ex.Message}");
+                _logger.LogError($"Something went wrong inside DeleteNFLTeam action: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
         }
@@ -184,14 +184,14 @@ namespace QuinielasApi.Controllers
         {
             try
             {
-                List<GetTeamsDTO>? teamsFromAPI = await APIClientNFL.GetTeams();
+                List<GetTeamsDTO>? NFLTeamsFromAPI = await APIClientNFL.GetTeams();
 
-                List<Team> bulkType = new List<Team>();
-                List<Team> ourTeams = await _repository.Team.GetAllAsync();
+                List<NFLTeam> bulkType = new List<NFLTeam>();
+                List<NFLTeam> ourNFLTeams = await _repository.NFLTeam.GetAllAsync();
 
-                foreach (var item in teamsFromAPI!)
+                foreach (var item in NFLTeamsFromAPI!)
                 {
-                    if (ourTeams.Any(t => t.Id == item.Id))
+                    if (ourNFLTeams.Any(t => t.Id == item.Id))
                     {
                         continue; 
                     }
@@ -200,18 +200,17 @@ namespace QuinielasApi.Controllers
                     {
                         continue;
                     }
-                    Team newTeam = new Team
+                    NFLTeam newNFLTeam = new NFLTeam
                     {
                         Id =  item.Id.Value,
-                        SportId = NFLId,
-                        Name = item.Name,
+                        Name = item.Name!,
                         Abbreviation = string.IsNullOrEmpty(item.Code) ? "" : item.Code,
                         ImageURL = string.IsNullOrEmpty(item.Logo) ? "" : item.Logo,
                         City = string.IsNullOrEmpty(item.City) ? "" : item.City
                     };
 
-                    _repository.Team.Create(newTeam);
-                    bulkType.Add(newTeam);
+                    _repository.NFLTeam.Create(newNFLTeam);
+                    bulkType.Add(newNFLTeam);
                 }
 
                 if (bulkType.Any())
@@ -219,13 +218,13 @@ namespace QuinielasApi.Controllers
                     await _repository.SaveAsync();
                 }
 
-                List<TeamDTO> teamDTO = _mapper.Map<List<TeamDTO>>(bulkType);
+                List<NFLTeamDTO> NFLTeamDTO = _mapper.Map<List<NFLTeamDTO>>(bulkType);
 
-                return Ok(teamDTO);
+                return Ok(NFLTeamDTO);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong inside CreateBulkTeam action: {ex.Message}");
+                _logger.LogError($"Something went wrong inside CreateBulkNFLTeam action: {ex.Message}");
                 return StatusCode(500, "Internal server error ");
             }
         }

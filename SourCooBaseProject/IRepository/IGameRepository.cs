@@ -1,14 +1,14 @@
 ﻿using QuinielasApi.Models.Entities;
 
-namespace GamesApi.IRepository
+namespace NFLGamesApi.IRepository
 {
-    public interface IGameRepository
+    public interface INFLGameRepository
     {
-        Task<List<Game>> GetAllAsync();
-        Task<Game?> GetByIdAsync(int id);
-        Task BulkInsert(List<Game> entities);
-        void Create(Game entity);
-        void Update(Game entity);
-        void Delete(Game entity);
+        Task<List<NFLGame>> GetAllAsync();
+        Task<NFLGame?> GetByIdAsync(int id);
+        Task BulkInsert(List<NFLGame> entities);
+        void Create(NFLGame entity);
+        void Update(NFLGame entity);
+        void Delete(NFLGame entity);
     }
 }

@@ -117,7 +117,7 @@ namespace QuinielasApi.Utils.NFL
                         string responseBody = await response.Content.ReadAsStringAsync();
                         ApiResponse<GetGamesDTO> apiResponse = JsonConvert.DeserializeObject<ApiResponse<GetGamesDTO>>(responseBody);
 
-                        games = apiResponse.Response;
+                        games = apiResponse!.Response;
 
 
 
@@ -159,7 +159,7 @@ namespace QuinielasApi.Utils.NFL
                         string responseBody = await response.Content.ReadAsStringAsync();
                         ApiResponse<GetTeamsDTO> apiResponse = JsonConvert.DeserializeObject<ApiResponse<GetTeamsDTO>>(responseBody);
 
-                        teams = apiResponse.Response;
+                        teams = apiResponse!.Response;
 
                     }
                     else
@@ -187,9 +187,9 @@ namespace QuinielasApi.Utils.NFL
 
         public class ApiResponse<T>
         {
-            public string Get { get; set; }
+            public string Get { get; set; } = default!;
             public Dictionary<string, string> Parameters { get; set; } = default!;
-            public List<string> Errors { get; set; }
+            public List<string> Errors { get; set; } = default!;
             public int Results { get; set; }
             public List<T> Response { get; set; } = default!;
         }
