@@ -140,10 +140,10 @@ namespace QuinielasApi.Utils.NFL
             return teams;
         }
 
-        public static async Task<List<LeagueDto>?> GetLeagues()
+        public static async Task<List<LeagueInfoDto>?> GetLeagues()
         {
-            List<LeagueDto>? teams = new List<LeagueDto>();
-            string endpoint = $"teams?league={league}&season={currentYear}";
+            List<LeagueInfoDto>? teams = new List<LeagueInfoDto>();
+            string endpoint = $"leagues?season={currentYear}";
             try
             {
                 using (HttpClient client = new HttpClient())
@@ -160,7 +160,7 @@ namespace QuinielasApi.Utils.NFL
                     if (response.IsSuccessStatusCode)
                     {
                         string responseBody = await response.Content.ReadAsStringAsync();
-                        ApiResponse<LeagueDto> apiResponse = JsonConvert.DeserializeObject<ApiResponse<LeagueDto>>(responseBody);
+                        ApiResponse<LeagueInfoDto> apiResponse = JsonConvert.DeserializeObject<ApiResponse<LeagueInfoDto>>(responseBody);
 
                         teams = apiResponse!.Response;
 

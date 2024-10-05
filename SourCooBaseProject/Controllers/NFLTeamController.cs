@@ -235,33 +235,28 @@ namespace QuinielasApi.Controllers
         {
             try
             {
-                List<GetTeamsDTO>? NFLTeamsFromAPI = await APIClientNFL.GetTeams();
+                List<LeagueInfoDto>? NFLTeamsFromAPI = await APIClientNFL.GetLeagues();
 
-                List<NFLTeam> bulkType = new List<NFLTeam>();
-                List<NFLTeam> ourNFLTeams = await _repository.NFLTeam.GetAllAsync();
+                List<NFLLeague> bulkType = new List<NFLLeague>();
+                List<NFLLeague> ourNFLLeagues = await _repository.NFLLeague.GetAllAsync();
 
                 foreach (var item in NFLTeamsFromAPI!)
                 {
-                    if (ourNFLTeams.Any(t => t.Id == item.Id))
+                    if (ourNFLLeagues.Any(t => t.Id == item.League.Id))
                     {
                         continue;
                     }
 
-                    if (item.Id.HasValue == false)
+                    NFLLeague newNFLLeague = new NFLLeague
                     {
-                        continue;
-                    }
-                    NFLTeam newNFLTeam = new NFLTeam
-                    {
-                        Id = item.Id.Value,
-                        Name = item.Name!,
-                        Abbreviation = string.IsNullOrEmpty(item.Code) ? "" : item.Code,
-                        ImageURL = string.IsNullOrEmpty(item.Logo) ? "" : item.Logo,
-                        City = string.IsNullOrEmpty(item.City) ? "" : item.City
+                        Id = item.League.Id,
+                        Name = item.League.Name!,
+                        ImageURL = string.IsNullOrEmpty(item.League.Logo) ? "" : item.League.Logo,
+                        IsActive = true,
                     };
 
-                    _repository.NFLTeam.Create(newNFLTeam);
-                    bulkType.Add(newNFLTeam);
+                    _repository.NFLLeague.Create(newNFLLeague);
+                    bulkType.Add(newNFLLeague);
                 }
 
                 if (bulkType.Any())
@@ -269,9 +264,8 @@ namespace QuinielasApi.Controllers
                     await _repository.SaveAsync();
                 }
 
-                List<NFLTeamDTO> NFLTeamDTO = _mapper.Map<List<NFLTeamDTO>>(bulkType);
 
-                return Ok(NFLTeamDTO);
+                return Ok(bulkType);
             }
             catch (Exception ex)
             {

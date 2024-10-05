@@ -2,63 +2,68 @@
 
 namespace QuinielasApi.Utils.NFL.DTO
 {
-    public class LeagueDto
+    public class LeagueParametersDto
     {
-        public LeagueInfoDto League { get; set; } = default!;
-        public CountryDto Country { get; set; } = default!;
-        public List<SeasonDto> Seasons { get; set; } = default!;
+        public string Season { get; set; }
     }
 
     public class LeagueInfoDto
     {
+        public LeagueDto League { get; set; }
+        public CountryDto Country { get; set; }
+        public List<SeasonDto> Seasons { get; set; }
+    }
+
+    public class LeagueDto
+    {
         public int Id { get; set; }
-        public string Name { get; set; } = default!;
-        public string Logo { get; set; } = default!;
+        public string Name { get; set; }
+        public string Logo { get; set; }
     }
 
     public class CountryDto
     {
-        public string Name { get; set; } = default!;
-        public string Code { get; set; } = default!;
-        public string Flag { get; set; } = default!;
+        public string Name { get; set; }
+        public string Code { get; set; }
+        public string Flag { get; set; }
     }
 
     public class SeasonDto
     {
         public int Year { get; set; }
-        public string Start { get; set; } = default!;
-        public string End { get; set; } = default!;
+        public string Start { get; set; }
+        public string End { get; set; }
         public bool Current { get; set; }
-        public CoverageDto Coverage { get; set; } = default!;
+        public CoverageDto Coverage { get; set; }
     }
 
     public class CoverageDto
     {
-        public GamesCoverageDto Games { get; set; } = default!;
-        public StatisticsCoverageDto Statistics { get; set; } = default!;
+        public GameCoverageDto Games { get; set; }
+        public SeasonStatisticsDto Statistics { get; set; }
         public bool Players { get; set; }
         public bool Injuries { get; set; }
         public bool Standings { get; set; }
     }
 
-    public class GamesCoverageDto
+    public class GameCoverageDto
     {
-        public bool Events { get; set; } = default!;
-        public GameStatisticsDto Statistics { get; set; } = default!;
+        public bool Events { get; set; }
+        public StatisticsDetailsDto Statisitcs { get; set; }
     }
 
-    public class GameStatisticsDto
+    public class StatisticsDetailsDto
     {
         public bool Teams { get; set; }
         public bool Players { get; set; }
     }
 
-    public class StatisticsCoverageDto
+    public class SeasonStatisticsDto
     {
-        public SeasonStatisticsDto Season { get; set; } = default!;
+        public PlayerStatisticsDto Season { get; set; }
     }
 
-    public class SeasonStatisticsDto
+    public class PlayerStatisticsDto
     {
         public bool Players { get; set; }
     }
