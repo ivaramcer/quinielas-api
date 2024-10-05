@@ -2,7 +2,7 @@
 
 namespace QuinielasApi.Models.Entities
 {
-    public class SoccerTeam
+    public class SoccerTeamDTO
     {
         [Key]
         public int Id { get; set; }

@@ -66,58 +66,7 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpPost("Create")]
-        public async Task<IActionResult> CreateSoccerLeague([FromBody] SoccerLeagueInsertDTO SoccerLeagueDTO)
-        {
-            try
-            {
-                if (SoccerLeagueDTO == null)
-                {
-                    _logger.LogError("SoccerLeague object sent from client is null.");
-                    return BadRequest("SoccerLeague object is null");
-                }
-
-                var SoccerLeagueEntity = _mapper.Map<SoccerLeague>(SoccerLeagueDTO);
-                _repository.SoccerLeague.Create(SoccerLeagueEntity);
-                await _repository.SaveAsync();
-
-                var createdSoccerLeague = _mapper.Map<SoccerLeagueDTO>(SoccerLeagueEntity);
-
-                return CreatedAtRoute("GetSoccerLeagueById", new { id = SoccerLeagueEntity.Id }, createdSoccerLeague);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Something went wrong inside CreateSoccerLeague action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
-            }
-        }
-
-        [HttpPost("CreateBulk")]
-        public async Task<IActionResult> CreateBulkSoccerLeague(List<SoccerLeagueInsertDTO> SoccerLeagues)
-        {
-            try
-            {
-                if (SoccerLeagues == null || !SoccerLeagues.Any())
-                {
-                    _logger.LogError($"The server doesn't receive any object from the client");
-                    return StatusCode(500, "The server doesn't receive any object from the client");
-                }
-
-                List<SoccerLeague> bulkType = _mapper.Map<List<SoccerLeague>>(SoccerLeagues);
-
-
-                await _repository.SoccerLeague.BulkInsert(bulkType);
-                await _repository.SaveAsync();
-
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Something went wrong inside CreateBulkSoccerLeague action: {ex.Message}");
-                return StatusCode(500, "Internal server error ");
-            }
-        }
-
+      
         [HttpPut("Update/{id}")]
         public async Task<IActionResult> UpdateSoccerLeague(int id, [FromBody] SoccerLeagueDTO SoccerLeagueDTO)
         {

@@ -179,8 +179,8 @@ namespace QuinielasApi.Controllers
         }
 
 
-        [HttpPost("GetBulkNFL")]
-        public async Task<IActionResult> GetBulkNFL()
+        [HttpPost("GetTeamsNFL")]
+        public async Task<IActionResult> GetTeamsNFL()
         {
             try
             {
@@ -193,7 +193,7 @@ namespace QuinielasApi.Controllers
                 {
                     if (ourNFLTeams.Any(t => t.Id == item.Id))
                     {
-                        continue; 
+                        continue;
                     }
 
                     if (item.Id.HasValue == false)
@@ -202,7 +202,58 @@ namespace QuinielasApi.Controllers
                     }
                     NFLTeam newNFLTeam = new NFLTeam
                     {
-                        Id =  item.Id.Value,
+                        Id = item.Id.Value,
+                        Name = item.Name!,
+                        Abbreviation = string.IsNullOrEmpty(item.Code) ? "" : item.Code,
+                        ImageURL = string.IsNullOrEmpty(item.Logo) ? "" : item.Logo,
+                        City = string.IsNullOrEmpty(item.City) ? "" : item.City
+                    };
+
+                    _repository.NFLTeam.Create(newNFLTeam);
+                    bulkType.Add(newNFLTeam);
+                }
+
+                if (bulkType.Any())
+                {
+                    await _repository.SaveAsync();
+                }
+
+                List<NFLTeamDTO> NFLTeamDTO = _mapper.Map<List<NFLTeamDTO>>(bulkType);
+
+                return Ok(NFLTeamDTO);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside CreateBulkNFLTeam action: {ex.Message}");
+                return StatusCode(500, "Internal server error ");
+            }
+        }
+
+
+        [HttpPost("GetLeaguesNFL")]
+        public async Task<IActionResult> GetLeaguesNFL()
+        {
+            try
+            {
+                List<GetTeamsDTO>? NFLTeamsFromAPI = await APIClientNFL.GetTeams();
+
+                List<NFLTeam> bulkType = new List<NFLTeam>();
+                List<NFLTeam> ourNFLTeams = await _repository.NFLTeam.GetAllAsync();
+
+                foreach (var item in NFLTeamsFromAPI!)
+                {
+                    if (ourNFLTeams.Any(t => t.Id == item.Id))
+                    {
+                        continue;
+                    }
+
+                    if (item.Id.HasValue == false)
+                    {
+                        continue;
+                    }
+                    NFLTeam newNFLTeam = new NFLTeam
+                    {
+                        Id = item.Id.Value,
                         Name = item.Name!,
                         Abbreviation = string.IsNullOrEmpty(item.Code) ? "" : item.Code,
                         ImageURL = string.IsNullOrEmpty(item.Logo) ? "" : item.Logo,
@@ -229,4 +280,7 @@ namespace QuinielasApi.Controllers
             }
         }
     }
+
+
+
 }
