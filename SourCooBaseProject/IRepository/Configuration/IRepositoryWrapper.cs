@@ -1,9 +1,12 @@
 ﻿using NFLGamesApi.IRepository;
+using NFLLeaguesApi.IRepository;
 using NFLTeamsApi.IRepository;
 using QuinielaDurationsApi.IRepository;
 using QuinielaPickDurationsApi.IRepository;
 using QuinielaTypesApi.IRepository;
+using SoccerGamesApi.IRepository;
 using SoccerLeaguesApi.IRepository;
+using SoccerTeamsApi.IRepository;
 using StatusApi.IRepository;
 
 namespace QuinielasApi.IRepository.Configuration
@@ -23,8 +26,12 @@ namespace QuinielasApi.IRepository.Configuration
         IQuinielaTypeRepository QuinielaType { get; }
         INFLGameRepository NFLGame { get; }
         INFLTeamRepository NFLTeam { get; }
-        IStatusRepository Status{ get; }
+        INFLLeagueRepository NFLLeague { get; }
+
+        ISoccerGameRepository SoccerGame { get; }
+        ISoccerTeamRepository SoccerTeam { get; }
         ISoccerLeagueRepository SoccerLeague { get; }
+        IStatusRepository Status{ get; }
 
     }
 }

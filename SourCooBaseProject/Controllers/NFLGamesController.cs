@@ -230,11 +230,11 @@ namespace QuinielasApi.Controllers
 
 
         [HttpPost("GetBulkNFL")]
-        public async Task<IActionResult> GetBulkNFL()
+        public async Task<IActionResult> GetBulkNFL(int leagueId)
         {
             try
             {
-                List<GetGamesDTO>? teamsFromAPI = await APIClientNFL.GetGames();
+                List<GetGamesDTO>? teamsFromAPI = await APIClientNFL.GetGames(leagueId);
 
                 List<NFLGame> bulkNFLGames = new List<NFLGame>();
                 List<NFLGame> ourNFLGames = await _repository.NFLGame.GetAllAsync();
@@ -346,6 +346,7 @@ namespace QuinielasApi.Controllers
                     NFLGame newNFLGame = new NFLGame
                     {
                         Id = item.Game.Id,
+                        
                         Schedule = parsedDateTime,  
                         Venue = venueNFLGame,
                         Status = statusNFLGame,

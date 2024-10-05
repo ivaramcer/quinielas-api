@@ -94,10 +94,10 @@ namespace QuinielasApi.Utils.NFL
             return responseFromAPI;
         }
 
-        public static async Task<List<GetGamesDTO>?> GetGames()
+        public static async Task<List<GetGamesDTO>?> GetGames(int leagueId)
         {
             List<GetGamesDTO>? games = new List<GetGamesDTO>();
-            string endpoint = $"games?league={league}&season={currentYear}";
+            string endpoint = $"games?league={leagueId}&season={currentYear}";
             try
             {
                 using (HttpClient client = new HttpClient())

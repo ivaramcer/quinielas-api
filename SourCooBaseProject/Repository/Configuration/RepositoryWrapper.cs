@@ -9,6 +9,9 @@ using StatusApi.IRepository;
 using SoccerLeaguesApi.IRepository;
 using NFLGamesApi.IRepository;
 using NFLTeamsApi.IRepository;
+using NFLLeaguesApi.IRepository;
+using SoccerTeamsApi.IRepository;
+using SoccerGamesApi.IRepository;
 
 namespace QuinielasApi.Repository.Configuration
 {
@@ -24,9 +27,54 @@ namespace QuinielasApi.Repository.Configuration
         private IQuinielaPickDurationRepository _quinielaPickDuration = default!;
         private IQuinielaTypeRepository _quinielaType = default!;
         private IStatusRepository _status = default!;
-        private ISoccerLeagueRepository _soccerLeague = default!;
         private INFLGameRepository _NFLGame = default!;
         private INFLTeamRepository _NFLTeam = default!;
+        private INFLLeagueRepository _NFLLeague = default!;
+
+        private ISoccerGameRepository _soccerGame = default!;
+        private ISoccerTeamRepository _soccerTeam = default!;
+        private ISoccerLeagueRepository _soccerLeague = default!;
+
+
+        public ISoccerTeamRepository SoccerTeam
+        {
+            get
+            {
+                if (_soccerTeam == null)
+                {
+                    _soccerTeam = new SoccerTeamRepository(_dbContext);
+                }
+
+                return _soccerTeam;
+            }
+        }
+
+        public ISoccerGameRepository SoccerGame
+        {
+            get
+            {
+                if (_soccerGame == null)
+                {
+                    _soccerGame = new SoccerGameRepository(_dbContext);
+                }
+
+                return _soccerGame;
+            }
+        }
+
+        public ISoccerLeagueRepository SoccerLeague
+        {
+            get
+            {
+                if (_soccerLeague == null)
+                {
+                    _soccerLeague = new SoccerLeagueRepository(_dbContext);
+                }
+
+                return _soccerLeague;
+            }
+        }
+
 
         public INFLTeamRepository NFLTeam
         {
@@ -54,16 +102,16 @@ namespace QuinielasApi.Repository.Configuration
             }
         }
 
-        public ISoccerLeagueRepository SoccerLeague
+        public INFLLeagueRepository NFLLeague
         {
             get
             {
-                if (_soccerLeague == null)
+                if (_NFLLeague == null)
                 {
-                    _soccerLeague = new SoccerLeagueRepository(_dbContext);
+                    _NFLLeague = new NFLLeagueRepository(_dbContext);
                 }
 
-                return _soccerLeague;
+                return _NFLLeague;
             }
         }
         public IStatusRepository Status
