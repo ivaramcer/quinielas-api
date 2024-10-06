@@ -1,6 +1,7 @@
 ﻿using NFLGamesApi.IRepository;
 using NFLLeaguesApi.IRepository;
 using NFLTeamsApi.IRepository;
+using PreferencesApi.IRepository;
 using QuinielaDurationsApi.IRepository;
 using QuinielaPickDurationsApi.IRepository;
 using QuinielaTypesApi.IRepository;
@@ -32,6 +33,7 @@ namespace QuinielasApi.IRepository.Configuration
         ISoccerTeamRepository SoccerTeam { get; }
         ISoccerLeagueRepository SoccerLeague { get; }
         IStatusRepository Status{ get; }
+        IPreferenceRepository Preference { get; }
 
     }
 }

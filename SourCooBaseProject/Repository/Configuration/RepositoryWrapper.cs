@@ -12,6 +12,7 @@ using NFLTeamsApi.IRepository;
 using NFLLeaguesApi.IRepository;
 using SoccerTeamsApi.IRepository;
 using SoccerGamesApi.IRepository;
+using PreferencesApi.IRepository;
 
 namespace QuinielasApi.Repository.Configuration
 {
@@ -34,7 +35,19 @@ namespace QuinielasApi.Repository.Configuration
         private ISoccerGameRepository _soccerGame = default!;
         private ISoccerTeamRepository _soccerTeam = default!;
         private ISoccerLeagueRepository _soccerLeague = default!;
+        private IPreferenceRepository _preference = default!;
+        public IPreferenceRepository Preference
+        {
+            get
+            {
+                if (_preference == null)
+                {
+                    _preference = new PreferenceRepository(_dbContext);
+                }
 
+                return _preference;
+            }
+        }
 
         public ISoccerTeamRepository SoccerTeam
         {

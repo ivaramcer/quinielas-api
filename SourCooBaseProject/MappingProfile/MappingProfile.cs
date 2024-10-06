@@ -75,6 +75,20 @@ namespace QuinielasApi.MappingProfile
             CreateMap<NFLTeamUpdateDTO, NFLTeam>();
 
 
+
+            CreateMap<Preference, PreferenceNFLDTO>();
+            CreateMap<PreferenceNFLDTO, Preference>();
+
+            CreateMap<Preference, PreferenceNFLInsertDTO>();
+            CreateMap<PreferenceNFLInsertDTO, Preference>();
+
+            CreateMap<Preference, PreferenceSoccerDTO>();
+            CreateMap<PreferenceSoccerDTO, Preference>();
+
+            CreateMap<Preference, PreferenceSoccerInsertDTO>();
+            CreateMap<PreferenceSoccerInsertDTO, Preference>();
+
+
         }
     }
 }
