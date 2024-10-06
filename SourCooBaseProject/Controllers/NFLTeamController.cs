@@ -180,7 +180,7 @@ namespace QuinielasApi.Controllers
 
 
         [HttpPost("GetTeamsNFL")]
-        public async Task<IActionResult> GetTeamsNFL()
+        public async Task<IActionResult> GetTeamsNFL(int leagueId)
         {
             try
             {
@@ -204,6 +204,7 @@ namespace QuinielasApi.Controllers
                     {
                         Id = item.Id.Value,
                         Name = item.Name!,
+                        NFLLeagueId = leagueId,
                         Abbreviation = string.IsNullOrEmpty(item.Code) ? "" : item.Code,
                         ImageURL = string.IsNullOrEmpty(item.Logo) ? "" : item.Logo,
                         City = string.IsNullOrEmpty(item.City) ? "" : item.City
