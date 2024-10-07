@@ -8,8 +8,8 @@ namespace QuinielasApi.Models.Entities
         public DateTime Schedule { get; set; }
         public string Venue { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
-        public int? Week { get; set; }
-        public string WeekString { get; set; } = string.Empty;
+        public int? Round { get; set; }
+        public string RoundName { get; set; } = string.Empty;
 
         public int HomeTeamId { get; set; }
         public SoccerTeam HomeTeam { get; set; } = default!;
