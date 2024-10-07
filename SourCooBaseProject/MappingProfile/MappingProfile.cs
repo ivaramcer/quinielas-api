@@ -55,6 +55,39 @@ namespace QuinielasApi.MappingProfile
             CreateMap<SoccerLeagueDTO, SoccerLeague>();
             CreateMap<SoccerLeague, SoccerLeagueDTO>();
 
+            CreateMap<SoccerLeagueInsertDTO, SoccerLeague>();
+            CreateMap<SoccerLeague, SoccerLeagueInsertDTO>();
+
+            CreateMap<SoccerLeagueUpdateDTO, SoccerLeague>();
+            CreateMap<SoccerLeague, SoccerLeagueUpdateDTO>();
+
+            CreateMap<SoccerGame, SoccerGameDTO>();
+            CreateMap<SoccerGameDTO, SoccerGame>();
+
+            CreateMap<SoccerGame, SoccerGameInsertDTO>();
+            CreateMap<SoccerGameInsertDTO, SoccerGame>();
+
+            CreateMap<SoccerGame, SoccerGameUpdateDTO>();
+            CreateMap<SoccerGameUpdateDTO, SoccerGame>();
+
+            CreateMap<SoccerTeam, SoccerTeamDTO>();
+            CreateMap<SoccerTeamDTO, SoccerTeam>();
+
+            CreateMap<SoccerTeam, SoccerTeamInsertDTO>();
+            CreateMap<SoccerTeamInsertDTO, SoccerTeam>();
+
+            CreateMap<SoccerTeam, SoccerTeamUpdateDTO>();
+            CreateMap<SoccerTeamUpdateDTO, SoccerTeam>();
+
+
+            CreateMap<NFLLeagueDTO, NFLLeague>();
+            CreateMap<NFLLeague, NFLLeagueDTO>();
+
+            CreateMap<NFLLeagueInsertDTO, NFLLeague>();
+            CreateMap<NFLLeague, NFLLeagueInsertDTO>();
+
+            CreateMap<NFLLeagueUpdateDTO, NFLLeague>();
+            CreateMap<NFLLeague, NFLLeagueUpdateDTO>();
 
             CreateMap<NFLGame, NFLGameDTO>();
             CreateMap<NFLGameDTO, NFLGame>();
