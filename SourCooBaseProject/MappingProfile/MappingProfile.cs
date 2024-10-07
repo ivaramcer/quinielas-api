@@ -76,17 +76,13 @@ namespace QuinielasApi.MappingProfile
 
 
 
-            CreateMap<Preference, PreferenceNFLDTO>();
-            CreateMap<PreferenceNFLDTO, Preference>();
+            CreateMap<Preference, PreferenceDTO>();
+            CreateMap<PreferenceDTO, Preference>();
 
-            CreateMap<Preference, PreferenceNFLInsertDTO>();
-            CreateMap<PreferenceNFLInsertDTO, Preference>();
+            CreateMap<Preference, PreferenceInsertDTO>();
+            CreateMap<PreferenceInsertDTO, Preference>();
 
-            CreateMap<Preference, PreferenceSoccerDTO>();
-            CreateMap<PreferenceSoccerDTO, Preference>();
 
-            CreateMap<Preference, PreferenceSoccerInsertDTO>();
-            CreateMap<PreferenceSoccerInsertDTO, Preference>();
 
 
         }

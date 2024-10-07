@@ -35,17 +35,8 @@ namespace QuinielasApi.Controllers
             try
             {
                 var Preferences = await _repository.Preference.GetAllAsync(sportId, userId);
-                if (sportId == NFLTeamController.SoccerId)
-                {
-                    var PreferenceDTOs = _mapper.Map<IEnumerable<PreferenceSoccerDTO>>(Preferences);
-                    return Ok(PreferenceDTOs);
-                }
-                else
-                {
-                    var PreferenceDTOs = _mapper.Map<IEnumerable<PreferenceNFLDTO>>(Preferences);
-                    return Ok(PreferenceDTOs);
-                }
-
+                var PreferenceDTOs = _mapper.Map<IEnumerable<PreferenceDTO>>(Preferences);
+                return Ok(PreferenceDTOs);
             }
             catch (Exception ex)
             {
@@ -66,16 +57,9 @@ namespace QuinielasApi.Controllers
                     return NotFound($"No Preference with the id: {id}");
                 }
 
-                if (Preference.SportId == NFLTeamController.SoccerId)
-                {
-                    var PreferenceDTO = _mapper.Map<PreferenceSoccerDTO>(Preference);
+
+                    var PreferenceDTO = _mapper.Map<PreferenceDTO>(Preference);
                     return Ok(PreferenceDTO);
-                }
-                else
-                {
-                    var PreferenceDTO = _mapper.Map<PreferenceNFLDTO>(Preference);
-                    return Ok(PreferenceDTO);
-                }
 
             }
             catch (Exception ex)
@@ -87,28 +71,18 @@ namespace QuinielasApi.Controllers
 
 
         [HttpPost("CreateBulk")]
-        public async Task<IActionResult> CreateBulkPreference([FromBody] BulkPreferenceInsertDTO bulkPreferences)
+        public async Task<IActionResult> CreateBulkPreference([FromBody] List<PreferenceInsertDTO> bulkPreferences)
         {
             try
             {
-                if ((bulkPreferences.NFLPreferences == null || !bulkPreferences.NFLPreferences.Any()) &&
-                    (bulkPreferences.SoccerPreferences == null || !bulkPreferences.SoccerPreferences.Any()))
+                if ((bulkPreferences == null || !bulkPreferences.Any()))
                 {
                     _logger.LogError("The server didn't receive any object from the client");
                     return StatusCode(500, "The server didn't receive any object from the client");
                 }
 
-                List<Preference> bulkType = new List<Preference>();
+                List<Preference> bulkType = _mapper.Map<List<Preference>>(bulkPreferences);
 
-                if (bulkPreferences.NFLPreferences != null && bulkPreferences.NFLPreferences.Any())
-                {
-                    bulkType.AddRange(_mapper.Map<List<Preference>>(bulkPreferences.NFLPreferences));
-                }
-
-                if (bulkPreferences.SoccerPreferences != null && bulkPreferences.SoccerPreferences.Any())
-                {
-                    bulkType.AddRange(_mapper.Map<List<Preference>>(bulkPreferences.SoccerPreferences));
-                }
 
                 await _repository.Preference.BulkInsert(bulkType);
                 await _repository.SaveAsync();
@@ -152,10 +126,5 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        public class BulkPreferenceInsertDTO
-        {
-            public List<PreferenceNFLInsertDTO>? NFLPreferences { get; set; }
-            public List<PreferenceSoccerInsertDTO>? SoccerPreferences { get; set; }
-        }
     }
 }
