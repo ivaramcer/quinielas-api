@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using QuinielasApi.Utils.NFL.DTO;
+using QuinielasApi.Utils.NFL.SoccerDto;
 
 namespace QuinielasApi.Utils.Soccer
 {
@@ -97,9 +98,9 @@ namespace QuinielasApi.Utils.Soccer
 
             return games;
         }
-        public static async Task<List<GetTeamsDTO>?> GetTeams()
+        public static async Task<List<GetTeamsSoccerDto>?> GetTeams()
         {
-            List<GetTeamsDTO>? teams = new List<GetTeamsDTO>();
+            List<GetTeamsSoccerDto>? teams = new List<GetTeamsSoccerDto>();
             string endpoint = $"teams?league={league}&season={currentYear}";
             try
             {
@@ -117,7 +118,7 @@ namespace QuinielasApi.Utils.Soccer
                     if (response.IsSuccessStatusCode)
                     {
                         string responseBody = await response.Content.ReadAsStringAsync();
-                        ApiResponse<GetTeamsDTO> apiResponse = JsonConvert.DeserializeObject<ApiResponse<GetTeamsDTO>>(responseBody);
+                        ApiResponse<GetTeamsSoccerDto> apiResponse = JsonConvert.DeserializeObject<ApiResponse<GetTeamsSoccerDto>>(responseBody);
 
                         teams = apiResponse!.Response;
 
@@ -138,9 +139,9 @@ namespace QuinielasApi.Utils.Soccer
             return teams;
         }
 
-        public static async Task<List<LeagueInfoDto>?> GetLeagues()
+        public static async Task<List<LeagueInfoSoccerDto>?> GetLeagues()
         {
-            List<LeagueInfoDto>? teams = new List<LeagueInfoDto>();
+            List<LeagueInfoSoccerDto>? teams = new List<LeagueInfoSoccerDto>();
             string endpoint = $"leagues?season={currentYear}";
             try
             {
@@ -158,7 +159,7 @@ namespace QuinielasApi.Utils.Soccer
                     if (response.IsSuccessStatusCode)
                     {
                         string responseBody = await response.Content.ReadAsStringAsync();
-                        ApiResponse<LeagueInfoDto> apiResponse = JsonConvert.DeserializeObject<ApiResponse<LeagueInfoDto>>(responseBody);
+                        ApiResponse<LeagueInfoSoccerDto> apiResponse = JsonConvert.DeserializeObject<ApiResponse<LeagueInfoSoccerDto>>(responseBody);
 
                         teams = apiResponse!.Response;
 
