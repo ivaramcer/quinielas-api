@@ -87,24 +87,27 @@ namespace QuinielasApi.Controllers
 
 
         [HttpPost("CreateBulk")]
-        public async Task<IActionResult> CreateBulkPreference(List<PreferenceNFLInsertDTO>? NFLPreferences, List<PreferenceSoccerInsertDTO>? SoccerPreferences)
+        public async Task<IActionResult> CreateBulkPreference([FromBody] BulkPreferenceInsertDTO bulkPreferences)
         {
             try
             {
-                if ((NFLPreferences == null || !NFLPreferences.Any()) && (SoccerPreferences == null || !SoccerPreferences.Any()))
+                if ((bulkPreferences.NFLPreferences == null || !bulkPreferences.NFLPreferences.Any()) &&
+                    (bulkPreferences.SoccerPreferences == null || !bulkPreferences.SoccerPreferences.Any()))
                 {
-                    _logger.LogError($"The server doesn't receive any object from the client");
-                    return StatusCode(500, "The server doesn't receive any object from the client");
+                    _logger.LogError("The server didn't receive any object from the client");
+                    return StatusCode(500, "The server didn't receive any object from the client");
                 }
-                List<Preference> bulkType = new List<Preference>();
-                if (!(NFLPreferences == null || !NFLPreferences.Any()))
-                {
-                    bulkType = _mapper.Map<List<Preference>>(NFLPreferences);
 
-                }
-                if (!(SoccerPreferences == null || !SoccerPreferences.Any()))
+                List<Preference> bulkType = new List<Preference>();
+
+                if (bulkPreferences.NFLPreferences != null && bulkPreferences.NFLPreferences.Any())
                 {
-                    bulkType = _mapper.Map<List<Preference>>(SoccerPreferences);
+                    bulkType.AddRange(_mapper.Map<List<Preference>>(bulkPreferences.NFLPreferences));
+                }
+
+                if (bulkPreferences.SoccerPreferences != null && bulkPreferences.SoccerPreferences.Any())
+                {
+                    bulkType.AddRange(_mapper.Map<List<Preference>>(bulkPreferences.SoccerPreferences));
                 }
 
                 await _repository.Preference.BulkInsert(bulkType);
@@ -115,7 +118,7 @@ namespace QuinielasApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Something went wrong inside CreateBulkPreference action: {ex.Message}");
-                return StatusCode(500, "Internal server error ");
+                return StatusCode(500, "Internal server error");
             }
         }
 
@@ -147,6 +150,12 @@ namespace QuinielasApi.Controllers
                 _logger.LogError($"Something went wrong inside DeletePreference action: {ex.Message}");
                 return StatusCode(500, "Internal server error");
             }
+        }
+
+        public class BulkPreferenceInsertDTO
+        {
+            public List<PreferenceNFLInsertDTO>? NFLPreferences { get; set; }
+            public List<PreferenceSoccerInsertDTO>? SoccerPreferences { get; set; }
         }
     }
 }
