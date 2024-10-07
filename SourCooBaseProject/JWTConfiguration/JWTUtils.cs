@@ -46,7 +46,7 @@ namespace QuinielasApi.JWTConfiguration
 
             var jwtConfig = new JwtSecurityToken(
                 claims: userClaims,
-                expires: DateTime.UtcNow.AddHours(1),
+                expires: DateTime.UtcNow.AddMonths(8),
                 signingCredentials: credentials
                 );
 
