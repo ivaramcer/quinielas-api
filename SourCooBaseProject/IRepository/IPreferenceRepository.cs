@@ -4,7 +4,7 @@ namespace PreferencesApi.IRepository
 {
     public interface IPreferenceRepository
     {
-        Task<List<Preference>> GetAllAsync();
+        Task<List<Preference>> GetAllAsync(int sportId, int userId);
         Task<Preference?> GetByIdAsync(int id);
         Task BulkInsert(List<Preference> entities);
         void Create(Preference entity);

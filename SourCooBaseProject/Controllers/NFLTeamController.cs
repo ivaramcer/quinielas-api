@@ -16,8 +16,8 @@ namespace QuinielasApi.Controllers
     [ApiController]
     public class NFLTeamController : ControllerBase
     {
-        private const int NFLId = 2;
-        private const int SoccerId = 1;
+        public const int NFLId = 2;
+        public const int SoccerId = 1;
         private readonly JWTUtils _jwtUtils;
         private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;

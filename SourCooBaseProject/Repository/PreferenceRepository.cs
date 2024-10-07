@@ -14,9 +14,11 @@ namespace QuinielasApi.IRepository
         public PreferenceRepository(DatabaseContext dbContext) : base(dbContext)
         {
         }
-        public async Task<List<Preference>> GetAllAsync()
+        public async Task<List<Preference>> GetAllAsync(int sportId, int userId)
         {
             return await FindAll()
+                .Where(p => p.SportId == sportId
+                && p.UserId == userId)
                 .ToListAsync();
         }
 
