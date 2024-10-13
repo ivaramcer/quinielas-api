@@ -95,6 +95,7 @@ namespace QuinielasApi.DBContext
         public DbSet<OperationType> OperationTypes { get; set; } = default!;
         public DbSet<Preference> Preferences { get; set; } = default!;
         public DbSet<Quiniela> Quinielas { get; set; } = default!;
+        public DbSet<QuinielaConfiguration> QuinielaConfigurations { get; set; } = default!;
         public DbSet<QuinielaType> QuinielaTypes { get; set; } = default!;
         public DbSet<QuinielaTypeConfiguration> QuinielaTypeConfigurations { get; set; } = default!;
         public DbSet<QuinielaGame> QuinielaGames { get; set; }

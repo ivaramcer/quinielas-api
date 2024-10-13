@@ -80,6 +80,7 @@ namespace QuinielasApi.Controllers
                 var quinielaEntity = _mapper.Map<Quiniela>(QuinielaDTO);
                 _repository.Quiniela.Create(quinielaEntity);
                 await _repository.SaveAsync();
+                
 
                 var createdQuiniela = _mapper.Map<QuinielaDTO>(quinielaEntity);
 

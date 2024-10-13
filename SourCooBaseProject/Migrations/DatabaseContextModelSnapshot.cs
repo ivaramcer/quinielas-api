@@ -348,17 +348,14 @@ namespace QuinielasApi.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("QuinielaDurationId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("QuinielaPickDurationId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("QuinielaTypeId")
                         .HasColumnType("integer");
 
                     b.Property<int>("QuotaPeople")
                         .HasColumnType("integer");
+
+                    b.Property<string>("Round")
+                        .HasColumnType("text");
 
                     b.Property<int>("StatusId")
                         .HasColumnType("integer");
@@ -366,17 +363,45 @@ namespace QuinielasApi.Migrations
                     b.Property<double>("ViudaPrice")
                         .HasColumnType("double precision");
 
+                    b.Property<int?>("Week")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("QuinielaDurationId");
-
                     b.HasIndex("QuinielaPickDurationId");
-
-                    b.HasIndex("QuinielaTypeId");
 
                     b.HasIndex("StatusId");
 
                     b.ToTable("Quinielas");
+                });
+
+            modelBuilder.Entity("QuinielasApi.Models.Entities.QuinielaConfiguration", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("QuinielaId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Read")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<double>("Value")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuinielaId");
+
+                    b.ToTable("QuinielaConfigurations");
                 });
 
             modelBuilder.Entity("QuinielasApi.Models.Entities.QuinielaDuration", b =>
@@ -1210,21 +1235,9 @@ namespace QuinielasApi.Migrations
 
             modelBuilder.Entity("QuinielasApi.Models.Entities.Quiniela", b =>
                 {
-                    b.HasOne("QuinielasApi.Models.Entities.QuinielaDuration", "QuinielaDuration")
-                        .WithMany()
-                        .HasForeignKey("QuinielaDurationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("QuinielasApi.Models.Entities.QuinielaPickDuration", "QuinielaPickDuration")
                         .WithMany()
                         .HasForeignKey("QuinielaPickDurationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("QuinielasApi.Models.Entities.QuinielaType", "QuinielaType")
-                        .WithMany()
-                        .HasForeignKey("QuinielaTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1234,13 +1247,20 @@ namespace QuinielasApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("QuinielaDuration");
-
                     b.Navigation("QuinielaPickDuration");
 
-                    b.Navigation("QuinielaType");
-
                     b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("QuinielasApi.Models.Entities.QuinielaConfiguration", b =>
+                {
+                    b.HasOne("QuinielasApi.Models.Entities.Quiniela", "Quiniela")
+                        .WithMany("QuinielaConfigurations")
+                        .HasForeignKey("QuinielaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Quiniela");
                 });
 
             modelBuilder.Entity("QuinielasApi.Models.Entities.QuinielaDuration", b =>
@@ -1400,6 +1420,11 @@ namespace QuinielasApi.Migrations
             modelBuilder.Entity("QuinielasApi.Models.Entities.Person", b =>
                 {
                     b.Navigation("Preferences");
+                });
+
+            modelBuilder.Entity("QuinielasApi.Models.Entities.Quiniela", b =>
+                {
+                    b.Navigation("QuinielaConfigurations");
                 });
 
             modelBuilder.Entity("QuinielasApi.Models.Entities.QuinielaDuration", b =>
