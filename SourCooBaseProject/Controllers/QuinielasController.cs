@@ -80,8 +80,10 @@ namespace QuinielasApi.Controllers
                 var quinielaEntity = _mapper.Map<Quiniela>(QuinielaDTO);
                 _repository.Quiniela.Create(quinielaEntity);
                 await _repository.SaveAsync();
-                
 
+                await CreateWinnerRules(quinielaEntity);
+                
+                
                 var createdQuiniela = _mapper.Map<QuinielaDTO>(quinielaEntity);
 
                 return CreatedAtRoute("GetQuinielaById", new { id = quinielaEntity.Id }, createdQuiniela);
@@ -92,6 +94,40 @@ namespace QuinielasApi.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        private async Task CreateWinnerRules(Quiniela quinielaEntity)
+        {
+            if (quinielaEntity == null)
+            {
+                throw new ArgumentNullException(nameof(quinielaEntity), "quinielaEntity can´t be null");
+            }
+
+            try
+            {
+                QuinielaConfiguration firstPlace = new QuinielaConfiguration
+                {
+                    QuinielaId = quinielaEntity.Id,
+                    Name = "First",
+                    Value = 0.65
+                };
+                _repository.QuinielaConfiguration.Create(firstPlace);
+
+                QuinielaConfiguration secondPlace = new QuinielaConfiguration
+                {
+                    QuinielaId = quinielaEntity.Id,
+                    Name = "Second",
+                    Value = 0.25
+                };
+                _repository.QuinielaConfiguration.Create(secondPlace);
+
+                await _repository.SaveAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurs while we are saving the rules.", ex);
+            }
+        }
+
 
         [HttpPost("CreateBulk")]
         public async Task<IActionResult> CreateBulkQuiniela(List<QuinielaInsertDTO> Quiniela)
