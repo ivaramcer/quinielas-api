@@ -28,19 +28,7 @@ namespace QuinielasApi.DBContext
             modelBuilder.Entity<User>()
             .HasIndex(u => u.Email)
             .IsUnique();
-
-            modelBuilder.Entity<UserPermission>()
-                .HasKey(up => new { up.UserId, up.PermissionId });
-
-            modelBuilder.Entity<UserPermission>()
-                .HasOne(up => up.User)
-                .WithMany(u => u.UserPermissions)
-                .HasForeignKey(up => up.UserId);
-
-            modelBuilder.Entity<UserPermission>()
-                .HasOne(up => up.Permission)
-                .WithMany(p => p.UserPermissions)
-                .HasForeignKey(up => up.PermissionId);
+            
 
             //NFL RELATIONS
             modelBuilder.Entity<NFLTeam>()
@@ -103,13 +91,14 @@ namespace QuinielasApi.DBContext
         public DbSet<Country> Countries { get; set; } = default!;
         public DbSet<Role> Roles { get; set; } = default!;
         public DbSet<Permission> Permissions { get; set; } = default!;
-        public DbSet<UserPermission> UserPermissions { get; set; } = default!;
         public DbSet<Sport> Sports { get; set; } = default!;
         public DbSet<OperationType> OperationTypes { get; set; } = default!;
         public DbSet<Preference> Preferences { get; set; } = default!;
         public DbSet<Quiniela> Quinielas { get; set; } = default!;
         public DbSet<QuinielaType> QuinielaTypes { get; set; } = default!;
         public DbSet<QuinielaTypeConfiguration> QuinielaTypeConfigurations { get; set; } = default!;
+        public DbSet<QuinielaGame> QuinielaGames { get; set; }
+
         public DbSet<Status> Status { get; set; } = default!;
 
 
@@ -121,6 +110,7 @@ namespace QuinielasApi.DBContext
         public DbSet<SoccerLeague> SoccerLeagues { get; set; } = default!;
         public DbSet<SoccerTeam> SoccerTeams { get; set; }
         public DbSet<SoccerGame> SoccerGames { get; set; }
+        
 
     }
 }

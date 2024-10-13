@@ -77,13 +77,13 @@ namespace QuinielasApi.Controllers
                     return BadRequest("Quiniela object is null");
                 }
 
-                var QuinielaEntity = _mapper.Map<Quiniela>(QuinielaDTO);
-                _repository.Quiniela.Create(QuinielaEntity);
+                var quinielaEntity = _mapper.Map<Quiniela>(QuinielaDTO);
+                _repository.Quiniela.Create(quinielaEntity);
                 await _repository.SaveAsync();
 
-                var createdQuiniela = _mapper.Map<QuinielaDTO>(QuinielaEntity);
+                var createdQuiniela = _mapper.Map<QuinielaDTO>(quinielaEntity);
 
-                return CreatedAtRoute("GetQuinielaById", new { id = QuinielaEntity.Id }, createdQuiniela);
+                return CreatedAtRoute("GetQuinielaById", new { id = quinielaEntity.Id }, createdQuiniela);
             }
             catch (Exception ex)
             {
@@ -129,15 +129,15 @@ namespace QuinielasApi.Controllers
                     return BadRequest("Invalid model object or mismatching ids");
                 }
 
-                var QuinielaEntity = await _repository.Quiniela.GetByIdAsync(id);
-                if (QuinielaEntity == null)
+                var quinielaEntity = await _repository.Quiniela.GetByIdAsync(id);
+                if (quinielaEntity == null)
                 {
                     _logger.LogError($"Quiniela with id: {id} hasn't been found in db.");
                     return NotFound($"No Quiniela with the id: {id}");
                 }
 
-                _mapper.Map(QuinielaDTO, QuinielaEntity);
-                _repository.Quiniela.Update(QuinielaEntity);
+                _mapper.Map(QuinielaDTO, quinielaEntity);
+                _repository.Quiniela.Update(quinielaEntity);
                 await _repository.SaveAsync();
 
                 return NoContent();
@@ -154,14 +154,14 @@ namespace QuinielasApi.Controllers
         {
             try
             {
-                var Quiniela = await _repository.Quiniela.GetByIdAsync(id);
-                if (Quiniela == null)
+                var quiniela = await _repository.Quiniela.GetByIdAsync(id);
+                if (quiniela == null)
                 {
                     _logger.LogError($"Quiniela with id: {id} hasn't been found in db.");
                     return NotFound($"No Quiniela with the id: {id}");
                 }
 
-                _repository.Quiniela.Delete(Quiniela);
+                _repository.Quiniela.Delete(quiniela);
                 await _repository.SaveAsync();
 
                 return NoContent();

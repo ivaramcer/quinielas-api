@@ -12,7 +12,6 @@ namespace QuinielasApi.Models.Entities
         [Required]
 
         public string Description { get; set; } = default!;
-        public IEnumerable<UserPermission> UserPermissions { get; set; } = default!;
 
     }
 }

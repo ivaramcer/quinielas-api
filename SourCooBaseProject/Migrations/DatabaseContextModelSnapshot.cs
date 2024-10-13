@@ -457,6 +457,42 @@ namespace QuinielasApi.Migrations
                         });
                 });
 
+            modelBuilder.Entity("QuinielasApi.Models.Entities.QuinielaGame", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Group")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("GroupNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("NFLGameId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("QuinielaId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SoccerGameId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NFLGameId");
+
+                    b.HasIndex("QuinielaId");
+
+                    b.HasIndex("SoccerGameId");
+
+                    b.ToTable("QuinielaGames");
+                });
+
             modelBuilder.Entity("QuinielasApi.Models.Entities.QuinielaPickDuration", b =>
                 {
                     b.Property<int>("Id")
@@ -1067,21 +1103,6 @@ namespace QuinielasApi.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("QuinielasApi.Models.Entities.UserPermission", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PermissionId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("UserId", "PermissionId");
-
-                    b.HasIndex("PermissionId");
-
-                    b.ToTable("UserPermissions");
-                });
-
             modelBuilder.Entity("QuinielasApi.Models.Entities.Address", b =>
                 {
                     b.HasOne("QuinielasApi.Models.Entities.City", "City")
@@ -1235,6 +1256,33 @@ namespace QuinielasApi.Migrations
                     b.Navigation("QuinielaType");
                 });
 
+            modelBuilder.Entity("QuinielasApi.Models.Entities.QuinielaGame", b =>
+                {
+                    b.HasOne("QuinielasApi.Models.Entities.NFLGame", "NFLGame")
+                        .WithMany()
+                        .HasForeignKey("NFLGameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("QuinielasApi.Models.Entities.Quiniela", "Quiniela")
+                        .WithMany()
+                        .HasForeignKey("QuinielaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("QuinielasApi.Models.Entities.SoccerGame", "SoccerGame")
+                        .WithMany()
+                        .HasForeignKey("SoccerGameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NFLGame");
+
+                    b.Navigation("Quiniela");
+
+                    b.Navigation("SoccerGame");
+                });
+
             modelBuilder.Entity("QuinielasApi.Models.Entities.QuinielaPickDuration", b =>
                 {
                     b.HasOne("QuinielasApi.Models.Entities.QuinielaDuration", "QuinielaDuration")
@@ -1336,25 +1384,6 @@ namespace QuinielasApi.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("QuinielasApi.Models.Entities.UserPermission", b =>
-                {
-                    b.HasOne("QuinielasApi.Models.Entities.Permission", "Permission")
-                        .WithMany("UserPermissions")
-                        .HasForeignKey("PermissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("QuinielasApi.Models.Entities.User", "User")
-                        .WithMany("UserPermissions")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Permission");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("QuinielasApi.Models.Entities.Country", b =>
                 {
                     b.Navigation("States");
@@ -1372,11 +1401,6 @@ namespace QuinielasApi.Migrations
                     b.Navigation("HomeGames");
 
                     b.Navigation("WinnerGames");
-                });
-
-            modelBuilder.Entity("QuinielasApi.Models.Entities.Permission", b =>
-                {
-                    b.Navigation("UserPermissions");
                 });
 
             modelBuilder.Entity("QuinielasApi.Models.Entities.Person", b =>
@@ -1408,11 +1432,6 @@ namespace QuinielasApi.Migrations
             modelBuilder.Entity("QuinielasApi.Models.Entities.State", b =>
                 {
                     b.Navigation("Cities");
-                });
-
-            modelBuilder.Entity("QuinielasApi.Models.Entities.User", b =>
-                {
-                    b.Navigation("UserPermissions");
                 });
 #pragma warning restore 612, 618
         }
