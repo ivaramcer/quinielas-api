@@ -13,6 +13,7 @@ using NFLLeaguesApi.IRepository;
 using SoccerTeamsApi.IRepository;
 using SoccerGamesApi.IRepository;
 using PreferencesApi.IRepository;
+using QuinielaGamesApi.IRepository;
 
 namespace QuinielasApi.Repository.Configuration
 {
@@ -36,6 +37,21 @@ namespace QuinielasApi.Repository.Configuration
         private ISoccerTeamRepository _soccerTeam = default!;
         private ISoccerLeagueRepository _soccerLeague = default!;
         private IPreferenceRepository _preference = default!;
+        private IQuinielaGameRepository _quinielaGame = default!;
+
+        public IQuinielaGameRepository QuinielaGame
+        {
+            get
+            {
+                if (_quinielaGame == null)
+                {
+                    _quinielaGame = new QuinielaGameRepository(_dbContext);
+                }
+
+                return _quinielaGame;
+            }
+        }
+        
         public IPreferenceRepository Preference
         {
             get

@@ -3,6 +3,7 @@ using NFLLeaguesApi.IRepository;
 using NFLTeamsApi.IRepository;
 using PreferencesApi.IRepository;
 using QuinielaDurationsApi.IRepository;
+using QuinielaGamesApi.IRepository;
 using QuinielaPickDurationsApi.IRepository;
 using QuinielaTypesApi.IRepository;
 using SoccerGamesApi.IRepository;
@@ -18,6 +19,7 @@ namespace QuinielasApi.IRepository.Configuration
         Task SaveAsync();
         void Clear();
         IUserRepository User { get; }
+        IQuinielaGameRepository QuinielaGame { get; }
         ISportRepository Sport { get; }
         IPermissionRepository Permission { get; }
         IPersonRepository Person { get; }
