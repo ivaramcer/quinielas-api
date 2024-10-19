@@ -28,8 +28,9 @@ namespace QuinielasApi.Models.Entities
 
         public virtual QuinielaPickDuration QuinielaPickDuration { get; set; } = default!;
 
+        public int SportId { get; set; }
+        public virtual Sport Sport { get; set; } = default!;
         public int StatusId { get; set; }
-
         public virtual Status Status { get; set; } = default!;
         public virtual ICollection<QuinielaConfiguration> QuinielaConfigurations { get; set; } = new List<QuinielaConfiguration>();
 

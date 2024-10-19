@@ -82,6 +82,7 @@ namespace QuinielasApi.Controllers
                 await _repository.SaveAsync();
 
                 await CreateWinnerRules(quinielaEntity);
+                await CreateQuinielaGames(quinielaEntity);
                 
                 
                 var createdQuiniela = _mapper.Map<QuinielaDTO>(quinielaEntity);
@@ -128,6 +129,44 @@ namespace QuinielasApi.Controllers
             }
         }
 
+        private async Task CreateQuinielaGames(Quiniela quinielaEntity)
+        {
+            if (quinielaEntity == null)
+            {
+                throw new ArgumentNullException(nameof(quinielaEntity), "quinielaEntity can´t be null");
+            }
+
+            try
+            {
+                QuinielaPickDuration? pickDuration = await _repository.QuinielaPickDuration.GetByIdAsync(quinielaEntity.QuinielaPickDurationId);
+                QuinielaDuration? duration = await _repository.QuinielaDuration.GetByIdAsync(pickDuration!.QuinielaDurationId);
+                
+                
+                switch (quinielaEntity.SportId)
+                {
+                    case NFLTeamController.NFLId:
+                        break;
+                    case NFLTeamController.SoccerId:
+                        break;
+                    default:
+                        break;
+                }
+                
+                switch (duration!.Name)
+                {
+                    case "Round":
+                        break;
+                    case "Season":
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurs while we are saving the rules.", ex);
+            }
+        }
 
         [HttpPost("CreateBulk")]
         public async Task<IActionResult> CreateBulkQuiniela(List<QuinielaInsertDTO> Quiniela)
