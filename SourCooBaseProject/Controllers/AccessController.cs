@@ -86,7 +86,7 @@ namespace QuinielasApi.Controllers
 
             PersonNameDTO successPerson = _mapper.Map<PersonNameDTO>(person);
 
-            return StatusCode(StatusCodes.Status200OK, new { isSuccess = true, response = _jwtUtils.generateToken(successUser), person = successPerson });
+            return StatusCode(StatusCodes.Status200OK, new { isSuccess = true, response = _jwtUtils.generateToken(successUser), person = successPerson, userId = successUser.Id });
 
         }
 
