@@ -71,17 +71,80 @@ namespace QuinielasApi.Controllers
 
 
         [HttpPost("CreateBulk")]
-        public async Task<IActionResult> CreateBulkPreference([FromBody] List<PreferenceInsertDTO> bulkPreferences)
+        public async Task<IActionResult> CreateBulkPreference([FromBody] PreferenceBulkDTO bulkPreferences)
         {
             try
             {
-                if ((bulkPreferences == null || !bulkPreferences.Any()))
+                if (bulkPreferences == null )
                 {
                     _logger.LogError("The server didn't receive any object from the client");
                     return StatusCode(500, "The server didn't receive any object from the client");
                 }
 
-                List<Preference> bulkType = _mapper.Map<List<Preference>>(bulkPreferences);
+                List<Preference> userPreferences = await _repository.Preference.GetAllAsync(bulkPreferences.SportId, bulkPreferences.UserId);
+                List<int> preferencesIds = bulkPreferences.TeamsId;
+                List<int> userPreferenceIds = new List<int>();
+
+                if (bulkPreferences.SportId == NFLTeamController.NFLId)
+                {
+                    userPreferenceIds = userPreferences
+                        .Where(up => up.NFLTeamId.HasValue)  
+                        .Select(up => up.NFLTeamId.Value)    
+                        .ToList();
+                }
+                else
+                {
+                   
+                    userPreferenceIds = userPreferences
+                        .Where(up => up.SoccerTeamId.HasValue)  
+                        .Select(up => up.SoccerTeamId.Value)    
+                        .ToList();
+                }
+
+                
+                 
+
+                List<int> idsToDelete = userPreferenceIds.Except(preferencesIds).ToList();
+                List<Preference> preferencesToDelete = new List<Preference>();  
+                if (bulkPreferences.SportId == NFLTeamController.NFLId)
+                {
+                     preferencesToDelete = userPreferences
+                        .Where(up =>  up.NFLTeamId.HasValue && idsToDelete.Contains(up.NFLTeamId.Value))
+                        .ToList();
+                }
+                else
+                {
+                    preferencesToDelete = userPreferences
+                        .Where(up => up.SoccerTeamId.HasValue && idsToDelete.Contains(up.SoccerTeamId.Value))
+                        .ToList();
+                }
+
+                foreach (var pref in preferencesToDelete)
+                {
+                    _repository.Preference.Delete(pref);
+                }
+
+                await _repository.SaveAsync();
+                
+                
+                List<Preference> bulkType = new List<Preference>();
+
+                foreach (var item in preferencesIds)
+                {
+                    Preference newPreference = new Preference();
+                    newPreference.SportId = bulkPreferences.SportId;
+                    newPreference.UserId = bulkPreferences.UserId;
+                    if (bulkPreferences.SportId == NFLTeamController.NFLId)
+                    {
+                        newPreference.NFLTeamId = item;
+                    }
+                    else
+                    {
+                        newPreference.SoccerTeamId = item;
+
+                    }
+                    bulkType.Add(newPreference);
+                }
 
 
                 await _repository.Preference.BulkInsert(bulkType);
