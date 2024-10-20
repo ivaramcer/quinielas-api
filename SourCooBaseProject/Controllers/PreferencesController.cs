@@ -35,8 +35,9 @@ namespace QuinielasApi.Controllers
             try
             {
                 var Preferences = await _repository.Preference.GetAllAsync(sportId, userId);
-                var PreferenceDTOs = _mapper.Map<IEnumerable<PreferenceDTO>>(Preferences);
-                return Ok(PreferenceDTOs);
+                List<int> preferencesIds = (sportId == NFLTeamController.NFLId ) ? Preferences.Select(p=>  p.NFLTeamId.Value).ToList():  Preferences.Select(p=> p.SoccerTeamId.Value).ToList();
+
+                return Ok(preferencesIds);
             }
             catch (Exception ex)
             {
