@@ -145,22 +145,78 @@ namespace QuinielasApi.Controllers
                 switch (quinielaEntity.SportId)
                 {
                     case NFLTeamController.NFLId:
+                        var gamesNFL = await _repository.NFLGame.GetAllAsync();
+                        await GamesForNFL(quinielaEntity,duration!.Name,gamesNFL);
                         break;
                     case NFLTeamController.SoccerId:
+                        var gamesSoccer = await _repository.SoccerGame.GetAllAsync();
+                        await GamesForSoccer(quinielaEntity,duration!.Name, gamesSoccer);
                         break;
                     default:
                         break;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurs while we are saving the rules.", ex);
+            }
+        }
+
+        private async Task GamesForNFL(Quiniela quiniela, string duration, List<NFLGame> games)
+        {
+            try
+            {
+                if (duration == "Round")
+                {
+                    games = games.Where(g => g.Week == quiniela.Week).ToList();
+                }
+                else
+                {
+                    DateTime now = DateTime.Now;
+                    NFLGame? firstGame = games.FirstOrDefault(g => g.Schedule >= now);
+
+                    if (firstGame == null)
+                    {
+                        throw new Exception("An error occurs with the games that were scheduled.");
+                    }
+
+                    games = games
+                        .Where(g => g.Week >= firstGame.Week)
+                        .OrderBy(g => g.Schedule)
+                        .ToList();
+
+                    if (games.Any() && games.First().Schedule != firstGame.Schedule)
+                    {
+                        games = games.Where(g => g.Week > firstGame.Week).ToList();
+                    }
+
+
                 }
                 
-                switch (duration!.Name)
+                var quinielaGames = games.Select(game => new QuinielaGame
                 {
-                    case "Round":
-                        break;
-                    case "Season":
-                        break;
-                    default:
-                        break;
-                }
+                    QuinielaId = quiniela.Id,
+                    NFLGameId = game.Id,
+                    GroupNumber = game.Week,
+                    Group = $"Week {game.Week}"
+                }).ToList();
+
+                await _repository.QuinielaGame.BulkInsert(quinielaGames);
+                await _repository.SaveAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("An error occurs while we are saving the rules.", ex);
+            }
+        }
+
+
+        private async Task GamesForSoccer(Quiniela quiniela,string duration, List<SoccerGame> games)
+        {
+            try
+            {
+                games = (duration == "Round") ? games.Where(g => g.RoundName == quiniela.Round).ToList() : games;
+
             }
             catch (Exception ex)
             {
