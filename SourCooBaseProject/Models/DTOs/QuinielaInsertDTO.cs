@@ -6,7 +6,9 @@ namespace QuinielasApi.Models.Entities
     {
         public string Name { get; set; } = string.Empty;
 
-        public double Price { get; set; }
+        public double? Price { get; set; }
+        public double? ViudaPrice { get; set; }
+
 
         public bool IsActive { get; set; } = true;
 
@@ -21,7 +23,6 @@ namespace QuinielasApi.Models.Entities
 
         public int SportId { get; set; }
         public int StatusId { get; set; }
-
 
     }
 }
