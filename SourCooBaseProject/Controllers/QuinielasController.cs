@@ -87,7 +87,7 @@ namespace QuinielasApi.Controllers
                 
                 var createdQuiniela = _mapper.Map<QuinielaDTO>(quinielaEntity);
 
-                return CreatedAtRoute("GetQuinielaById", new { id = quinielaEntity.Id }, createdQuiniela);
+                return Ok(createdQuiniela);
             }
             catch (Exception ex)
             {

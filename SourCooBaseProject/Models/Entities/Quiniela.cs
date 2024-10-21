@@ -11,14 +11,14 @@ namespace QuinielasApi.Models.Entities
         [MaxLength(100)]
         public string Name { get; set; } = string.Empty;
 
-        public double Price { get; set; }
+        public double? Price { get; set; }
 
         public bool IsActive { get; set; } = true;
 
         public string Code { get; set; }
 
         public int QuotaPeople { get; set; }
-        public double ViudaPrice { get; set; }
+        public double? ViudaPrice { get; set; }
         public int? Week { get; set; }
         public string? Round { get; set; } = default!;
 
