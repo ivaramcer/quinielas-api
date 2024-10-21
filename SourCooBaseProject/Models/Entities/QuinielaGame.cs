@@ -13,6 +13,6 @@ public class QuinielaGame
     public int? SoccerGameId { get; set; }
     public SoccerGame? SoccerGame { get; set; } = default!;
     public string? Group  { get; set; } = default!;
-    public string? GroupNumber {get; set;} = default!;
+    public int? GroupNumber {get; set;}
 
 }
