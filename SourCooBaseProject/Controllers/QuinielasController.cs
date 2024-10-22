@@ -65,6 +65,28 @@ namespace QuinielasApi.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+        
+        [HttpGet("GetByCode/{code}")]
+        public async Task<IActionResult> GetByCode(string code)
+        {
+            try
+            {
+                var Quiniela = await _repository.Quiniela.GetByCodeAsync(code);
+                if (Quiniela == null)
+                {
+                    _logger.LogError($"Quiniela with code: {code} hasn't been found in db.");
+                    return NotFound($"No Quiniela with the code: {code}");
+                }
+
+                var QuinielaDTO = _mapper.Map<QuinielaDTO>(Quiniela);
+                return Ok(QuinielaDTO);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside GetQuinielaById action: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
 
         [HttpPost("Create")]
         public async Task<IActionResult> CreateQuiniela([FromBody] QuinielaInsertDTO QuinielaDTO)

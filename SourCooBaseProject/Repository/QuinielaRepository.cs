@@ -25,6 +25,12 @@ namespace QuinielasApi.IRepository
             return await FindAll()
                 .FirstOrDefaultAsync(q => q.Id == id);
         }
+        
+        public async Task<Quiniela?> GetByCodeAsync(string code)
+        {
+            return await FindAll()
+                .FirstOrDefaultAsync(q => q.Code.ToLower() == code.ToLower());
+        }
 
         public async Task BulkInsert(List<Quiniela> entities)
         {
