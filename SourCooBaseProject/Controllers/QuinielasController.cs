@@ -77,6 +77,11 @@ namespace QuinielasApi.Controllers
                     return BadRequest("Quiniela object is null");
                 }
 
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                
                 var quinielaEntity = _mapper.Map<Quiniela>(QuinielaDTO);
                 _repository.Quiniela.Create(quinielaEntity);
                 await _repository.SaveAsync();
