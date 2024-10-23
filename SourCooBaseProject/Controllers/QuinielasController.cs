@@ -311,9 +311,26 @@ namespace QuinielasApi.Controllers
                 transaction.WalletId = wallet.Id;
                 transaction.GamepassId = gamepass.Id;
                 
+                _repository.TransactionHistory.Create(transaction);
+                await _repository.SaveAsync();
                 
-                wallet.Balance -= quiniela.Price;
-                _repository.Wallet.Update(wallet);
+
+                
+                List<QuinielaGame> quinielaGames = await _repository.QuinielaGame.GetAllByQuinielaId(quiniela.Id);
+                List<UserPicks> picks = new List<UserPicks>();
+
+                foreach (var game in quinielaGames)
+                {
+                    UserPicks userPicks = new UserPicks();
+                    userPicks.QuinielaGameId = game.Id;
+                    userPicks.QuinielaId = quinielaId;
+                    userPicks.UserId = userId;
+                    userPicks.Week = game.GroupNumber;
+                    userPicks.Round = game.Group;
+                    picks.Add(userPicks);
+                }
+                
+                await _repository.UserPicks.BulkInsert(picks);
                 await _repository.SaveAsync();
 
                 return Ok();
