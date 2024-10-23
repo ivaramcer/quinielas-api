@@ -184,6 +184,13 @@ namespace QuinielasApi.Controllers
         {
             try
             {
+                League? league = await _repository.League.GetByIdAsync(leagueId);
+                if (league == null)
+                {
+                    _logger.LogError($"There is not a league with the id: {leagueId}");
+                    return StatusCode(500, $"There is not a league with the id: {leagueId}");
+                }
+
                 List<GetTeamsDTO>? TeamsFromAPI = await APIClientNFL.GetTeams();
                 if (!TeamsFromAPI.Any())
                 {
@@ -251,6 +258,13 @@ namespace QuinielasApi.Controllers
         {
             try
             {
+                League? league = await _repository.League.GetByIdAsync(leagueId);
+                if (league == null)
+                {
+                    _logger.LogError($"There is not a league with the id: {leagueId}");
+                    return StatusCode(500, $"There is not a league with the id: {leagueId}");
+                }
+
                 List<GetTeamsSoccerDto>? TeamsFromAPI = await APIClientSoccer.GetTeams();
 
                 List<Team> bulkType = new List<Team>();

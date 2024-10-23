@@ -235,7 +235,14 @@ namespace QuinielasApi.Controllers
         {
             try
             {
-                List<GetGamesDTO>? teamsFromAPI = await APIClientNFL.GetGames(leagueId);
+                League? league = await _repository.League.GetByIdAsync(leagueId);
+                if (league == null)
+                {
+                    _logger.LogError($"There is not a league with the id: {leagueId}");
+                    return StatusCode(500, $"There is not a league with the id: {leagueId}");
+                }
+
+                List<GetGamesDTO>? teamsFromAPI = await APIClientNFL.GetGames(league.ExternalId);
                 if (!teamsFromAPI.Any())
                 {
                     _logger.LogError($"API it's not working");
@@ -409,7 +416,14 @@ namespace QuinielasApi.Controllers
         {
             try
             {
-                List<GetGamesDTO>? teamsFromAPI = await APIClientSoccer.GetGames(leagueId);
+
+                League? league = await _repository.League.GetByIdAsync(leagueId);
+                if (league == null)
+                {
+                    _logger.LogError($"There is not a league with the id: {leagueId}");
+                    return StatusCode(500, $"There is not a league with the id: {leagueId}");
+                }
+                List<GetGamesDTO>? teamsFromAPI = await APIClientSoccer.GetGames(league.ExternalId);
 
                 List<Game> bulkGames = new List<Game>();
                 List<Game> ourGames = await _repository.Game.GetAllAsync(TeamController.SoccerId);
