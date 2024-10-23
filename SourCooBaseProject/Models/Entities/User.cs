@@ -16,5 +16,7 @@ namespace QuinielasApi.Models.Entities
         public Role Role { get; set; } = default!;
         public int PersonId { get; set; }
         public Person Person { get; set; } = default!;
+        public virtual Wallet Wallet { get; set; }
+
     }
 }

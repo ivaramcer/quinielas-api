@@ -29,6 +29,10 @@ namespace QuinielasApi.DBContext
             .HasIndex(u => u.Email)
             .IsUnique();
             
+            modelBuilder.Entity<Wallet>()
+                .HasOne(w => w.User)       
+                .WithOne(u => u.Wallet)     
+                .HasForeignKey<Wallet>(w => w.UserId); 
 
             modelBuilder.Entity<Game>()
                 .HasOne(g => g.WinnerTeam)

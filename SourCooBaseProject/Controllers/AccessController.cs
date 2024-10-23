@@ -58,6 +58,12 @@ namespace QuinielasApi.Controllers
             
             _repository.User.CreateUser(newUser);
             await _repository.SaveAsync();
+            
+            Wallet wallet = new Wallet();
+            wallet.Balance = 1000;
+            wallet.UserId = newUser.Id;
+            _repository.Wallet.Create(wallet);
+            await _repository.SaveAsync();
 
             if (newUser.Id != 0)
                 return StatusCode(StatusCodes.Status200OK, new { isSuccess = true, response = "User registered successfully" });

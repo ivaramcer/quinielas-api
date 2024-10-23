@@ -1,14 +1,20 @@
-﻿using GamesApi.IRepository;
+﻿using GamepasssApi.IRepository;
+using GamesApi.IRepository;
 using LeaguesApi.IRepository;
+using OperationTypesApi.IRepository;
 using TeamsApi.IRepository;
 using PreferencesApi.IRepository;
 using QuinielaConfigurationsApi.IRepository;
 using QuinielaDurationsApi.IRepository;
 using QuinielaGamesApi.IRepository;
 using QuinielaPickDurationsApi.IRepository;
+using QuinielaTypeConfigurationsApi.IRepository;
 using QuinielaTypesApi.IRepository;
 
 using StatusApi.IRepository;
+using TransactionHistorysApi.IRepository;
+using UserPickssApi.IRepository;
+using WalletsApi.IRepository;
 
 namespace QuinielasApi.IRepository.Configuration
 {
@@ -17,23 +23,32 @@ namespace QuinielasApi.IRepository.Configuration
         void Save();
         Task SaveAsync();
         void Clear();
-        IUserRepository User { get; }
-        IQuinielaGameRepository QuinielaGame { get; }
-        IQuinielaConfigurationRepository QuinielaConfiguration { get; }
-        ISportRepository Sport { get; }
+        
+        IGameRepository Game { get; }
+        IGamepassRepository Gamepass { get; }
+        ILeagueRepository League { get; }
+        IOperationTypeRepository OperationType { get; }
         IPermissionRepository Permission { get; }
         IPersonRepository Person { get; }
-        IQuinielaRepository Quiniela { get; }
-        IQuinielaDurationRepository QuinielaDuration { get; }
-        IQuinielaPickDurationRepository QuinielaPickDuration { get; }
-        IQuinielaTypeRepository QuinielaType { get; }
-        IGameRepository Game { get; }
-        ITeamRepository Team { get; }
-        ILeagueRepository League { get; }
-
-
-        IStatusRepository Status{ get; }
         IPreferenceRepository Preference { get; }
+        IQuinielaRepository Quiniela { get; }
+        IQuinielaConfigurationRepository QuinielaConfiguration { get; }
+        IQuinielaDurationRepository QuinielaDuration { get; }
+        IQuinielaGameRepository QuinielaGame { get; }
+        IQuinielaPickDurationRepository QuinielaPickDuration { get; }
+        IQuinielaTypeRepository  QuinielaType { get; }
+        IQuinielaTypeConfigurationRepository  QuinielaTypeConfiguration { get; }
+        IRoleRepository  Role { get; }
+
+        ISportRepository Sport { get; }
+        IStatusRepository Status{ get; }
+        ITeamRepository Team { get; }
+        ITransactionHistoryRepository TransactionHistory { get; }
+        IUserRepository User { get; }
+        IUserPicksRepository UserPicks { get; }
+        IWalletRepository Wallet { get; }
+
+
 
     }
 }

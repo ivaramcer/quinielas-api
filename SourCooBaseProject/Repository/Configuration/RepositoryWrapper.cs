@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GamepasssApi.IRepository;
+using Microsoft.EntityFrameworkCore;
 using QuinielasApi.IRepository;
 using QuinielasApi.IRepository.Configuration;
 using QuinielasApi.DBContext;
@@ -9,33 +10,131 @@ using StatusApi.IRepository;
 using GamesApi.IRepository;
 using TeamsApi.IRepository;
 using LeaguesApi.IRepository;
+using OperationTypesApi.IRepository;
 using PreferencesApi.IRepository;
 using QuinielaConfigurationsApi.IRepository;
 using QuinielaGamesApi.IRepository;
+using QuinielaTypeConfigurationsApi.IRepository;
+using TransactionHistorysApi.IRepository;
+using UserPickssApi.IRepository;
+using WalletsApi.IRepository;
 
 namespace QuinielasApi.Repository.Configuration
 {
     public class RepositoryWrapper : IRepositoryWrapper
     {
         private DatabaseContext _dbContext = default!;
-        private IUserRepository _user = default!;
-        private IPersonRepository _person = default!;
+        private IGameRepository _game = default!;
+        private IGamepassRepository _gamepass = default!;
+        private ILeagueRepository _league = default!;
+        private IOperationTypeRepository _operationType = default!;
         private IPermissionRepository _permission = default!;
-        private ISportRepository _sport = default!;
+        private IPersonRepository _person = default!;
+        private IPreferenceRepository _preference = default!;
         private IQuinielaRepository _quiniela = default!;
+        private IQuinielaConfigurationRepository _quinielaConfiguration = default!;
         private IQuinielaDurationRepository _quinielaDuration = default!;
+        private IQuinielaGameRepository _quinielaGame = default!;
         private IQuinielaPickDurationRepository _quinielaPickDuration = default!;
         private IQuinielaTypeRepository _quinielaType = default!;
+        private IQuinielaTypeConfigurationRepository _quinielaTypeConfiguration = default!;
+        private IRoleRepository _role = default!;
+        private ISportRepository _sport = default!;
         private IStatusRepository _status = default!;
-        private IGameRepository _game = default!;
         private ITeamRepository _team = default!;
-        private ILeagueRepository _league = default!;
+        private ITransactionHistoryRepository _transactionHistoryRepository = default!;
+        private IUserRepository _user = default!;
+        private IUserPicksRepository _userPicks = default!;
+        private IWalletRepository _wallet = default!;
 
+        public IWalletRepository Wallet
+        {
+            get
+            {
+                if (_wallet == null)
+                {
+                    _wallet = new WalletRepository(_dbContext);
+                }
 
-        private IPreferenceRepository _preference = default!;
-        private IQuinielaGameRepository _quinielaGame = default!;
-        private IQuinielaConfigurationRepository _quinielaConfiguration = default!;
+                return _wallet;
+            }
+        }
+        public IUserPicksRepository UserPicks
+        {
+            get
+            {
+                if (_userPicks == null)
+                {
+                    _userPicks = new UserPicksRepository(_dbContext);
+                }
 
+                return _userPicks;
+            }
+        }
+        public ITransactionHistoryRepository TransactionHistory
+        {
+            get
+            {
+                if (_transactionHistoryRepository == null)
+                {
+                    _transactionHistoryRepository = new TransactionHistoryRepository(_dbContext);
+                }
+
+                return _transactionHistoryRepository;
+            }
+        }
+        
+        public IRoleRepository Role
+        {
+            get
+            {
+                if (_role == null)
+                {
+                    _role = new RoleRepository(_dbContext);
+                }
+
+                return _role;
+            }
+        }
+        
+        public IQuinielaTypeConfigurationRepository QuinielaTypeConfiguration
+        {
+            get
+            {
+                if (_quinielaTypeConfiguration == null)
+                {
+                    _quinielaTypeConfiguration = new QuinielaTypeConfigurationRepository(_dbContext);
+                }
+
+                return _quinielaTypeConfiguration;
+            }
+        }
+        public IOperationTypeRepository OperationType
+        {
+            get
+            {
+                if (_operationType == null)
+                {
+                    _operationType = new OperationTypeRepository(_dbContext);
+                }
+
+                return _operationType;
+            }
+        }
+        
+        public IGamepassRepository Gamepass
+        {
+            get
+            {
+                if (_gamepass == null)
+                {
+                    _gamepass = new GamepassRepository(_dbContext);
+                }
+
+                return _gamepass;
+            }
+        }
+        
         public IQuinielaConfigurationRepository QuinielaConfiguration
         {
             get
