@@ -35,10 +35,9 @@ namespace QuinielasApi.Models.Entities
         public virtual ICollection<QuinielaConfiguration> QuinielaConfigurations { get; set; } = new List<QuinielaConfiguration>();
 
 
-        public Quiniela(double? price = null)
+        public Quiniela()
         {
             Code = GenerateRandomCode();
-            Price = price ?? 0;
         }
 
         private static string GenerateRandomCode()
