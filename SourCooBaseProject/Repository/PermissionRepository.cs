@@ -11,31 +11,31 @@ namespace QuinielasApi.Repository
         public PermissionRepository(DatabaseContext dbContext) : base(dbContext)
         {
         }
-        public async Task<List<Permission>> GetAllPermissionsAsync()
+        public async Task<List<Permission>> GetAllAsync()
         {
             return await FindAll()
                 .OrderBy(p => p.Name)
                 .ToListAsync();
         }
 
-        public async Task<Permission?> GetPermissionByIdAsync(int id)
+        public async Task<Permission?> GetByIdAsync(int id)
         {
             return await FindAll()
                 .FirstOrDefaultAsync(u => u.Id == id); 
         }
 
 
-        public void CreatePermission(Permission permission)
+        public new void Create(Permission permission)
         {
-            Create(permission);
+            base.Create(permission);
         }
-        public void UpdatePermission(Permission permission)
+        public new void Update(Permission permission)
         {
-            Update(permission);
+           base.Update(permission);
         }
-        public void DeletePermission(Permission permission)
+        public new void Delete(Permission permission)
         {
-            Delete(permission);
+            base.Delete(permission);
         }
     }
 }

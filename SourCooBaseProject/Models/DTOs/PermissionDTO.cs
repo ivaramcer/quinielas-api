@@ -2,33 +2,39 @@
 
 namespace QuinielasApi.Models.Entities
 {
-    public class RoleDTO
+    public class PermissionDTO
     {
+        [Key]
         public int Id { get; set; }
         [Required]
-        public string Name { get; set; } = string.Empty!;
+
+        public string Name { get; set; } = default!;
         [Required]
 
         public string Description { get; set; } = default!;
 
     }
     
-    public class RoleInsertDTO
+    public class PermissionInsertDTO
     {
+        [Key]
         public int Id { get; set; }
         [Required]
-        public string Name { get; set; } = string.Empty!;
+
+        public string Name { get; set; } = default!;
         [Required]
 
         public string Description { get; set; } = default!;
 
     }
     
-    public class RoleUpdateDTO
+    public class PermissionUpdateDTO
     {
+        [Key]
         public int Id { get; set; }
         [Required]
-        public string Name { get; set; } = string.Empty!;
+
+        public string Name { get; set; } = default!;
         [Required]
 
         public string Description { get; set; } = default!;

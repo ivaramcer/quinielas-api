@@ -35,7 +35,7 @@ namespace QuinielasApi.Controllers
             try
             {
                 var Preferences = await _repository.Preference.GetAllAsync(sportId, userId);
-                List<int> preferencesIds = (sportId == NFLTeamController.NFLId ) ? Preferences.Select(p=>  p.NFLTeamId.Value).ToList():  Preferences.Select(p=> p.SoccerTeamId.Value).ToList();
+                List<int> preferencesIds =  Preferences.Select(p=>  p.TeamId).ToList();
 
                 return Ok(preferencesIds);
             }
@@ -86,39 +86,18 @@ namespace QuinielasApi.Controllers
                 List<int> preferencesIds = bulkPreferences.TeamsId;
                 List<int> userPreferenceIds = new List<int>();
 
-                if (bulkPreferences.SportId == NFLTeamController.NFLId)
-                {
-                    userPreferenceIds = userPreferences
-                        .Where(up => up.NFLTeamId.HasValue)  
-                        .Select(up => up.NFLTeamId.Value)    
-                        .ToList();
-                }
-                else
-                {
-                   
-                    userPreferenceIds = userPreferences
-                        .Where(up => up.SoccerTeamId.HasValue)  
-                        .Select(up => up.SoccerTeamId.Value)    
-                        .ToList();
-                }
+                userPreferenceIds = userPreferences
+                    .Select(up => up.TeamId)    
+                    .ToList();
 
                 
                  
 
                 List<int> idsToDelete = userPreferenceIds.Except(preferencesIds).ToList();
                 List<Preference> preferencesToDelete = new List<Preference>();  
-                if (bulkPreferences.SportId == NFLTeamController.NFLId)
-                {
-                     preferencesToDelete = userPreferences
-                        .Where(up =>  up.NFLTeamId.HasValue && idsToDelete.Contains(up.NFLTeamId.Value))
-                        .ToList();
-                }
-                else
-                {
-                    preferencesToDelete = userPreferences
-                        .Where(up => up.SoccerTeamId.HasValue && idsToDelete.Contains(up.SoccerTeamId.Value))
-                        .ToList();
-                }
+                preferencesToDelete = userPreferences
+                    .Where(up =>   idsToDelete.Contains(up.TeamId))
+                    .ToList();
 
                 foreach (var pref in preferencesToDelete)
                 {
@@ -135,15 +114,8 @@ namespace QuinielasApi.Controllers
                     Preference newPreference = new Preference();
                     newPreference.SportId = bulkPreferences.SportId;
                     newPreference.UserId = bulkPreferences.UserId;
-                    if (bulkPreferences.SportId == NFLTeamController.NFLId)
-                    {
-                        newPreference.NFLTeamId = item;
-                    }
-                    else
-                    {
-                        newPreference.SoccerTeamId = item;
-
-                    }
+                    newPreference.TeamId = item;
+                    
                     bulkType.Add(newPreference);
                 }
 

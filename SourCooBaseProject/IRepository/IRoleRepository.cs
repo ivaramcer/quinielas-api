@@ -4,10 +4,10 @@ namespace QuinielasApi.IRepository
 {
     public interface IRoleRepository
     {
-        Task<List<Role>> GetAllRolesAsync();
-        Task<Role?> GetRoleByIdAsync(int id);
-        void CreateRole(Role role);
-        void UpdateRole(Role role);
-        void DeleteRole(Role role);
+        Task<List<Role>> GetAllAsync();
+        Task<Role?> GetByIdAsync(int id);
+        void Create(Role role);
+        void Update(Role role);
+        void Delete(Role role);
     }
 }

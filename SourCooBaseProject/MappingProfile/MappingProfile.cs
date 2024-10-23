@@ -52,60 +52,35 @@ namespace QuinielasApi.MappingProfile
             CreateMap<StatusInsertDTO, Status>();
             CreateMap<Status, StatusInsertDTO>();
 
-            CreateMap<SoccerLeagueDTO, SoccerLeague>();
-            CreateMap<SoccerLeague, SoccerLeagueDTO>();
-
-            CreateMap<SoccerLeagueInsertDTO, SoccerLeague>();
-            CreateMap<SoccerLeague, SoccerLeagueInsertDTO>();
-
-            CreateMap<SoccerLeagueUpdateDTO, SoccerLeague>();
-            CreateMap<SoccerLeague, SoccerLeagueUpdateDTO>();
-
-            CreateMap<SoccerGame, SoccerGameDTO>();
-            CreateMap<SoccerGameDTO, SoccerGame>();
-
-            CreateMap<SoccerGame, SoccerGameInsertDTO>();
-            CreateMap<SoccerGameInsertDTO, SoccerGame>();
-
-            CreateMap<SoccerGame, SoccerGameUpdateDTO>();
-            CreateMap<SoccerGameUpdateDTO, SoccerGame>();
-
-            CreateMap<SoccerTeam, SoccerTeamDTO>();
-            CreateMap<SoccerTeamDTO, SoccerTeam>();
-
-            CreateMap<SoccerTeam, SoccerTeamInsertDTO>();
-            CreateMap<SoccerTeamInsertDTO, SoccerTeam>();
-
-            CreateMap<SoccerTeam, SoccerTeamUpdateDTO>();
-            CreateMap<SoccerTeamUpdateDTO, SoccerTeam>();
 
 
-            CreateMap<NFLLeagueDTO, NFLLeague>();
-            CreateMap<NFLLeague, NFLLeagueDTO>();
 
-            CreateMap<NFLLeagueInsertDTO, NFLLeague>();
-            CreateMap<NFLLeague, NFLLeagueInsertDTO>();
+            CreateMap<LeagueDTO, League>();
+            CreateMap<League, LeagueDTO>();
 
-            CreateMap<NFLLeagueUpdateDTO, NFLLeague>();
-            CreateMap<NFLLeague, NFLLeagueUpdateDTO>();
+            CreateMap<LeagueInsertDTO, League>();
+            CreateMap<League, LeagueInsertDTO>();
 
-            CreateMap<NFLGame, NFLGameDTO>();
-            CreateMap<NFLGameDTO, NFLGame>();
+            CreateMap<LeagueUpdateDTO, League>();
+            CreateMap<League, LeagueUpdateDTO>();
 
-            CreateMap<NFLGame, NFLGameInsertDTO>();
-            CreateMap<NFLGameInsertDTO, NFLGame>();
+            CreateMap<Game, GameDTO>();
+            CreateMap<GameDTO, Game>();
 
-            CreateMap<NFLGame, NFLGameUpdateDTO>();
-            CreateMap<NFLGameUpdateDTO, NFLGame>();
+            CreateMap<Game, GameInsertDTO>();
+            CreateMap<GameInsertDTO, Game>();
 
-            CreateMap<NFLTeam, NFLTeamDTO>();
-            CreateMap<NFLTeamDTO, NFLTeam>();
+            CreateMap<Game, GameUpdateDTO>();
+            CreateMap<GameUpdateDTO, Game>();
 
-            CreateMap<NFLTeam, NFLTeamInsertDTO>();
-            CreateMap<NFLTeamInsertDTO, NFLTeam>();
+            CreateMap<Team, TeamDTO>();
+            CreateMap<TeamDTO, Team>();
 
-            CreateMap<NFLTeam, NFLTeamUpdateDTO>();
-            CreateMap<NFLTeamUpdateDTO, NFLTeam>();
+            CreateMap<Team, TeamInsertDTO>();
+            CreateMap<TeamInsertDTO, Team>();
+
+            CreateMap<Team, TeamUpdateDTO>();
+            CreateMap<TeamUpdateDTO, Team>();
 
 
 

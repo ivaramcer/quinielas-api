@@ -11,31 +11,31 @@ namespace QuinielasApi.Repository
         public PersonRepository(DatabaseContext dbContext) : base(dbContext)
         {
         }
-        public async Task<List<Person>> GetAllPersonsAsync()
+        public async Task<List<Person>> GetAllAsync()
         {
             return await FindAll()
                 .OrderBy(p => p.Name)
                 .ToListAsync();
         }
 
-        public async Task<Person?> GetPersonByIdAsync(int id)
+        public async Task<Person?> GetByIdAsync(int id)
         {
             return await FindAll()
                 .FirstOrDefaultAsync(u => u.Id == id); 
         }
 
 
-        public void CreatePerson(Person person)
+        public new void Create(Person entity)
         {
-            Create(person);
+            base.Create(entity);
         }
-        public void UpdatePerson(Person person)
+        public new void Update(Person entity)
         {
-            Update(person);
+            base.Update(entity);
         }
-        public void DeletePerson(Person person)
+        public new void Delete(Person entity)
         {
-            Delete(person);
+            base.Delete(entity);
         }
     }
 }

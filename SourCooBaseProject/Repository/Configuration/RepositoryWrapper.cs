@@ -6,12 +6,9 @@ using QuinielaDurationsApi.IRepository;
 using QuinielaPickDurationsApi.IRepository;
 using QuinielaTypesApi.IRepository;
 using StatusApi.IRepository;
-using SoccerLeaguesApi.IRepository;
-using NFLGamesApi.IRepository;
-using NFLTeamsApi.IRepository;
-using NFLLeaguesApi.IRepository;
-using SoccerTeamsApi.IRepository;
-using SoccerGamesApi.IRepository;
+using GamesApi.IRepository;
+using TeamsApi.IRepository;
+using LeaguesApi.IRepository;
 using PreferencesApi.IRepository;
 using QuinielaConfigurationsApi.IRepository;
 using QuinielaGamesApi.IRepository;
@@ -30,13 +27,11 @@ namespace QuinielasApi.Repository.Configuration
         private IQuinielaPickDurationRepository _quinielaPickDuration = default!;
         private IQuinielaTypeRepository _quinielaType = default!;
         private IStatusRepository _status = default!;
-        private INFLGameRepository _NFLGame = default!;
-        private INFLTeamRepository _NFLTeam = default!;
-        private INFLLeagueRepository _NFLLeague = default!;
+        private IGameRepository _game = default!;
+        private ITeamRepository _team = default!;
+        private ILeagueRepository _league = default!;
 
-        private ISoccerGameRepository _soccerGame = default!;
-        private ISoccerTeamRepository _soccerTeam = default!;
-        private ISoccerLeagueRepository _soccerLeague = default!;
+
         private IPreferenceRepository _preference = default!;
         private IQuinielaGameRepository _quinielaGame = default!;
         private IQuinielaConfigurationRepository _quinielaConfiguration = default!;
@@ -79,82 +74,43 @@ namespace QuinielasApi.Repository.Configuration
             }
         }
 
-        public ISoccerTeamRepository SoccerTeam
+
+        public ITeamRepository Team
         {
             get
             {
-                if (_soccerTeam == null)
+                if (_team == null)
                 {
-                    _soccerTeam = new SoccerTeamRepository(_dbContext);
+                    _team = new TeamRepository(_dbContext);
                 }
 
-                return _soccerTeam;
+                return _team;
             }
         }
 
-        public ISoccerGameRepository SoccerGame
+        public IGameRepository Game
         {
             get
             {
-                if (_soccerGame == null)
+                if (_game == null)
                 {
-                    _soccerGame = new SoccerGameRepository(_dbContext);
+                    _game = new GameRepository(_dbContext);
                 }
 
-                return _soccerGame;
+                return _game;
             }
         }
 
-        public ISoccerLeagueRepository SoccerLeague
+        public ILeagueRepository League
         {
             get
             {
-                if (_soccerLeague == null)
+                if (_league == null)
                 {
-                    _soccerLeague = new SoccerLeagueRepository(_dbContext);
+                    _league = new LeagueRepository(_dbContext);
                 }
 
-                return _soccerLeague;
-            }
-        }
-
-
-        public INFLTeamRepository NFLTeam
-        {
-            get
-            {
-                if (_NFLTeam == null)
-                {
-                    _NFLTeam = new NFLTeamRepository(_dbContext);
-                }
-
-                return _NFLTeam;
-            }
-        }
-
-        public INFLGameRepository NFLGame
-        {
-            get
-            {
-                if (_NFLGame == null)
-                {
-                    _NFLGame = new NFLGameRepository(_dbContext);
-                }
-
-                return _NFLGame;
-            }
-        }
-
-        public INFLLeagueRepository NFLLeague
-        {
-            get
-            {
-                if (_NFLLeague == null)
-                {
-                    _NFLLeague = new NFLLeagueRepository(_dbContext);
-                }
-
-                return _NFLLeague;
+                return _league;
             }
         }
         public IStatusRepository Status

@@ -4,10 +4,10 @@ namespace QuinielasApi.IRepository
 {
     public interface IPersonRepository
     {
-        Task<List<Person>> GetAllPersonsAsync();
-        Task<Person?> GetPersonByIdAsync(int id);
-        void CreatePerson(Person person);
-        void UpdatePerson(Person person);
-        void DeletePerson(Person person);
+        Task<List<Person>> GetAllAsync();
+        Task<Person?> GetByIdAsync(int id);
+        void Create(Person entity);
+        void Update(Person entity);
+        void Delete(Person entity);
     }
 }

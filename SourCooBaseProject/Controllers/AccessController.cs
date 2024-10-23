@@ -46,7 +46,7 @@ namespace QuinielasApi.Controllers
             person.Name = user.Name;
             person.Lastname = user.Lastname;
 
-            _repository.Person.CreatePerson(person);
+            _repository.Person.Create(person);
             await _repository.SaveAsync();
 
 
@@ -82,7 +82,7 @@ namespace QuinielasApi.Controllers
             if (successUser == null)
                 return StatusCode(StatusCodes.Status200OK, new { isSuccess = false, response = "The password it's incorrect" });
 
-            Person? person = await _repository.Person.GetPersonByIdAsync(successUser.PersonId);
+            Person? person = await _repository.Person.GetByIdAsync(successUser.PersonId);
 
             PersonNameDTO successPerson = _mapper.Map<PersonNameDTO>(person);
 
