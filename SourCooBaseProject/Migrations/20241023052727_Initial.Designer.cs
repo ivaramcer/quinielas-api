@@ -12,8 +12,8 @@ using QuinielasApi.DBContext;
 namespace QuinielasApi.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20241013023141_QuinielaGamesAdded")]
-    partial class QuinielaGamesAdded
+    [Migration("20241023052727_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace QuinielasApi.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("QuinielasApi.Models.Entities.Address", b =>
+            modelBuilder.Entity("QuinielasApi.Models.Entities.Game", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -33,95 +33,32 @@ namespace QuinielasApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CityId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Number")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Street")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ZipCode")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CityId");
-
-                    b.ToTable("Addresses");
-                });
-
-            modelBuilder.Entity("QuinielasApi.Models.Entities.City", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("StateId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StateId");
-
-                    b.ToTable("Cities");
-                });
-
-            modelBuilder.Entity("QuinielasApi.Models.Entities.Country", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ISOCode")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Countries");
-                });
-
-            modelBuilder.Entity("QuinielasApi.Models.Entities.NFLGame", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AwayScore")
+                    b.Property<int?>("AwayScore")
                         .HasColumnType("integer");
 
                     b.Property<int>("AwayTeamId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("HomeScore")
+                    b.Property<int>("ExternalId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("HomeScore")
                         .HasColumnType("integer");
 
                     b.Property<int>("HomeTeamId")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("NFLTeamId")
-                        .HasColumnType("integer");
+                    b.Property<bool?>("IsDraw")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Round")
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("Schedule")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("SportId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -134,10 +71,6 @@ namespace QuinielasApi.Migrations
                     b.Property<int?>("Week")
                         .HasColumnType("integer");
 
-                    b.Property<string>("WeekString")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<int?>("WinnerTeamId")
                         .HasColumnType("integer");
 
@@ -147,20 +80,46 @@ namespace QuinielasApi.Migrations
 
                     b.HasIndex("HomeTeamId");
 
-                    b.HasIndex("NFLTeamId");
+                    b.HasIndex("SportId");
 
                     b.HasIndex("WinnerTeamId");
 
-                    b.ToTable("NFLGames");
+                    b.ToTable("Games");
                 });
 
-            modelBuilder.Entity("QuinielasApi.Models.Entities.NFLLeague", b =>
+            modelBuilder.Entity("QuinielasApi.Models.Entities.Gamepass", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("QuinielaId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuinielaId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Gamepasses");
+                });
+
+            modelBuilder.Entity("QuinielasApi.Models.Entities.League", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ExternalId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("ImageURL")
                         .IsRequired()
@@ -173,43 +132,18 @@ namespace QuinielasApi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("NFLLeagues");
-                });
-
-            modelBuilder.Entity("QuinielasApi.Models.Entities.NFLTeam", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("SportId")
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Abbreviation")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ImageURL")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("NFLLeagueId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NFLLeagueId");
+                    b.HasIndex("SportId");
 
-                    b.ToTable("NFLTeams");
+                    b.ToTable("Leagues");
                 });
 
             modelBuilder.Entity("QuinielasApi.Models.Entities.OperationType", b =>
@@ -262,9 +196,6 @@ namespace QuinielasApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AddressId")
-                        .HasColumnType("integer");
-
                     b.Property<DateTime>("DateOfBirthday")
                         .HasColumnType("timestamp with time zone");
 
@@ -282,8 +213,6 @@ namespace QuinielasApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddressId");
-
                     b.ToTable("Persons");
                 });
 
@@ -295,16 +224,10 @@ namespace QuinielasApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("NFLTeamId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("PersonId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("SoccerTeamId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("SportId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TeamId")
                         .HasColumnType("integer");
 
                     b.Property<int>("UserId")
@@ -312,13 +235,9 @@ namespace QuinielasApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NFLTeamId");
-
-                    b.HasIndex("PersonId");
-
-                    b.HasIndex("SoccerTeamId");
-
                     b.HasIndex("SportId");
+
+                    b.HasIndex("TeamId");
 
                     b.HasIndex("UserId");
 
@@ -348,38 +267,66 @@ namespace QuinielasApi.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
-                    b.Property<double>("Price")
+                    b.Property<double?>("Price")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("QuinielaDurationId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("QuinielaPickDurationId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("QuinielaTypeId")
                         .HasColumnType("integer");
 
                     b.Property<int>("QuotaPeople")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Round")
+                        .HasColumnType("text");
+
+                    b.Property<int>("SportId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("StatusId")
                         .HasColumnType("integer");
 
-                    b.Property<double>("ViudaPrice")
+                    b.Property<double?>("ViudaPrice")
                         .HasColumnType("double precision");
+
+                    b.Property<int?>("Week")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuinielaDurationId");
-
                     b.HasIndex("QuinielaPickDurationId");
 
-                    b.HasIndex("QuinielaTypeId");
+                    b.HasIndex("SportId");
 
                     b.HasIndex("StatusId");
 
                     b.ToTable("Quinielas");
+                });
+
+            modelBuilder.Entity("QuinielasApi.Models.Entities.QuinielaConfiguration", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<int>("QuinielaId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Read")
+                        .HasColumnType("text");
+
+                    b.Property<double?>("Value")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuinielaId");
+
+                    b.ToTable("QuinielaConfigurations");
                 });
 
             modelBuilder.Entity("QuinielasApi.Models.Entities.QuinielaDuration", b =>
@@ -406,7 +353,7 @@ namespace QuinielasApi.Migrations
 
                     b.HasIndex("QuinielaTypeId");
 
-                    b.ToTable("QuinielaDuration");
+                    b.ToTable("QuinielaDurations");
 
                     b.HasData(
                         new
@@ -468,30 +415,23 @@ namespace QuinielasApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("GameId")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Group")
-                        .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("GroupNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("NFLGameId")
+                    b.Property<int?>("GroupNumber")
                         .HasColumnType("integer");
 
                     b.Property<int>("QuinielaId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("SoccerGameId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("NFLGameId");
+                    b.HasIndex("GameId");
 
                     b.HasIndex("QuinielaId");
-
-                    b.HasIndex("SoccerGameId");
 
                     b.ToTable("QuinielaGames");
                 });
@@ -520,7 +460,7 @@ namespace QuinielasApi.Migrations
 
                     b.HasIndex("QuinielaDurationId");
 
-                    b.ToTable("QuinielaPickDuration");
+                    b.ToTable("QuinielaPickDurations");
 
                     b.HasData(
                         new
@@ -866,128 +806,6 @@ namespace QuinielasApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("QuinielasApi.Models.Entities.SoccerGame", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AwayScore")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("AwayTeamId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("HomeScore")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("HomeTeamId")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("IsDraw")
-                        .HasColumnType("boolean");
-
-                    b.Property<int?>("Round")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("RoundName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("Schedule")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int?>("SoccerTeamId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Venue")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int?>("WinnerTeamId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AwayTeamId");
-
-                    b.HasIndex("HomeTeamId");
-
-                    b.HasIndex("SoccerTeamId");
-
-                    b.HasIndex("WinnerTeamId");
-
-                    b.ToTable("SoccerGames");
-                });
-
-            modelBuilder.Entity("QuinielasApi.Models.Entities.SoccerLeague", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ImageURL")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SoccerLeagues");
-                });
-
-            modelBuilder.Entity("QuinielasApi.Models.Entities.SoccerTeam", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Abbreviation")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ImageURL")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<int>("SoccerLeagueId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SoccerLeagueId");
-
-                    b.ToTable("SoccerTeams");
-                });
-
             modelBuilder.Entity("QuinielasApi.Models.Entities.Sport", b =>
                 {
                     b.Property<int>("Id")
@@ -1023,32 +841,6 @@ namespace QuinielasApi.Migrations
                         });
                 });
 
-            modelBuilder.Entity("QuinielasApi.Models.Entities.State", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CountryId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("ISOCode")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CountryId");
-
-                    b.ToTable("States");
-                });
-
             modelBuilder.Entity("QuinielasApi.Models.Entities.Status", b =>
                 {
                     b.Property<int>("Id")
@@ -1070,6 +862,81 @@ namespace QuinielasApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Status");
+                });
+
+            modelBuilder.Entity("QuinielasApi.Models.Entities.Team", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Abbreviation")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("ExternalId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ImageURL")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("LeagueId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("SportId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LeagueId");
+
+                    b.HasIndex("SportId");
+
+                    b.ToTable("Teams");
+                });
+
+            modelBuilder.Entity("QuinielasApi.Models.Entities.TransactionHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("Balance")
+                        .HasColumnType("double precision");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("GamepassId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("WalletId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GamepassId");
+
+                    b.HasIndex("WalletId");
+
+                    b.ToTable("TransactionHistories");
                 });
 
             modelBuilder.Entity("QuinielasApi.Models.Entities.User", b =>
@@ -1106,47 +973,86 @@ namespace QuinielasApi.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("QuinielasApi.Models.Entities.Address", b =>
+            modelBuilder.Entity("QuinielasApi.Models.Entities.UserPicks", b =>
                 {
-                    b.HasOne("QuinielasApi.Models.Entities.City", "City")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool?>("IsDraw")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("QuinielaGameId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("QuinielaId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Round")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("TeamId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Week")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuinielaGameId");
+
+                    b.HasIndex("QuinielaId");
+
+                    b.HasIndex("TeamId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserPicks");
+                });
+
+            modelBuilder.Entity("QuinielasApi.Models.Entities.Wallet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("Balance")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Wallets");
+                });
+
+            modelBuilder.Entity("QuinielasApi.Models.Entities.Game", b =>
+                {
+                    b.HasOne("QuinielasApi.Models.Entities.Team", "AwayTeam")
                         .WithMany()
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("City");
-                });
-
-            modelBuilder.Entity("QuinielasApi.Models.Entities.City", b =>
-                {
-                    b.HasOne("QuinielasApi.Models.Entities.State", "State")
-                        .WithMany("Cities")
-                        .HasForeignKey("StateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("State");
-                });
-
-            modelBuilder.Entity("QuinielasApi.Models.Entities.NFLGame", b =>
-                {
-                    b.HasOne("QuinielasApi.Models.Entities.NFLTeam", "AwayTeam")
-                        .WithMany("AwayGames")
                         .HasForeignKey("AwayTeamId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("QuinielasApi.Models.Entities.NFLTeam", "HomeTeam")
-                        .WithMany("HomeGames")
+                    b.HasOne("QuinielasApi.Models.Entities.Team", "HomeTeam")
+                        .WithMany()
                         .HasForeignKey("HomeTeamId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("QuinielasApi.Models.Entities.NFLTeam", null)
-                        .WithMany("WinnerGames")
-                        .HasForeignKey("NFLTeamId");
+                    b.HasOne("QuinielasApi.Models.Entities.Sport", "Sport")
+                        .WithMany()
+                        .HasForeignKey("SportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("QuinielasApi.Models.Entities.NFLTeam", "WinnerTeam")
+                    b.HasOne("QuinielasApi.Models.Entities.Team", "WinnerTeam")
                         .WithMany()
                         .HasForeignKey("WinnerTeamId")
                         .OnDelete(DeleteBehavior.SetNull);
@@ -1155,46 +1061,16 @@ namespace QuinielasApi.Migrations
 
                     b.Navigation("HomeTeam");
 
+                    b.Navigation("Sport");
+
                     b.Navigation("WinnerTeam");
                 });
 
-            modelBuilder.Entity("QuinielasApi.Models.Entities.NFLTeam", b =>
+            modelBuilder.Entity("QuinielasApi.Models.Entities.Gamepass", b =>
                 {
-                    b.HasOne("QuinielasApi.Models.Entities.NFLLeague", "NFLLeague")
-                        .WithMany("Teams")
-                        .HasForeignKey("NFLLeagueId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("NFLLeague");
-                });
-
-            modelBuilder.Entity("QuinielasApi.Models.Entities.Person", b =>
-                {
-                    b.HasOne("QuinielasApi.Models.Entities.Address", "Address")
+                    b.HasOne("QuinielasApi.Models.Entities.Quiniela", "Quiniela")
                         .WithMany()
-                        .HasForeignKey("AddressId");
-
-                    b.Navigation("Address");
-                });
-
-            modelBuilder.Entity("QuinielasApi.Models.Entities.Preference", b =>
-                {
-                    b.HasOne("QuinielasApi.Models.Entities.NFLTeam", "NFLTeam")
-                        .WithMany()
-                        .HasForeignKey("NFLTeamId");
-
-                    b.HasOne("QuinielasApi.Models.Entities.Person", null)
-                        .WithMany("Preferences")
-                        .HasForeignKey("PersonId");
-
-                    b.HasOne("QuinielasApi.Models.Entities.SoccerTeam", "SoccerTeam")
-                        .WithMany()
-                        .HasForeignKey("SoccerTeamId");
-
-                    b.HasOne("QuinielasApi.Models.Entities.Sport", "Sport")
-                        .WithMany()
-                        .HasForeignKey("SportId")
+                        .HasForeignKey("QuinielaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1204,32 +1080,60 @@ namespace QuinielasApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("NFLTeam");
+                    b.Navigation("Quiniela");
 
-                    b.Navigation("SoccerTeam");
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("QuinielasApi.Models.Entities.League", b =>
+                {
+                    b.HasOne("QuinielasApi.Models.Entities.Sport", "Sport")
+                        .WithMany()
+                        .HasForeignKey("SportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Sport");
+                });
+
+            modelBuilder.Entity("QuinielasApi.Models.Entities.Preference", b =>
+                {
+                    b.HasOne("QuinielasApi.Models.Entities.Sport", "Sport")
+                        .WithMany()
+                        .HasForeignKey("SportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("QuinielasApi.Models.Entities.Team", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("QuinielasApi.Models.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Sport");
+
+                    b.Navigation("Team");
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("QuinielasApi.Models.Entities.Quiniela", b =>
                 {
-                    b.HasOne("QuinielasApi.Models.Entities.QuinielaDuration", "QuinielaDuration")
-                        .WithMany()
-                        .HasForeignKey("QuinielaDurationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("QuinielasApi.Models.Entities.QuinielaPickDuration", "QuinielaPickDuration")
                         .WithMany()
                         .HasForeignKey("QuinielaPickDurationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("QuinielasApi.Models.Entities.QuinielaType", "QuinielaType")
+                    b.HasOne("QuinielasApi.Models.Entities.Sport", "Sport")
                         .WithMany()
-                        .HasForeignKey("QuinielaTypeId")
+                        .HasForeignKey("SportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1239,13 +1143,22 @@ namespace QuinielasApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("QuinielaDuration");
-
                     b.Navigation("QuinielaPickDuration");
 
-                    b.Navigation("QuinielaType");
+                    b.Navigation("Sport");
 
                     b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("QuinielasApi.Models.Entities.QuinielaConfiguration", b =>
+                {
+                    b.HasOne("QuinielasApi.Models.Entities.Quiniela", "Quiniela")
+                        .WithMany("QuinielaConfigurations")
+                        .HasForeignKey("QuinielaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Quiniela");
                 });
 
             modelBuilder.Entity("QuinielasApi.Models.Entities.QuinielaDuration", b =>
@@ -1261,9 +1174,9 @@ namespace QuinielasApi.Migrations
 
             modelBuilder.Entity("QuinielasApi.Models.Entities.QuinielaGame", b =>
                 {
-                    b.HasOne("QuinielasApi.Models.Entities.NFLGame", "NFLGame")
+                    b.HasOne("QuinielasApi.Models.Entities.Game", "Game")
                         .WithMany()
-                        .HasForeignKey("NFLGameId")
+                        .HasForeignKey("GameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1273,17 +1186,9 @@ namespace QuinielasApi.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("QuinielasApi.Models.Entities.SoccerGame", "SoccerGame")
-                        .WithMany()
-                        .HasForeignKey("SoccerGameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("NFLGame");
+                    b.Navigation("Game");
 
                     b.Navigation("Quiniela");
-
-                    b.Navigation("SoccerGame");
                 });
 
             modelBuilder.Entity("QuinielasApi.Models.Entities.QuinielaPickDuration", b =>
@@ -1316,56 +1221,42 @@ namespace QuinielasApi.Migrations
                     b.Navigation("QuinielaType");
                 });
 
-            modelBuilder.Entity("QuinielasApi.Models.Entities.SoccerGame", b =>
+            modelBuilder.Entity("QuinielasApi.Models.Entities.Team", b =>
                 {
-                    b.HasOne("QuinielasApi.Models.Entities.SoccerTeam", "AwayTeam")
-                        .WithMany("AwayGames")
-                        .HasForeignKey("AwayTeamId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("QuinielasApi.Models.Entities.SoccerTeam", "HomeTeam")
-                        .WithMany("HomeGames")
-                        .HasForeignKey("HomeTeamId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("QuinielasApi.Models.Entities.SoccerTeam", null)
-                        .WithMany("WinnerGames")
-                        .HasForeignKey("SoccerTeamId");
-
-                    b.HasOne("QuinielasApi.Models.Entities.SoccerTeam", "WinnerTeam")
+                    b.HasOne("QuinielasApi.Models.Entities.League", "League")
                         .WithMany()
-                        .HasForeignKey("WinnerTeamId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.Navigation("AwayTeam");
-
-                    b.Navigation("HomeTeam");
-
-                    b.Navigation("WinnerTeam");
-                });
-
-            modelBuilder.Entity("QuinielasApi.Models.Entities.SoccerTeam", b =>
-                {
-                    b.HasOne("QuinielasApi.Models.Entities.SoccerLeague", "SoccerLeague")
-                        .WithMany()
-                        .HasForeignKey("SoccerLeagueId")
+                        .HasForeignKey("LeagueId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("SoccerLeague");
-                });
-
-            modelBuilder.Entity("QuinielasApi.Models.Entities.State", b =>
-                {
-                    b.HasOne("QuinielasApi.Models.Entities.Country", "Country")
-                        .WithMany("States")
-                        .HasForeignKey("CountryId")
+                    b.HasOne("QuinielasApi.Models.Entities.Sport", "Sport")
+                        .WithMany()
+                        .HasForeignKey("SportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Country");
+                    b.Navigation("League");
+
+                    b.Navigation("Sport");
+                });
+
+            modelBuilder.Entity("QuinielasApi.Models.Entities.TransactionHistory", b =>
+                {
+                    b.HasOne("QuinielasApi.Models.Entities.Gamepass", "Gamepass")
+                        .WithMany()
+                        .HasForeignKey("GamepassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("QuinielasApi.Models.Entities.Wallet", "Wallet")
+                        .WithMany()
+                        .HasForeignKey("WalletId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Gamepass");
+
+                    b.Navigation("Wallet");
                 });
 
             modelBuilder.Entity("QuinielasApi.Models.Entities.User", b =>
@@ -1387,28 +1278,44 @@ namespace QuinielasApi.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("QuinielasApi.Models.Entities.Country", b =>
+            modelBuilder.Entity("QuinielasApi.Models.Entities.UserPicks", b =>
                 {
-                    b.Navigation("States");
+                    b.HasOne("QuinielasApi.Models.Entities.QuinielaGame", "QuinielaGame")
+                        .WithMany()
+                        .HasForeignKey("QuinielaGameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("QuinielasApi.Models.Entities.Quiniela", "Quiniela")
+                        .WithMany()
+                        .HasForeignKey("QuinielaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("QuinielasApi.Models.Entities.Team", "Team")
+                        .WithMany()
+                        .HasForeignKey("TeamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("QuinielasApi.Models.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Quiniela");
+
+                    b.Navigation("QuinielaGame");
+
+                    b.Navigation("Team");
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("QuinielasApi.Models.Entities.NFLLeague", b =>
+            modelBuilder.Entity("QuinielasApi.Models.Entities.Quiniela", b =>
                 {
-                    b.Navigation("Teams");
-                });
-
-            modelBuilder.Entity("QuinielasApi.Models.Entities.NFLTeam", b =>
-                {
-                    b.Navigation("AwayGames");
-
-                    b.Navigation("HomeGames");
-
-                    b.Navigation("WinnerGames");
-                });
-
-            modelBuilder.Entity("QuinielasApi.Models.Entities.Person", b =>
-                {
-                    b.Navigation("Preferences");
+                    b.Navigation("QuinielaConfigurations");
                 });
 
             modelBuilder.Entity("QuinielasApi.Models.Entities.QuinielaDuration", b =>
@@ -1421,20 +1328,6 @@ namespace QuinielasApi.Migrations
                     b.Navigation("QuinielaDurations");
 
                     b.Navigation("QuinielaTypeConfigurations");
-                });
-
-            modelBuilder.Entity("QuinielasApi.Models.Entities.SoccerTeam", b =>
-                {
-                    b.Navigation("AwayGames");
-
-                    b.Navigation("HomeGames");
-
-                    b.Navigation("WinnerGames");
-                });
-
-            modelBuilder.Entity("QuinielasApi.Models.Entities.State", b =>
-                {
-                    b.Navigation("Cities");
                 });
 #pragma warning restore 612, 618
         }
