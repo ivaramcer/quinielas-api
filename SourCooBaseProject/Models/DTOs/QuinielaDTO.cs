@@ -15,7 +15,7 @@ namespace QuinielasApi.Models.Entities
 
         public bool IsActive { get; set; } = true;
 
-        public string Code { get; set; }
+        public string Code { get; set; } = string.Empty;
 
         public int QuotaPeople { get; set; }
         public double? ViudaPrice { get; set; }
@@ -74,7 +74,7 @@ namespace QuinielasApi.Models.Entities
 
         public bool IsActive { get; set; } = true;
 
-        public string Code { get; set; }
+        public string Code { get; set; } = string.Empty;
 
         public int QuotaPeople { get; set; }
         public double? ViudaPrice { get; set; }

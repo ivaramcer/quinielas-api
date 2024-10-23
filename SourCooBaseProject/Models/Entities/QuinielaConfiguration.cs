@@ -7,6 +7,6 @@ public class QuinielaConfiguration
     public string? Read { get; set; }
     public double? Value { get; set; }
     public int QuinielaId { get; set; }
-    public Quiniela Quiniela { get; set; }
+    public Quiniela Quiniela { get; set; }= default!;
     
 }

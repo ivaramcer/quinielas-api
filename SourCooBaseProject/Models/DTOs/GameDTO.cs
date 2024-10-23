@@ -16,7 +16,7 @@ public class GameDTO
     public bool? IsDraw { get; set; }
     public int ExternalId { get; set; }
     public int SportId { get; set; }
-    public Sport Sport { get; set; }
+    public Sport Sport { get; set; } = default!;
     public int HomeTeamId { get; set; }
     public Team HomeTeam { get; set; } = default!;
     public int AwayTeamId { get; set; }
@@ -39,7 +39,7 @@ public class GameInsertDTO
     public bool? IsDraw { get; set; }
     public int ExternalId { get; set; }
     public int SportId { get; set; }
-    public Sport Sport { get; set; }
+    public Sport Sport { get; set; } = default!;
     public int HomeTeamId { get; set; }
     public Team HomeTeam { get; set; } = default!;
     public int AwayTeamId { get; set; }
@@ -62,7 +62,7 @@ public class GameUpdateDTO
     public bool? IsDraw { get; set; }
     public int ExternalId { get; set; }
     public int SportId { get; set; }
-    public Sport Sport { get; set; }
+    public Sport Sport { get; set; } = default!;
     public int HomeTeamId { get; set; }
     public Team HomeTeam { get; set; } = default!;
     public int AwayTeamId { get; set; }

@@ -10,7 +10,7 @@ public class TransactionHistory
     public DateTime Date { get; set; }
     public string Description { get; set; } = string.Empty;
     public int GamepassId { get; set; }
-    public Gamepass Gamepass { get; set; }
+    public Gamepass Gamepass { get; set; }= default!;
     public int WalletId { get; set; }
-    public Wallet Wallet { get; set; }
+    public Wallet Wallet { get; set; }= default!;
 }

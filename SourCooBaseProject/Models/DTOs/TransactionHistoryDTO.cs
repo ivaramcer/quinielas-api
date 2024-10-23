@@ -10,9 +10,9 @@ public class TransactionHistoryDTO
     public DateTime Date { get; set; }
     public string Description { get; set; } = string.Empty;
     public int GamepassId { get; set; }
-    public Gamepass Gamepass { get; set; }
+    public Gamepass Gamepass { get; set; } = default!;
     public int WalletId { get; set; }
-    public Wallet Wallet { get; set; }
+    public Wallet Wallet { get; set; }= default!;
 }
 
 public class TransactionHistoryInsertDTO
@@ -23,9 +23,9 @@ public class TransactionHistoryInsertDTO
     public DateTime Date { get; set; }
     public string Description { get; set; } = string.Empty;
     public int GamepassId { get; set; }
-    public Gamepass Gamepass { get; set; }
+    public Gamepass Gamepass { get; set; }= default!;
     public int WalletId { get; set; }
-    public Wallet Wallet { get; set; }
+    public Wallet Wallet { get; set; }= default!;
 }
 
 public class TransactionHistoryUpdateDTO
@@ -36,7 +36,7 @@ public class TransactionHistoryUpdateDTO
     public DateTime Date { get; set; }
     public string Description { get; set; } = string.Empty;
     public int GamepassId { get; set; }
-    public Gamepass Gamepass { get; set; }
+    public Gamepass Gamepass { get; set; }= default!;
     public int WalletId { get; set; }
-    public Wallet Wallet { get; set; }
+    public Wallet Wallet { get; set; }= default!;
 }

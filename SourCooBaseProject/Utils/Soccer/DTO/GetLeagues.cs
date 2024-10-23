@@ -3,43 +3,43 @@ namespace QuinielasApi.Utils.NFL.SoccerDto
 {
     public class LeagueParametersSoccerDto
     {
-        public string Season { get; set; }
+        public string Season { get; set; } = string.Empty;
     }
 
     public class LeagueInfoSoccerDto
     {
-        public LeagueSoccerDto League { get; set; }
-        public CountrySoccerDto Country { get; set; }
-        public List<SeasonSoccerDto> Seasons { get; set; }
+        public LeagueSoccerDto League { get; set; } = default!;
+        public CountrySoccerDto Country { get; set; } = default!;
+        public List<SeasonSoccerDto> Seasons { get; set; } = default!;
     }
 
     public class LeagueSoccerDto
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Logo { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Logo { get; set; } = string.Empty;
     }
 
     public class CountrySoccerDto
     {
-        public string Name { get; set; }
-        public string Code { get; set; }
-        public string Flag { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Code { get; set; } = string.Empty;
+        public string Flag { get; set; } = string.Empty;
     }
 
     public class SeasonSoccerDto
     {
         public int Year { get; set; }
-        public string Start { get; set; }
-        public string End { get; set; }
+        public string Start { get; set; } = string.Empty;
+        public string End { get; set; } = string.Empty;
         public bool Current { get; set; }
-        public CoverageSoccerDto Coverage { get; set; }
+        public CoverageSoccerDto Coverage { get; set; }  = default!;
     }
 
     public class CoverageSoccerDto
     {
-        public GameCoverageSoccerDto Games { get; set; }
-        public SeasonStatisticsSoccerDto Statistics { get; set; }
+        public GameCoverageSoccerDto Games { get; set; }  = default!;
+        public SeasonStatisticsSoccerDto Statistics { get; set; }  = default!;
         public bool Players { get; set; }
         public bool Injuries { get; set; }
         public bool Standings { get; set; }
@@ -48,7 +48,7 @@ namespace QuinielasApi.Utils.NFL.SoccerDto
     public class GameCoverageSoccerDto
     {
         public bool Events { get; set; }
-        public StatisticsDetailsSoccerDto Statisitcs { get; set; }
+        public StatisticsDetailsSoccerDto Statisitcs { get; set; }= default!;
     }
 
     public class StatisticsDetailsSoccerDto
@@ -59,7 +59,7 @@ namespace QuinielasApi.Utils.NFL.SoccerDto
 
     public class SeasonStatisticsSoccerDto
     {
-        public PlayerStatisticsSoccerDto Season { get; set; }
+        public PlayerStatisticsSoccerDto Season { get; set; }= default!;
     }
 
     public class PlayerStatisticsSoccerDto
