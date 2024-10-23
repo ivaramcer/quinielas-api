@@ -11,7 +11,7 @@ namespace QuinielasApi.Models.Entities
         [MaxLength(100)]
         public string Name { get; set; } = string.Empty;
 
-        public double? Price { get; set; }
+        public double Price { get; set; } 
 
         public bool IsActive { get; set; } = true;
 
@@ -20,7 +20,7 @@ namespace QuinielasApi.Models.Entities
         public int QuotaPeople { get; set; }
         public double? ViudaPrice { get; set; }
         public int? Week { get; set; }
-        public string? Round { get; set; } = default!;
+        public string? Round { get; set; } = string.Empty;
 
         public DateTime Created { get; set; } = DateTime.UtcNow;
         
@@ -35,9 +35,10 @@ namespace QuinielasApi.Models.Entities
         public virtual ICollection<QuinielaConfiguration> QuinielaConfigurations { get; set; } = new List<QuinielaConfiguration>();
 
 
-        public Quiniela()
+        public Quiniela(double? price = null)
         {
             Code = GenerateRandomCode();
+            Price = price ?? 0;
         }
 
         private static string GenerateRandomCode()

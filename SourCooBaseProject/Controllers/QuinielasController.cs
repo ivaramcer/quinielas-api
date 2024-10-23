@@ -265,6 +265,65 @@ namespace QuinielasApi.Controllers
                 return StatusCode(500, "Internal server error ");
             }
         }
+        
+        [HttpPost("Join")]
+        public async Task<IActionResult> Join(int userId, int quinielaId)
+        {
+            try
+            {
+                Quiniela? quiniela = await _repository.Quiniela.GetByIdAsync(quinielaId);
+                
+                if (quiniela == null)
+                {
+                    _logger.LogError($"The server doesn't have any quiniela with the id: {quinielaId}");
+                    return StatusCode(500, "The server doesn't receive any object from the client");
+                }
+
+                User? user = await _repository.User.GetUserByIdAsync(userId);
+                if (user == null)
+                {
+                    _logger.LogError($"The server doesn't have any user with the id: {quinielaId}");
+                    return StatusCode(500, "The server doesn't receive any user from the client");
+                }
+
+                Wallet? wallet = await _repository.Wallet.GetByIdAsync(userId);
+
+                if (wallet.Balance < quiniela.Price)
+                {
+                    _logger.LogError($"Your wallet doesn't have enough balance");
+                    return StatusCode(500, "Your wallet doesn't have enough balance");
+                }
+                
+                wallet.Balance -= quiniela.Price;
+                _repository.Wallet.Update(wallet);
+                await _repository.SaveAsync();
+
+                Gamepass gamepass = new Gamepass();
+                gamepass.QuinielaId = quinielaId;
+                gamepass.UserId = userId;
+                _repository.Gamepass.Create(gamepass);
+                await _repository.SaveAsync();
+
+                TransactionHistory transaction = new TransactionHistory();
+                transaction.Date = DateTime.Now.ToUniversalTime();
+                transaction.Balance = quiniela.Price;
+                transaction.Description = "Buy for quiniela with name: " + quiniela.Name;
+                transaction.WalletId = wallet.Id;
+                transaction.GamepassId = gamepass.Id;
+                
+                
+                wallet.Balance -= quiniela.Price;
+                _repository.Wallet.Update(wallet);
+                await _repository.SaveAsync();
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside CreateBulkQuiniela action: {ex.Message}");
+                return StatusCode(500, "Internal server error ");
+            }
+        }
 
         [HttpPut("Update/{id}")]
         public async Task<IActionResult> UpdateQuiniela(int id, [FromBody] QuinielaDTO QuinielaDTO)

@@ -25,6 +25,14 @@ namespace QuinielasApi.IRepository
             return await FindAll()
                 .FirstOrDefaultAsync(q => q.Id == id);
         }
+        
+        public async Task<Wallet?> GetByUserIdAsync(int userId)
+        {
+            return await FindAll()
+                .FirstOrDefaultAsync(q => q.UserId == userId);
+        }
+
+        
 
         public async Task BulkInsert(List<Wallet> entities)
         {
