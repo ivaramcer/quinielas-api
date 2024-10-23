@@ -14,9 +14,10 @@ namespace QuinielasApi.IRepository
         public GameRepository(DatabaseContext dbContext) : base(dbContext)
         {
         }
-        public async Task<List<Game>> GetAllAsync()
+        public async Task<List<Game>> GetAllAsync(int sportId)
         {
             return await FindAll()
+                .Where(g => g.SportId == sportId)
                 .Include(g => g.WinnerTeam)
                 .Include(g => g.HomeTeam)
                 .Include(g => g.AwayTeam)

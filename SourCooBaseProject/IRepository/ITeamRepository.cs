@@ -4,7 +4,7 @@ namespace TeamsApi.IRepository
 {
     public interface ITeamRepository
     {
-        Task<List<Team>> GetAllAsync();
+        Task<List<Team>> GetAllAsync(int sportId);
         Task<Team?> GetByIdAsync(int id);
         Task BulkInsert(List<Team> entities);
         void Create(Team entity);

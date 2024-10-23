@@ -33,12 +33,12 @@ namespace QuinielasApi.Controllers
         }
 
 
-        [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllGame()
+        [HttpGet("GetAll/{sportId}")]
+        public async Task<IActionResult> GetAllGame(int sportId)
         {
             try
             {
-                var Games = await _repository.Game.GetAllAsync();
+                var Games = await _repository.Game.GetAllAsync(sportId);
                 var GameDTOs = _mapper.Map<IEnumerable<GameDTO>>(Games);
                 return Ok(GameDTOs);
             }
@@ -49,12 +49,12 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpGet("GetNextGames")]
-        public async Task<IActionResult> GetNextGames()
+        [HttpGet("GetNextGames/{sportId}")]
+        public async Task<IActionResult> GetNextGames(int sportId)
         {
             try
             {
-                var Games = await _repository.Game.GetAllAsync();
+                var Games = await _repository.Game.GetAllAsync(sportId);
                 DateTime time = DateTime.Now;
 
                 // Filter the Games for today's date and take the first 5
@@ -74,13 +74,13 @@ namespace QuinielasApi.Controllers
         }
 
 
-        [HttpGet("GetFullNextGames/{pagination}")]
-        public async Task<IActionResult> GetFullNextGames(int pagination)
+        [HttpGet("GetFullNextGames/{pagination}/{sportId}")]
+        public async Task<IActionResult> GetFullNextGames(int pagination, int sportId)
         {
             try
             {
                 int pageSize = 10;
-                var Games = await _repository.Game.GetAllAsync();
+                var Games = await _repository.Game.GetAllAsync(sportId);
                 DateTime time = DateTime.Now;
 
                 // Filter the Games for today's date and take the first 5
@@ -230,18 +230,23 @@ namespace QuinielasApi.Controllers
         }
 
 
-        [HttpPost("GetBulk")]
-        public async Task<IActionResult> GetBulk(int leagueId)
+        [HttpPost("GetBulkNFL")]
+        public async Task<IActionResult> GetBulkNFL(int leagueId)
         {
             try
             {
                 List<GetGamesDTO>? teamsFromAPI = await APIClientNFL.GetGames(leagueId);
-
+                if (!teamsFromAPI.Any())
+                {
+                    _logger.LogError($"API it's not working");
+                    return StatusCode(500, "API it's not working ");
+                }
                 List<Game> bulkGames = new List<Game>();
-                List<Game> ourGames = await _repository.Game.GetAllAsync();
+                List<Game> ourGames = await _repository.Game.GetAllAsync(TeamController.NFLId);
+                List<Team> ourTeams = await _repository.Team.GetAllAsync(TeamController.NFLId);
                 foreach (var item in teamsFromAPI!)
                 {
-                    if (ourGames.Any(t => t.Id == item.Game.Id))
+                    if (ourGames.Count != 0 && ourGames.Any(t => t.ExternalId == item.Game.Id))
                     {
                         continue;
                     }
@@ -263,6 +268,19 @@ namespace QuinielasApi.Controllers
                         awayId = item.Teams.Away.Id;
                     }
                     else
+                    {
+                        continue;
+                    }
+
+                    Team? awayTeam = ourTeams.Find(t => t.ExternalId == awayId);
+                    Team? homeTeam = ourTeams.Find(t => t.ExternalId == homeId);
+
+                    if (awayTeam == null)
+                    {
+                        continue;
+                    }
+
+                    if (homeTeam == null)
                     {
                         continue;
                     }
@@ -336,37 +354,38 @@ namespace QuinielasApi.Controllers
                     {
                         if (item.Scores.Home.Total.Value > item.Scores.Away.Total.Value)
                         {
-                            WinnerId = item.Teams.Home.Id;
+                            WinnerId = homeTeam.Id;
                         }
                         else if (item.Scores.Home.Total.Value < item.Scores.Away.Total.Value)
                         {
-                            WinnerId = item.Teams.Away.Id;
+                            WinnerId = awayTeam.Id;
                         }
                         // Si son iguales, WinnerId se mantiene como null
                     }
                     Game newGame = new Game
                     {
-                        Id = item.Game.Id,
-                        
+                        ExternalId = item.Game.Id,
                         Schedule = parsedDateTime,  
                         Venue = venueGame,
                         Status = statusGame,
                         Round = item.Game.Week,
                         Week = weekNumber,
-                        HomeTeamId = homeId,  
-                        AwayTeamId = awayId,
+                        IsDraw = null,
+                        SportId = 2,
+                        HomeTeamId = homeTeam.Id,  
+                        AwayTeamId = awayTeam.Id,
                         HomeScore = homeScore,
                         AwayScore = awayScore,
                         WinnerTeamId = WinnerId
                     };
 
-                    _repository.Game.Create(newGame);
                     bulkGames.Add(newGame);
                 }
 
                 
                 if (bulkGames.Any())
                 {
+                    await _repository.Game.BulkInsert(bulkGames);
                     await _repository.SaveAsync();
                 }
 
@@ -393,10 +412,10 @@ namespace QuinielasApi.Controllers
                 List<GetGamesDTO>? teamsFromAPI = await APIClientSoccer.GetGames(leagueId);
 
                 List<Game> bulkGames = new List<Game>();
-                List<Game> ourGames = await _repository.Game.GetAllAsync();
+                List<Game> ourGames = await _repository.Game.GetAllAsync(TeamController.SoccerId);
                 foreach (var item in teamsFromAPI!)
                 {
-                    if (ourGames.Any(t => t.Id == item.Game.Id))
+                    if (ourGames.Count == 0 && ourGames.Any(t => t.Id == item.Game.Id))
                     {
                         continue;
                     }
@@ -501,13 +520,14 @@ namespace QuinielasApi.Controllers
                     }
                     Game newGame = new Game
                     {
-                        Id = item.Game.Id,
-                        
+                        ExternalId = item.Game.Id,
                         Schedule = parsedDateTime,  
                         Venue = venueGame,
                         Status = statusGame,
                         Round = item.Game.Week,
                         Week = weekNumber,
+                        IsDraw = null,
+                        SportId = 1,
                         HomeTeamId = homeId,  
                         AwayTeamId = awayId,
                         HomeScore = homeScore,

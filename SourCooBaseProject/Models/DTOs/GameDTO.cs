@@ -16,13 +16,13 @@ public class GameDTO
     public bool? IsDraw { get; set; }
     public int ExternalId { get; set; }
     public int SportId { get; set; }
-    public Sport Sport { get; set; } = default!;
+    public SportDTO Sport { get; set; } = default!;
     public int HomeTeamId { get; set; }
-    public Team HomeTeam { get; set; } = default!;
+    public TeamDTO HomeTeam { get; set; } = default!;
     public int AwayTeamId { get; set; }
-    public Team AwayTeam { get; set; } = default!;
+    public TeamDTO AwayTeam { get; set; } = default!;
     public int? WinnerTeamId { get; set; }
-    public Team? WinnerTeam { get; set; } = default!;
+    public TeamDTO? WinnerTeam { get; set; } = default!;
 }
 
 public class GameInsertDTO

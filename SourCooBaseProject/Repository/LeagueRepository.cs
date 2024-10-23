@@ -12,9 +12,10 @@ namespace LeaguesApi.IRepository
         public LeagueRepository(DatabaseContext dbContext) : base(dbContext)
         {
         }
-        public async Task<List<League>> GetAllAsync()
+        public async Task<List<League>> GetAllAsync(int sportId)
         {
             return await FindAll()
+                .Where(l => l.SportId == sportId)
                 .OrderBy(p => p.Name)
                 .ToListAsync();
         }

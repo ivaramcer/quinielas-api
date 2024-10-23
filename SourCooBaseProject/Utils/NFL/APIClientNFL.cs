@@ -101,7 +101,6 @@ namespace QuinielasApi.Utils.NFL
         }
         public static async Task<List<GetTeamsDTO>?> GetTeams()
         {
-            List<GetTeamsDTO>? teams = new List<GetTeamsDTO>();
             string endpoint = $"teams?league={league}&season={currentYear}";
             try
             {
@@ -115,6 +114,7 @@ namespace QuinielasApi.Utils.NFL
                     client.DefaultRequestHeaders.Add("x-rapidapi-host", "v1.american-football.api-sports.io");
 
                     HttpResponseMessage response = await client.GetAsync(apiUrl);
+                    List<GetTeamsDTO>? teams = new List<GetTeamsDTO>();
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -128,6 +128,9 @@ namespace QuinielasApi.Utils.NFL
                     {
                         throw new ApiServiceException("The external system is not working");
                     }
+                    
+                    return teams;
+
                 }
 
             }
@@ -137,7 +140,6 @@ namespace QuinielasApi.Utils.NFL
                 throw;
             }
 
-            return teams;
         }
 
         public static async Task<List<LeagueInfoDto>?> GetLeagues()

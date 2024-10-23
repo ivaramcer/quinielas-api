@@ -12,7 +12,7 @@ public class LeagueDTO
     public string Type { get; set; } = string.Empty;
     public int ExternalId { get; set; }
     public int SportId { get; set; }
-    public Sport Sport { get; set; } = default!;
+    public SportDTO Sport { get; set; } = default!;
 }
 
 public class LeagueInsertDTO
@@ -25,7 +25,6 @@ public class LeagueInsertDTO
     public string Type { get; set; } = string.Empty;
     public int ExternalId { get; set; }
     public int SportId { get; set; }
-    public Sport Sport { get; set; } = default!;
 }
 
 public class LeagueUpdateDTO
@@ -38,5 +37,4 @@ public class LeagueUpdateDTO
     public string Type { get; set; } = string.Empty;
     public int ExternalId { get; set; }
     public int SportId { get; set; }
-    public Sport Sport { get; set; } = default!;
 }

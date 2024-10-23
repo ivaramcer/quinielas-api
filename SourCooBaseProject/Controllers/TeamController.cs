@@ -33,12 +33,12 @@ namespace QuinielasApi.Controllers
         }
 
 
-        [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllTeam()
+        [HttpGet("GetAll/{sportId}")]
+        public async Task<IActionResult> GetAllTeam(int sportId)
         {
             try
             {
-                var Teams = await _repository.Team.GetAllAsync();
+                var Teams = await _repository.Team.GetAllAsync(sportId);
                 var TeamDTOs = _mapper.Map<IEnumerable<TeamDTO>>(Teams);
                 return Ok(TeamDTOs);
             }
@@ -179,19 +179,28 @@ namespace QuinielasApi.Controllers
         }
 
 
-        [HttpPost("GetTeams")]
-        public async Task<IActionResult> GetTeams(int leagueId)
+        [HttpPost("GetTeamsNFL")]
+        public async Task<IActionResult> GetTeamsNFL(int leagueId)
         {
             try
             {
                 List<GetTeamsDTO>? TeamsFromAPI = await APIClientNFL.GetTeams();
+                if (!TeamsFromAPI.Any())
+                {
+                    _logger.LogError($"API it's not working");
+                    return StatusCode(500, "API it's not working ");
+                }
 
                 List<Team> bulkType = new List<Team>();
-                List<Team> ourTeams = await _repository.Team.GetAllAsync();
+                List<Team> ourTeams = await _repository.Team.GetAllAsync(TeamController.NFLId);
 
                 foreach (var item in TeamsFromAPI!)
                 {
-                    if (ourTeams.Any(t => t.Id == item.Id))
+                    if (item == null)
+                    {
+                        continue;
+                    }
+                    if (ourTeams.Count == 0 && ourTeams.Any(t => t.ExternalId == item.Id))
                     {
                         continue;
                     }
@@ -202,12 +211,15 @@ namespace QuinielasApi.Controllers
                     }
                     Team newTeam = new Team
                     {
-                        Id = item.Id.Value,
                         Name = item.Name!,
-                        LeagueId = leagueId,
                         Abbreviation = string.IsNullOrEmpty(item.Code) ? "" : item.Code,
+                        City = string.IsNullOrEmpty(item.City) ? "" : item.City,
                         ImageURL = string.IsNullOrEmpty(item.Logo) ? "" : item.Logo,
-                        City = string.IsNullOrEmpty(item.City) ? "" : item.City
+                        ExternalId = item.Id.Value,
+                        SportId = 2,
+                        LeagueId = leagueId,
+
+
                     };
 
                     _repository.Team.Create(newTeam);
@@ -242,7 +254,7 @@ namespace QuinielasApi.Controllers
                 List<GetTeamsSoccerDto>? TeamsFromAPI = await APIClientSoccer.GetTeams();
 
                 List<Team> bulkType = new List<Team>();
-                List<Team> ourTeams = await _repository.Team.GetAllAsync();
+                List<Team> ourTeams = await _repository.Team.GetAllAsync(TeamController.SoccerId);
 
                 foreach (var item in TeamsFromAPI!)
                 {

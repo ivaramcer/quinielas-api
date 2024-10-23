@@ -14,9 +14,10 @@ namespace QuinielasApi.IRepository
         public TeamRepository(DatabaseContext dbContext) : base(dbContext)
         {
         }
-        public async Task<List<Team>> GetAllAsync()
+        public async Task<List<Team>> GetAllAsync(int sportId)
         {
             return await FindAll()
+                .Where(t => t.SportId == sportId)
                 .OrderBy(p => p.Name)
                 .ToListAsync();
         }

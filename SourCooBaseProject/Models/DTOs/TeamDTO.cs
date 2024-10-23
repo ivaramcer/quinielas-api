@@ -12,9 +12,9 @@ public class TeamDTO
     public string ImageURL { get; set; } = string.Empty;
     public int ExternalId { get; set; }
     public int SportId { get; set; }
-    public Sport Sport { get; set; } = default!;
+    public SportDTO Sport { get; set; } = default!;
     public int LeagueId { get; set; }
-    public League League { get; set; } = default!;
+    public LeagueDTO League { get; set; } = default!;
 }
 
 public class TeamInsertDTO

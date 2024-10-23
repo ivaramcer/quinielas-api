@@ -32,12 +32,12 @@ namespace QuinielasApi.Controllers
 
         }
 
-        [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllLeague()
+        [HttpGet("GetAll/{sportId}")]
+        public async Task<IActionResult> GetAllLeague(int sportId)
         {
             try
             {
-                var Leagues = await _repository.League.GetAllAsync();
+                var Leagues = await _repository.League.GetAllAsync(sportId);
                 var LeagueDTOs = _mapper.Map<IEnumerable<LeagueDTO>>(Leagues);
                 return Ok(LeagueDTOs);
             }
@@ -134,21 +134,24 @@ namespace QuinielasApi.Controllers
                 List<LeagueInfoDto>? TeamsFromAPI = await APIClientNFL.GetLeagues();
 
                 List<League> bulkType = new List<League>();
-                List<League> ourLeagues = await _repository.League.GetAllAsync();
+                List<League> ourLeagues = await _repository.League.GetAllAsync(TeamController.NFLId);
 
                 foreach (var item in TeamsFromAPI!)
                 {
-                    if (ourLeagues.Any(t => t.Id == item.League.Id))
+                    League? previousLeague = ourLeagues.Find(t => t.ExternalId == item.League.Id);
+                    if (previousLeague != null)
                     {
                         continue;
                     }
 
                     League newLeague = new League
                     {
-                        Id = item.League.Id,
+                        ExternalId = item.League.Id,
                         Name = item.League.Name!,
                         ImageURL = string.IsNullOrEmpty(item.League.Logo) ? "" : item.League.Logo,
                         IsActive = true,
+                        Type = "",
+                        SportId = 2,
                     };
 
                     _repository.League.Create(newLeague);
@@ -180,21 +183,23 @@ namespace QuinielasApi.Controllers
                 List<LeagueInfoSoccerDto>? TeamsFromAPI = await APIClientSoccer.GetLeagues();
 
                 List<League> bulkType = new List<League>();
-                List<League> ourLeagues = await _repository.League.GetAllAsync();
+                List<League> ourLeagues = await _repository.League.GetAllAsync(TeamController.SoccerId);
 
                 foreach (var item in TeamsFromAPI!)
                 {
-                    if (ourLeagues.Any(t => t.Id == item.League.Id))
+                    if (ourLeagues.Any(t => t.ExternalId == item.League.Id))
                     {
                         continue;
                     }
 
                     League newLeague = new League
                     {
-                        Id = item.League.Id,
+                        ExternalId = item.League.Id,
                         Name = item.League.Name!,
                         ImageURL = string.IsNullOrEmpty(item.League.Logo) ? "" : item.League.Logo,
                         IsActive = true,
+                        Type = "",
+                        SportId = 1,
                     };
 
                     _repository.League.Create(newLeague);
