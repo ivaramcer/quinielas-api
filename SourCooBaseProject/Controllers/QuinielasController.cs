@@ -71,14 +71,16 @@ namespace QuinielasApi.Controllers
         {
             try
             {
-                var Quiniela = await _repository.Quiniela.GetByCodeAsync(code);
+                var Quiniela = await _repository.Quiniela.GetByCodeWithInformationAsync(code);
                 if (Quiniela == null)
                 {
                     _logger.LogError($"Quiniela with code: {code} hasn't been found in db.");
                     return NotFound($"No Quiniela with the code: {code}");
                 }
 
-                var QuinielaDTO = _mapper.Map<QuinielaDTO>(Quiniela);
+                var QuinielaDTO = _mapper.Map<QuinielaDetailsDTO>(Quiniela);
+                
+                
                 return Ok(QuinielaDTO);
             }
             catch (Exception ex)

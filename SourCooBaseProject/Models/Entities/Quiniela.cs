@@ -33,6 +33,7 @@ namespace QuinielasApi.Models.Entities
         public int StatusId { get; set; }
         public virtual Status Status { get; set; } = default!;
         public virtual ICollection<QuinielaConfiguration> QuinielaConfigurations { get; set; } = new List<QuinielaConfiguration>();
+        public virtual ICollection<Gamepass> Gamepasses { get; set; } = new List<Gamepass>();
 
 
         public Quiniela()

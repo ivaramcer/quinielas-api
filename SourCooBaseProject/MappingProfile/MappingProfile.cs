@@ -103,6 +103,33 @@ namespace QuinielasApi.MappingProfile
             //Update
             CreateMap<Quiniela, QuinielaUpdateDTO>();
             CreateMap<QuinielaUpdateDTO, Quiniela>();
+            
+            CreateMap<Quiniela, QuinielaDetailsDTO>()
+                .ForMember(dest => dest.Sport, 
+                    opt => opt.MapFrom(src => src.Sport != null ? src.Sport.Name : "Unknown")) // Handles null Sport
+                .ForMember(dest => dest.QuinielaType, 
+                    opt => opt.MapFrom(src => src.QuinielaPickDuration != null 
+                                              && src.QuinielaPickDuration.QuinielaDuration != null 
+                                              && src.QuinielaPickDuration.QuinielaDuration.QuinielaType != null 
+                        ? src.QuinielaPickDuration.QuinielaDuration.QuinielaType.Name 
+                        : "N/A")) // Handles null QuinielaType
+                .ForMember(dest => dest.Duration, 
+                    opt => opt.MapFrom(src => src.QuinielaPickDuration != null 
+                                              && src.QuinielaPickDuration.QuinielaDuration != null 
+                        ? src.QuinielaPickDuration.QuinielaDuration.Name 
+                        : "Unknown")) // Handles null Duration
+                .ForMember(dest => dest.Code, 
+                    opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Code) ? src.Code : "No Code")) // Handles empty or null Code
+                .ForMember(dest => dest.Members, 
+                    opt => opt.MapFrom(src => src.Gamepasses.Count)) // Assuming QuotaPeople is always provided
+                .ForMember(dest => dest.League, 
+                    opt => opt.MapFrom(src => src.Sport != null ? src.Sport.Name : "No name")) // Handles null League
+                .ForMember(dest => dest.Spots, 
+                    opt => opt.MapFrom(src => src.QuotaPeople > 0 ? src.Gamepasses.Count+"/"+ src.QuotaPeople.ToString() : "No Spots")) // Handles Spots
+                .ForMember(dest => dest.Name, 
+                    opt => opt.MapFrom(src => !string.IsNullOrEmpty(src.Name) ? src.Name : "No name"))
+                .ForMember(dest => dest.Id, 
+                    opt => opt.MapFrom(src => src.Id));
             #endregion
 
             #region QuinielaConfiguration

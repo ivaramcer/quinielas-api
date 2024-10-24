@@ -35,6 +35,20 @@ namespace QuinielasApi.Models.Entities
 
     }
     
+    public class QuinielaDetailsDTO
+    {
+        [Key]
+        public int Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Sport { get; set; }= string.Empty;
+        public int Members { get; set; }
+        public string QuinielaType { get; set; }= string.Empty;
+        public string Code { get; set; }= string.Empty;
+        public string League { get; set; }= string.Empty;
+        public string Spots { get; set; }= string.Empty;
+        public string Duration { get; set; }= string.Empty;
+    }
+    
     public class QuinielaInsertDTO
     {
         
