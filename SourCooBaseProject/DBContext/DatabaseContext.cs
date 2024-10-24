@@ -22,7 +22,7 @@ namespace QuinielasApi.DBContext
             modelBuilder.SeedQuinielaType();
             modelBuilder.SeedQuinielaDuration();
             modelBuilder.SeedQuinielaPickDuration();
-
+            modelBuilder.SeedStatus();
 
             //Rules for our entities
             modelBuilder.Entity<User>()

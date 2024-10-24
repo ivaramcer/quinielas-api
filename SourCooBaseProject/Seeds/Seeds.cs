@@ -3,6 +3,15 @@ using QuinielasApi.Models.Entities;
 
 public static class ModelBuilderExtensions
 {
+    
+    public static void SeedStatus(this ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Status>().HasData(
+            new Status { Id = 1, Name = "Public", Description = "Everyone has access!" },
+            new Status { Id = 2, Name = "Private", Description = "Selected people has access!" }
+        );
+    }
+    
     public static void SeedRole(this ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Role>().HasData(

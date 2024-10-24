@@ -63,7 +63,7 @@ namespace QuinielasApi.Controllers
                     .Take(5)
                     .ToList();
 
-                var GameDTOs = _mapper.Map<IEnumerable<GameDTO>>(filteredGames);
+                List<GameDTO> GameDTOs = _mapper.Map<List<GameDTO>>(filteredGames);
                 return Ok(GameDTOs);
             }
             catch (Exception ex)

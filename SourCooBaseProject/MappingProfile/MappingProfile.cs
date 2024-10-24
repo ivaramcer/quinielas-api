@@ -215,14 +215,14 @@ namespace QuinielasApi.MappingProfile
 
             #region Team
             //Read
-            CreateMap<Permission, PermissionDTO>();
-            CreateMap<PermissionDTO, Permission>();
+            CreateMap<Team, TeamDTO>();
+            CreateMap<TeamDTO, Team>();
             //Create
-            CreateMap<Permission, PermissionInsertDTO>();
-            CreateMap<PermissionInsertDTO, Permission>();
+            CreateMap<Team, TeamInsertDTO>();
+            CreateMap<TeamInsertDTO, Team>();
             //Update
-            CreateMap<Permission, PermissionUpdateDTO>();
-            CreateMap<PermissionUpdateDTO, Permission>();
+            CreateMap<Team, TeamUpdateDTO>();
+            CreateMap<TeamUpdateDTO, Team>();
             #endregion
 
             #region TransactionHistory
