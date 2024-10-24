@@ -268,7 +268,7 @@ namespace QuinielasApi.Controllers
             }
         }
         
-        [HttpPost("Join")]
+        [HttpPost("Join/{userId}/{quinielaId}")]
         public async Task<IActionResult> Join(int userId, int quinielaId)
         {
             try
