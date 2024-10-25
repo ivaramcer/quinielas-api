@@ -20,6 +20,14 @@ namespace QuinielasApi.IRepository
                 .ToListAsync();
         }
 
+        public async Task<List<Gamepass>> GetAllByUserIdAsync(int userId)
+        {
+            return await FindAll()
+                .Where(g => g.UserId == userId)
+                .Include(g => g.Quiniela)
+                .ToListAsync();
+        }
+
         public async Task<Gamepass?> GetByIdAsync(int id)
         {
             return await FindAll()

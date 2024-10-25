@@ -28,13 +28,34 @@ namespace QuinielasApi.Controllers
 
         }
 
-        [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAllQuiniela()
+        [HttpGet("GetAll/{sportId}")]
+        public async Task<IActionResult> GetAllQuiniela(int sportId)
         {
             try
             {
-                var Quiniela = await _repository.Quiniela.GetAllAsync();
+                var Quiniela = await _repository.Quiniela.GetAllAsync(sportId);
                 var QuinielaDTOs = _mapper.Map<IEnumerable<QuinielaDTO>>(Quiniela);
+                return Ok(QuinielaDTOs);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside GetAllQuiniela action: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("GetAllByUserId/{sportId}/{userId}")]
+        public async Task<IActionResult> GetAllQuiniela(int sportId, int userId)
+        {
+            try
+            {
+                List<Gamepass> gamePasses = await _repository.Gamepass.GetAllByUserIdAsync(userId);
+                var filteredQuinielas = gamePasses
+                    .Select(g => g.Quiniela)
+                    .Where(q => q.SportId == sportId) // Filter based on sportId or 1
+                    .ToList();
+                
+                var QuinielaDTOs = _mapper.Map<IEnumerable<QuinielaDTO>>(filteredQuinielas);
                 return Ok(QuinielaDTOs);
             }
             catch (Exception ex)

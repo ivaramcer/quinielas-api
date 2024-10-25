@@ -13,7 +13,15 @@ namespace QuinielasApi.IRepository
         public QuinielaRepository(DatabaseContext dbContext) : base(dbContext)
         {
         }
-        public async Task<List<Quiniela>> GetAllAsync()
+        public async Task<List<Quiniela>> GetAllAsync(int sportId)
+        {
+            return await FindAll()
+                .Where(q=> q.SportId == sportId)
+                .OrderBy(p => p.Name)
+                .ToListAsync();
+        }
+
+        public async Task<List<Quiniela>> GetAllByUserIdAsync(int sportId, int userId)
         {
             return await FindAll()
                 .OrderBy(p => p.Name)

@@ -4,7 +4,8 @@ namespace QuinielasApi.IRepository
 {
     public interface IQuinielaRepository
     {
-        Task<List<Quiniela>> GetAllAsync();
+        Task<List<Quiniela>> GetAllAsync(int sportId);
+        Task<List<Quiniela>> GetAllByUserIdAsync(int sportId, int userId);
         Task<Quiniela?> GetByIdAsync(int id);
         Task<Quiniela?> GetByCodeAsync(string code);
         Task<Quiniela?> GetByCodeWithInformationAsync(string code);
