@@ -79,6 +79,10 @@ namespace QuinielasApi.MappingProfile
             //Update
             CreateMap<Person, PersonUpdateDTO>();
             CreateMap<PersonUpdateDTO, Person>();
+            
+            CreateMap<Person, PersonNameDTO>();
+            CreateMap<PersonNameDTO, Person>();
+
             #endregion
 
             #region Preference
