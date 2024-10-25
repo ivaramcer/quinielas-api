@@ -6,6 +6,7 @@ using QuinielasApi.IRepository.Configuration;
 using QuinielasApi.JWTConfiguration;
 using QuinielasApi.Models.DTOs;
 using QuinielasApi.Models.Entities;
+using QuinielasApi.Utils;
 using QuinielasApi.Utils.NFL;
 using QuinielasApi.Utils.NFL.DTO;
 using QuinielasApi.Utils.NFL.SoccerDto;
@@ -134,7 +135,7 @@ namespace QuinielasApi.Controllers
                 List<LeagueInfoDto>? TeamsFromAPI = await APIClientNFL.GetLeagues();
 
                 List<League> bulkType = new List<League>();
-                List<League> ourLeagues = await _repository.League.GetAllAsync(TeamController.NFLId);
+                List<League> ourLeagues = await _repository.League.GetAllAsync(UtilsVariables.SportNFLId);
 
                 foreach (var item in TeamsFromAPI!)
                 {
@@ -183,7 +184,7 @@ namespace QuinielasApi.Controllers
                 List<LeagueInfoSoccerDto>? TeamsFromAPI = await APIClientSoccer.GetLeagues();
 
                 List<League> bulkType = new List<League>();
-                List<League> ourLeagues = await _repository.League.GetAllAsync(TeamController.SoccerId);
+                List<League> ourLeagues = await _repository.League.GetAllAsync(UtilsVariables.SportSoccerId);
 
                 foreach (var item in TeamsFromAPI!)
                 {

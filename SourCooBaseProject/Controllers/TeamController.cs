@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using QuinielasApi.IRepository.Configuration;
 using QuinielasApi.JWTConfiguration;
 using QuinielasApi.Models.Entities;
+using QuinielasApi.Utils;
 using QuinielasApi.Utils.NFL;
 using QuinielasApi.Utils.NFL.DTO;
 using QuinielasApi.Utils.NFL.SoccerDto;
@@ -16,8 +17,7 @@ namespace QuinielasApi.Controllers
     [ApiController]
     public class TeamController : ControllerBase
     {
-        public const int NFLId = 2;
-        public const int SoccerId = 1;
+
         private readonly JWTUtils _jwtUtils;
         private readonly IRepositoryWrapper _repository;
         private readonly IMapper _mapper;
@@ -199,7 +199,7 @@ namespace QuinielasApi.Controllers
                 }
 
                 List<Team> bulkType = new List<Team>();
-                List<Team> ourTeams = await _repository.Team.GetAllAsync(TeamController.NFLId);
+                List<Team> ourTeams = await _repository.Team.GetAllAsync(UtilsVariables.SportNFLId);
 
                 foreach (var item in TeamsFromAPI!)
                 {
@@ -268,7 +268,7 @@ namespace QuinielasApi.Controllers
                 List<GetTeamsSoccerDto>? TeamsFromAPI = await APIClientSoccer.GetTeams();
 
                 List<Team> bulkType = new List<Team>();
-                List<Team> ourTeams = await _repository.Team.GetAllAsync(TeamController.SoccerId);
+                List<Team> ourTeams = await _repository.Team.GetAllAsync(UtilsVariables.SportSoccerId);
 
                 foreach (var item in TeamsFromAPI!)
                 {

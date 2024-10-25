@@ -6,6 +6,7 @@ using QuinielasApi.IRepository.Configuration;
 using QuinielasApi.JWTConfiguration;
 using QuinielasApi.Models.DTOs;
 using QuinielasApi.Models.Entities;
+using QuinielasApi.Utils;
 
 namespace QuinielasApi.Controllers
 {
@@ -34,6 +35,23 @@ namespace QuinielasApi.Controllers
             try
             {
                 var Quiniela = await _repository.Quiniela.GetAllAsync(sportId);
+                var QuinielaDTOs = _mapper.Map<IEnumerable<QuinielaDTO>>(Quiniela);
+                return Ok(QuinielaDTOs);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside GetAllQuiniela action: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("GetAllActives/{sportId}")]
+        public async Task<IActionResult> GetAllActives(int sportId)
+        {
+            try
+            {
+                var Quiniela = await _repository.Quiniela.GetAllAsync(sportId);
+                Quiniela = Quiniela.Where(q => q.IsActive == true).ToList();
                 var QuinielaDTOs = _mapper.Map<IEnumerable<QuinielaDTO>>(Quiniela);
                 return Ok(QuinielaDTOs);
             }
@@ -194,12 +212,12 @@ namespace QuinielasApi.Controllers
                 
                 switch (quinielaEntity.SportId)
                 {
-                    case TeamController.NFLId:
-                        var gamesNFL = await _repository.Game.GetAllAsync(TeamController.NFLId);
+                    case UtilsVariables.SportNFLId:
+                        var gamesNFL = await _repository.Game.GetAllAsync(UtilsVariables.SportNFLId);
                         await GamesForNFL(quinielaEntity,duration!.Name,gamesNFL);
                         break;
-                    case TeamController.SoccerId:
-                        var gamesSoccer = await _repository.Game.GetAllAsync(TeamController.SoccerId);
+                    case UtilsVariables.SportSoccerId:
+                        var gamesSoccer = await _repository.Game.GetAllAsync(UtilsVariables.SportSoccerId);
                         await GamesForNFL(quinielaEntity,duration!.Name, gamesSoccer);
                         break;
                     default:

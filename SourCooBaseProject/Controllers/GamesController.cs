@@ -11,6 +11,8 @@ using QuinielasApi.Utils.NFL;
 using System.Globalization;
 using QuinielasApi.Utils.Soccer;
 using Microsoft.EntityFrameworkCore;
+using QuinielasApi.Utils;
+
 
 namespace QuinielasApi.Controllers
 {
@@ -251,8 +253,8 @@ namespace QuinielasApi.Controllers
                 }
                 List<Game> bulkGames = new List<Game>();
                 List<Game> updateGames = new List<Game>();
-                List<Game> ourGames = await _repository.Game.GetAllAsync(TeamController.NFLId);
-                List<Team> ourTeams = await _repository.Team.GetAllNoTrackingAsync(TeamController.NFLId);
+                List<Game> ourGames = await _repository.Game.GetAllAsync(UtilsVariables.SportNFLId);
+                List<Team> ourTeams = await _repository.Team.GetAllNoTrackingAsync(UtilsVariables.SportNFLId);
 
 
                 foreach (var item in teamsFromAPI!)
@@ -466,7 +468,7 @@ namespace QuinielasApi.Controllers
                 List<GetGamesDTO>? teamsFromAPI = await APIClientSoccer.GetGames(league.ExternalId);
 
                 List<Game> bulkGames = new List<Game>();
-                List<Game> ourGames = await _repository.Game.GetAllAsync(TeamController.SoccerId);
+                List<Game> ourGames = await _repository.Game.GetAllAsync(UtilsVariables.SportSoccerId);
                 foreach (var item in teamsFromAPI!)
                 {
                     if (ourGames.Count == 0 && ourGames.Any(t => t.Id == item.Game.Id))
