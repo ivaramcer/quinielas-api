@@ -202,7 +202,7 @@ namespace QuinielasApi.Controllers
                 else
                 {
                     DateTime now = DateTime.Now;
-                    Game? firstGame = games.FirstOrDefault(g => g.Schedule >= now);
+                    Game? firstGame = games.FirstOrDefault(g => g.Schedule >= now && g.Week != null);
 
                     if (firstGame == null)
                     {
