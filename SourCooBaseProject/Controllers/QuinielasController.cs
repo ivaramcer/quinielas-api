@@ -45,13 +45,13 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpGet("GetAllActives/{sportId}")]
+        [HttpGet("GetAllPublics/{sportId}")]
         public async Task<IActionResult> GetAllActives(int sportId)
         {
             try
             {
                 var Quiniela = await _repository.Quiniela.GetAllAsync(sportId);
-                Quiniela = Quiniela.Where(q => q.IsActive == true).ToList();
+                Quiniela = Quiniela.Where(q => q.StatusId == UtilsVariables.StatusPublicId).ToList();
                 var QuinielaDTOs = _mapper.Map<IEnumerable<QuinielaDTO>>(Quiniela);
                 return Ok(QuinielaDTOs);
             }
