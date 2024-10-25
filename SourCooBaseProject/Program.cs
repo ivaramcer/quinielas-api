@@ -68,7 +68,8 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
 builder.Services.AddDbContext<DatabaseContext>(
     options =>
     {
-        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+        options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
+         .EnableSensitiveDataLogging();
     });
 
 builder.Services.AddSingleton<JWTUtils>();

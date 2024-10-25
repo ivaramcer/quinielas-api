@@ -27,5 +27,13 @@ namespace QuinielasApi.Repository.Configuration
                 options.SetOutputIdentity = true;
             });
         }
+
+        public async Task BulkUpdateAsync(List<T> entities)
+        {
+            await RepositoryContext.BulkUpdateAsync(entities, options =>
+            {
+                options.SetOutputIdentity = true;
+            });
+        }
     }
 }

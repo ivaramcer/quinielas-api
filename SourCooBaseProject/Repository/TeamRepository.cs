@@ -22,6 +22,17 @@ namespace QuinielasApi.IRepository
                 .ToListAsync();
         }
 
+        public async Task<List<Team>> GetAllNoTrackingAsync(int sportId)
+        {
+            return await FindAll()
+                .Where(t => t.SportId == sportId)
+                .OrderBy(p => p.Name)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        
+
         public async Task<Team?> GetByIdAsync(int id)
         {
             return await FindAll()
@@ -32,7 +43,6 @@ namespace QuinielasApi.IRepository
         {
             await BulkInsertAsync(entities);
         }
-
         public new void Create(Team entity)
         {
             base.Create(entity);

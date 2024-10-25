@@ -35,6 +35,11 @@ namespace QuinielasApi.IRepository
             await BulkInsertAsync(entities);
         }
 
+        public async Task BulkUpdate(List<Game> entities)
+        {
+            await BulkUpdateAsync(entities);
+        }
+
         public new void Create(Game entity)
         {
             base.Create(entity);
