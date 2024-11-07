@@ -432,7 +432,7 @@ namespace QuinielasApi.Controllers
 
                 if (updateGames.Any())
                 {
-                    await _repository.Game.BulkInsert(updateGames);
+                    await _repository.Game.BulkUpdate(updateGames);
                     await _repository.SaveAsync();
                     bulkGames.AddRange(updateGames);
                 }

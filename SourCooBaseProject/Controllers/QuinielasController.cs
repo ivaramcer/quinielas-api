@@ -63,7 +63,7 @@ namespace QuinielasApi.Controllers
         }
 
         [HttpGet("GetAllByUserId/{sportId}/{userId}")]
-        public async Task<IActionResult> GetAllQuiniela(int sportId, int userId)
+        public async Task<IActionResult> GetAllQuiniela(int sportId, int userId, string? filter)
         {
             try
             {
@@ -72,7 +72,16 @@ namespace QuinielasApi.Controllers
                     .Select(g => g.Quiniela)
                     .Where(q => q.SportId == sportId) // Filter based on sportId or 1
                     .ToList();
-                
+
+                List<Quiniela> filteredByCode = new List<Quiniela>();
+                if (!string.IsNullOrEmpty(filter))
+                {
+                    filteredByCode = filteredQuinielas.Where(fq => fq.Code.Contains(filter, StringComparison.OrdinalIgnoreCase)).ToList();
+                    filteredQuinielas = filteredQuinielas.Where(fq => fq.Name.Contains(filter, StringComparison.OrdinalIgnoreCase)).ToList();
+                }
+
+                filteredQuinielas.AddRange(filteredByCode);
+
                 var QuinielaDTOs = _mapper.Map<IEnumerable<QuinielaDTO>>(filteredQuinielas);
                 return Ok(QuinielaDTOs);
             }
