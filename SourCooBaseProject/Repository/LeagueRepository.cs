@@ -20,6 +20,15 @@ namespace LeaguesApi.IRepository
                 .ToListAsync();
         }
 
+        public async Task<List<League>> GetAllQuinielasAsync(int sportId)
+        {
+            return await FindAll()
+                .Include(l => l.Quinielas)
+                .Where(l => l.SportId == sportId)
+                .OrderBy(p => p.Name)
+                .ToListAsync();
+        }
+
         public async Task<League?> GetByIdAsync(int id)
         {
             return await FindAll()

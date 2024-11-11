@@ -10,4 +10,5 @@ public class Gamepass
     public User User { get; set; }= default!;
     public int QuinielaId { get; set; }
     public Quiniela Quiniela { get; set; }= default!;
+    public int Points { get; set; }
 }

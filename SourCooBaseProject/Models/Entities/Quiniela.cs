@@ -18,6 +18,7 @@ namespace QuinielasApi.Models.Entities
         public string Code { get; set; }
 
         public int QuotaPeople { get; set; }
+        public int QuotaPeopleFilled { get; set; }
         public double? ViudaPrice { get; set; }
         public int? Week { get; set; }
         public string? Round { get; set; } = string.Empty;
@@ -32,6 +33,9 @@ namespace QuinielasApi.Models.Entities
         public virtual Sport Sport { get; set; } = default!;
         public int StatusId { get; set; }
         public virtual Status Status { get; set; } = default!;
+
+        public int LeagueId { get; set; }
+        public virtual League League { get; set; } = default!;
         public virtual ICollection<QuinielaConfiguration> QuinielaConfigurations { get; set; } = new List<QuinielaConfiguration>();
         public virtual ICollection<Gamepass> Gamepasses { get; set; } = new List<Gamepass>();
 

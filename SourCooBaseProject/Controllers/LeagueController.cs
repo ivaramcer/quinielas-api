@@ -49,6 +49,22 @@ namespace QuinielasApi.Controllers
             }
         }
 
+        [HttpGet("GetAllQuinielas/{sportId}")]
+        public async Task<IActionResult> GetAllQuinielas(int sportId)
+        {
+            try
+            {
+                var Leagues = await _repository.League.GetAllQuinielasAsync(sportId);
+                IEnumerable<LeagueQuinielasDTO> LeagueDTOs = _mapper.Map<IEnumerable<LeagueQuinielasDTO>>(Leagues);
+                return Ok(LeagueDTOs);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside GetAllLeague action: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetLeagueById(int id)
         {

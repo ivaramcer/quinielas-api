@@ -5,6 +5,8 @@ namespace LeaguesApi.IRepository
     public interface ILeagueRepository
     {
         Task<List<League>> GetAllAsync(int sportId);
+        Task<List<League>> GetAllQuinielasAsync(int sportId);
+
         Task<League?> GetByIdAsync(int id);
         Task BulkInsert(List<League> entities);
         void Create(League entity);

@@ -13,4 +13,5 @@ public class League
     public int ExternalId { get; set; }
     public int SportId { get; set; }
     public Sport Sport { get; set; } = default!;
+    public ICollection<Quiniela> Quinielas { get; set; } = new List<Quiniela>();
 }

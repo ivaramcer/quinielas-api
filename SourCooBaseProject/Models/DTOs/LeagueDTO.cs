@@ -38,3 +38,16 @@ public class LeagueUpdateDTO
     public int ExternalId { get; set; }
     public int SportId { get; set; }
 }
+public class LeagueQuinielasDTO
+{
+    [Key]
+    public int Id { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string ImageURL { get; set; } = string.Empty;
+    public bool IsActive { get; set; }
+    public string Type { get; set; } = string.Empty;
+    public int ExternalId { get; set; }
+    public int SportId { get; set; }
+    public List<QuinielaDTO> Quinielas { get; set; } = new List<QuinielaDTO>();
+}
+

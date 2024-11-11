@@ -43,6 +43,12 @@ namespace QuinielasApi.MappingProfile
             //Update
             CreateMap<League, LeagueUpdateDTO>();
             CreateMap<LeagueUpdateDTO, League>();
+
+            CreateMap<LeagueQuinielasDTO, League>();
+            CreateMap<League, LeagueQuinielasDTO>();
+
+
+            
             #endregion
 
             #region OperationType
