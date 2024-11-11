@@ -60,7 +60,6 @@ namespace QuinielasApi.Controllers
                 var Games = await _repository.Game.GetAllAsync(sportId);
                 DateTime time = DateTime.Now;
 
-                // Filter the Games for today's date and take the first 5
                 var filteredGames = Games
                     .Where(g => g.Schedule.Day >= time.Day && g.Schedule.Month == time.Month && g.Schedule.Year == time.Year)
                     .Take(5)

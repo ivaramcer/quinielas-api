@@ -6,6 +6,8 @@ public class UserPicksDTO
 {
     [Key]
     public int Id { get; set; }
+    public bool IsRegistered { get; set; }
+    public DateTime Deadline { get; set; }
     public bool? IsDraw { get; set; }
     public int? Week { get; set; }
     public string Round { get; set; } = String.Empty;

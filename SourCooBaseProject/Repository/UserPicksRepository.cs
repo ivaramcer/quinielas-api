@@ -20,6 +20,13 @@ namespace QuinielasApi.IRepository
                 .ToListAsync();
         }
 
+        public async Task<List<UserPicks>> GetAllByUserIdAsync(int userId)
+        {
+            return await FindAll()
+                .Where(up => up.UserId == userId)
+                .ToListAsync();
+        }
+
         public async Task<UserPicks?> GetByIdAsync(int id)
         {
             return await FindAll()
