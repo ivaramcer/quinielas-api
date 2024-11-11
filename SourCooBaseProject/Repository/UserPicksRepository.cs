@@ -17,6 +17,8 @@ namespace QuinielasApi.IRepository
         public async Task<List<UserPicks>> GetAllAsync()
         {
             return await FindAll()
+                 .Include(up => up.QuinielaGame)
+                    .ThenInclude(qg => qg.Game)
                 .ToListAsync();
         }
 
@@ -44,6 +46,11 @@ namespace QuinielasApi.IRepository
         public async Task BulkInsert(List<UserPicks> entities)
         {
             await BulkInsertAsync(entities);
+        }
+
+        public async Task BulkUpdate(List<UserPicks> entities)
+        {
+            await BulkUpdateAsync(entities);
         }
 
         public new void Create(UserPicks entity)

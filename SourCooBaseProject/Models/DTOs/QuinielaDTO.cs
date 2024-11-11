@@ -69,7 +69,7 @@ namespace QuinielasApi.Models.Entities
         
         public int QuinielaPickDurationId { get; set; }
 
-
+        public int LeagueId { get; set; }
         public int SportId { get; set; }
         public int StatusId { get; set; }
 
