@@ -19,4 +19,6 @@ public class UserPicks
     public User User { get; set; } = default!;
     public int QuinielaId { get; set; }
     public Quiniela Quiniela { get; set; } = default!;
+    public int SportId { get; set; }
+    public Sport Sport { get; set; } = default!;
 }

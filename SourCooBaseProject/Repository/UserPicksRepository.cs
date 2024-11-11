@@ -20,10 +20,18 @@ namespace QuinielasApi.IRepository
                 .ToListAsync();
         }
 
-        public async Task<List<UserPicks>> GetAllByUserIdAsync(int userId)
+        public async Task<List<UserPicks>> GetAllByUserIdAsync(int userId, int sportId)
         {
             return await FindAll()
+                .Include(up => up.QuinielaGame)
+                    .ThenInclude(qg => qg.Game)
+                        .ThenInclude(g => g.HomeTeam)
+                .Include(up => up.QuinielaGame)
+                    .ThenInclude(qg => qg.Game)
+                        .ThenInclude(g => g.AwayTeam)
                 .Where(up => up.UserId == userId)
+                .Where(up => up.SportId == sportId)
+
                 .ToListAsync();
         }
 

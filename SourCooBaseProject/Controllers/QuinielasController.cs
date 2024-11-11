@@ -377,6 +377,8 @@ namespace QuinielasApi.Controllers
                     userPicks.UserId = userId;
                     userPicks.Week = game.GroupNumber;
                     userPicks.Round = game.Group;
+                    userPicks.SportId = quiniela.SportId;
+                    userPicks.Deadline = game.Game.Schedule;
                     picks.Add(userPicks);
                 }
                 

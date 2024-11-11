@@ -21,6 +21,7 @@ namespace QuinielaGamesApi.IRepository
         public async Task<List<QuinielaGame>> GetAllByQuinielaId(int quinielaId)
         {
             return await FindByCondition(qg => qg.QuinielaId == quinielaId )
+                .Include(qg => qg.Game)
                 .ToListAsync();
         }
 

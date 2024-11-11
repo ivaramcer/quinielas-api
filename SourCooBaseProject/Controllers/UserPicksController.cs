@@ -44,8 +44,8 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpGet("GetNext/{userId}/{pagination}")]
-        public async Task<IActionResult> GetAll(int userId, int pagination)
+        [HttpGet("GetNext/{userId}/{pagination}/{sportId}")]
+        public async Task<IActionResult> GetNext(int userId, int pagination, int sportId)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace QuinielasApi.Controllers
                     _logger.LogError($"There is not an user with the id: {userId}");
                     return NotFound($"There is not an user with the id: {userId}");
                 }
-                var picks = await _repository.UserPicks.GetAllByUserIdAsync(userId);
+                var picks = await _repository.UserPicks.GetAllByUserIdAsync(userId, sportId);
                 DateTime time = DateTime.Now;
 
 
