@@ -29,13 +29,32 @@ namespace QuinielasApi.Controllers
 
         }
 
-        [HttpGet("GetAll/{sportId}")]
-        public async Task<IActionResult> GetAllQuiniela(int sportId)
+        [HttpGet("GetAll/{sportId}/{pagination}")]
+        public async Task<IActionResult> GetAllQuiniela(int sportId, int pagination, string? filter)
         {
             try
             {
-                var Quiniela = await _repository.Quiniela.GetAllAsync(sportId);
-                var QuinielaDTOs = _mapper.Map<IEnumerable<QuinielaDTO>>(Quiniela);
+                int pageSize = 5;
+                var quiniela = await _repository.Quiniela.GetAllAsync(sportId);
+                List<Quiniela> quinielasCodes = new List<Quiniela>();
+
+                if (!string.IsNullOrEmpty(filter))
+                {
+                    quinielasCodes = quiniela.Where(q => q.Code.Contains(filter, StringComparison.OrdinalIgnoreCase)).ToList();
+                    quiniela = quiniela.Where(q=> q.Name.Contains(filter, StringComparison.OrdinalIgnoreCase)).ToList();
+                }
+                quiniela.AddRange(quinielasCodes);
+
+                if (pagination != 0)
+                {
+                    quiniela = quiniela
+                        .Skip(pageSize * (pagination - 1))
+                        .Take(pageSize)
+                        .ToList();
+                }
+
+                var QuinielaDTOs = _mapper.Map<IEnumerable<QuinielaDTO>>(quiniela);
+
                 return Ok(QuinielaDTOs);
             }
             catch (Exception ex)

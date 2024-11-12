@@ -49,13 +49,29 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpGet("GetAllQuinielas/{sportId}")]
-        public async Task<IActionResult> GetAllQuinielas(int sportId)
+        [HttpGet("GetAllQuinielas/{sportId}/{pagination}")]
+        public async Task<IActionResult> GetAllQuinielas(int sportId, int pagination, int? leagueId)
         {
             try
             {
-                var Leagues = await _repository.League.GetAllQuinielasAsync(sportId);
-                IEnumerable<LeagueQuinielasDTO> LeagueDTOs = _mapper.Map<IEnumerable<LeagueQuinielasDTO>>(Leagues);
+                int pageSize = 5; 
+                List<League> leagues = await _repository.League.GetAllQuinielasAsync(sportId);
+
+                if (leagueId.HasValue)
+                {
+                    leagues = leagues.Where(l => l.Id == leagueId).ToList();
+                }
+
+                foreach (var league in leagues)
+                {
+                    league.Quinielas = league.Quinielas.Where(q => q.StatusId == 1).ToList();
+                }
+
+                leagues = leagues
+                    .Skip(pageSize * (pagination - 1))
+                    .Take(pageSize)
+                    .ToList();
+                IEnumerable<LeagueQuinielasDTO> LeagueDTOs = _mapper.Map<IEnumerable<LeagueQuinielasDTO>>(leagues);
                 return Ok(LeagueDTOs);
             }
             catch (Exception ex)
