@@ -7,7 +7,7 @@ public class QuinielaConfigurationDTO
     public string? Read { get; set; }
     public double? Value { get; set; }
     public int QuinielaId { get; set; }
-    public Quiniela Quiniela { get; set; } = default!;
+    public QuinielaDTO Quiniela { get; set; } = default!;
     
 }
 
@@ -18,7 +18,7 @@ public class QuinielaConfigurationInsertDTO
     public string? Read { get; set; }
     public double? Value { get; set; }
     public int QuinielaId { get; set; }
-    public Quiniela Quiniela { get; set; } = default!;
+    public QuinielaInsertDTO Quiniela { get; set; } = default!;
 
 }
 
@@ -29,6 +29,6 @@ public class QuinielaConfigurationUpdateDTO
     public string? Read { get; set; }
     public double? Value { get; set; }
     public int QuinielaId { get; set; }
-    public Quiniela Quiniela { get; set; } = default!;
+    public QuinielaUpdateDTO Quiniela { get; set; } = default!;
     
 }

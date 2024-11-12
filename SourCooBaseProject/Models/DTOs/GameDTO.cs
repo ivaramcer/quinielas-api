@@ -4,7 +4,6 @@ namespace QuinielasApi.Models.Entities;
 
 public class GameDTO
 {
-    [Key]
     public int Id { get; set; }
     public DateTime Schedule { get; set; }
     public string Venue { get; set; }  = string.Empty;

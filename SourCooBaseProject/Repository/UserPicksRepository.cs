@@ -37,6 +37,30 @@ namespace QuinielasApi.IRepository
                 .ToListAsync();
         }
 
+        public async Task<List<UserPicks>> GetAllByQuinielaUserIdAsync(int userId, int quinielaId)
+        {
+            return await FindAll()
+                .Include(up => up.QuinielaGame)
+                    .ThenInclude(qg => qg.Game)
+                        .ThenInclude(g => g.HomeTeam)
+                .Include(up => up.QuinielaGame)
+                    .ThenInclude(qg => qg.Game)
+                        .ThenInclude(g => g.AwayTeam)
+                .Where(up => up.UserId == userId)
+                .Where(up => up.QuinielaId == quinielaId)
+
+                .ToListAsync();
+        }
+
+        public async Task<List<UserPicks>> MakePicks(int userId, int quinielaId)
+        {
+            return await FindAll()
+                                .Where(up => up.UserId == userId)
+                .Where(up => up.QuinielaId == quinielaId)
+                .ToListAsync();
+        }
+
+
         public async Task<UserPicks?> GetByIdAsync(int id)
         {
             return await FindAll()

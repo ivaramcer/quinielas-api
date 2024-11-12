@@ -4,41 +4,38 @@ namespace QuinielasApi.Models.Entities
 {
     public class PreferenceDTO
     {
-        [Key]
         public int Id { get; set; }
         public int UserId { get; set; }
-        public User User { get; set; } = default!;
+        public UserDTO User { get; set; } = default!;
         public int SportId { get; set; }
-        public Sport Sport { get; set; } = default!;
+        public SportDTO Sport { get; set; } = default!;
 
         public int TeamId { get; set; }
-        public Team Team { get; set; } = default!;
+        public TeamDTO Team { get; set; } = default!;
     }
     
     public class PreferenceInsertDTO
     {
-        [Key]
         public int Id { get; set; }
         public int UserId { get; set; }
-        public User User { get; set; } = default!;
+        public UserInsertDTO User { get; set; } = default!;
         public int SportId { get; set; }
-        public Sport Sport { get; set; } = default!;
+        public SportInsertDTO Sport { get; set; } = default!;
 
         public int TeamId { get; set; }
-        public Team Team { get; set; } = default!;
+        public TeamInsertDTO Team { get; set; } = default!;
     }
     
     public class PreferenceUpdateDTO
     {
-        [Key]
         public int Id { get; set; }
         public int UserId { get; set; }
-        public User User { get; set; } = default!;
+        public UserUpdateDTO User { get; set; } = default!;
         public int SportId { get; set; }
-        public Sport Sport { get; set; } = default!;
+        public SportUpdateDTO Sport { get; set; } = default!;
 
         public int TeamId { get; set; }
-        public Team Team { get; set; } = default!;
+        public TeamUpdateDTO Team { get; set; } = default!;
     }
     
     public class PreferenceBulkDTO

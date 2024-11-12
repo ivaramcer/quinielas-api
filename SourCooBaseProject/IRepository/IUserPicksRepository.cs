@@ -6,6 +6,8 @@ namespace UserPickssApi.IRepository
     {
         Task<List<UserPicks>> GetAllAsync();
         Task<List<UserPicks>> GetAllByUserIdAsync(int userId, int sportId);
+        Task<List<UserPicks>> GetAllByQuinielaUserIdAsync(int userId, int quinielaId);
+        Task<List<UserPicks>> MakePicks(int userId, int quinielaId);
         Task<UserPicks?> GetByIdAsync(int id);
         Task BulkInsert(List<UserPicks> entities);
         Task BulkUpdate(List<UserPicks> entities);

@@ -44,6 +44,22 @@ namespace QuinielasApi.Controllers
             }
         }
 
+        [HttpGet("GetAllByUserQuiniela/{userId}/{quinielaId}")]
+        public async Task<IActionResult> GetAllByUserQuiniela(int userId, int quinielaId)
+        {
+            try
+            {
+                var UserPickss = await _repository.UserPicks.GetAllByQuinielaUserIdAsync(userId, quinielaId);
+                var UserPicksDTOs = _mapper.Map<IEnumerable<UserPicksDTO>>(UserPickss);
+                return Ok(UserPicksDTOs);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside GetAllUserPicks action: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpGet("GetNext/{userId}/{pagination}/{sportId}")]
         public async Task<IActionResult> GetNext(int userId, int pagination, int sportId)
         {
@@ -97,6 +113,47 @@ namespace QuinielasApi.Controllers
                 return StatusCode(500, "Internal server error");
             }
         }
+
+        [HttpPut("UpdateBulk/{userId}/{quinielaId}")]
+        public async Task<IActionResult> UpdateBulk(List<UserPicksInsertBulkDTO> picksDTO, int userId, int quinielaId)
+        {
+            try
+            {
+                if (picksDTO == null || picksDTO.Count == 0)
+                {
+                    _logger.LogError("UserPicks object is null or mismatching ids.");
+                    return BadRequest("Invalid model object or mismatching ids");
+                }
+
+                List<UserPicks> picks = await _repository.UserPicks.MakePicks(userId, quinielaId);
+
+                foreach (var item in picks)
+                {
+                    var matchingDTO = picksDTO.FirstOrDefault(dto => dto.Id == item.Id);
+
+                    if (matchingDTO != null)
+                    {
+                        item.IsRegistered = true;
+                        item.TeamId = matchingDTO.TeamId;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    _repository.UserPicks.Update(item);
+                }
+
+                await _repository.SaveAsync();
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside UpdateUserPicks action: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
 
         [HttpPost("Create")]
         public async Task<IActionResult> CreateUserPicks([FromBody] UserPicksInsertDTO UserPicksDTO)

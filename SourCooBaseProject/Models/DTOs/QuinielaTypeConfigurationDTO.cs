@@ -5,23 +5,14 @@ namespace QuinielasApi.Models.Entities
 {
     public class QuinielaTypeConfigurationDTO
     {
-        [Key]
         public int Id { get; set; }
-        [Required]
-        [MaxLength(100)]
         public int OperationTypeId { get; set; }
-        public OperationType OperationType { get; set; } = default!;
-        [Required]
-        [MaxLength(250)]
+        public OperationTypeDTO OperationType { get; set; } = default!;
         public string Description { get; set; } = string.Empty;
-        [Required]
-        [MaxLength(250)]
         public string Name { get; set; } = string.Empty;
-        [Required]
-        [MaxLength(250)]
         public string Value { get; set; } = string.Empty;
         public int QuinielaTypeId  { get; set; }
-        public QuinielaType QuinielaType { get; set; } = default!;
+        public QuinielaTypeDTO QuinielaType { get; set; } = default!;
 
     }
     
@@ -32,7 +23,7 @@ namespace QuinielasApi.Models.Entities
         [Required]
         [MaxLength(100)]
         public int OperationTypeId { get; set; }
-        public OperationType OperationType { get; set; } = default!;
+        public OperationTypeInsertDTO OperationType { get; set; } = default!;
         [Required]
         [MaxLength(250)]
         public string Description { get; set; } = string.Empty;
@@ -43,7 +34,7 @@ namespace QuinielasApi.Models.Entities
         [MaxLength(250)]
         public string Value { get; set; } = string.Empty;
         public int QuinielaTypeId  { get; set; }
-        public QuinielaType QuinielaType { get; set; } = default!;
+        public QuinielaTypeInsertDTO QuinielaType { get; set; } = default!;
 
     }
     
@@ -54,7 +45,7 @@ namespace QuinielasApi.Models.Entities
         [Required]
         [MaxLength(100)]
         public int OperationTypeId { get; set; }
-        public OperationType OperationType { get; set; } = default!;
+        public OperationTypeUpdateDTO OperationType { get; set; } = default!;
         [Required]
         [MaxLength(250)]
         public string Description { get; set; } = string.Empty;
@@ -65,7 +56,7 @@ namespace QuinielasApi.Models.Entities
         [MaxLength(250)]
         public string Value { get; set; } = string.Empty;
         public int QuinielaTypeId  { get; set; }
-        public QuinielaType QuinielaType { get; set; } = default!;
+        public QuinielaTypeUpdateDTO QuinielaType { get; set; } = default!;
 
     }
 }

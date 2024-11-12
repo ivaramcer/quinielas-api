@@ -296,6 +296,11 @@ namespace QuinielasApi.MappingProfile
             //Update
             CreateMap<UserPicks, UserPicksUpdateDTO>();
             CreateMap<UserPicksUpdateDTO, UserPicks>();
+
+            CreateMap<UserPicksInsertBulkDTO, UserPicks>();
+            CreateMap<UserPicks, UserPicksInsertBulkDTO>();
+
+            
             #endregion
 
             #region Wallet

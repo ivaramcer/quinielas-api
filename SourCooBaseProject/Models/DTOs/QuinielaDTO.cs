@@ -4,11 +4,8 @@ namespace QuinielasApi.Models.Entities
 {
     public class QuinielaDTO
     {
-        [Key]
         public int Id { get; set; }
 
-        [Required]
-        [MaxLength(100)]
         public string Name { get; set; } = string.Empty;
 
         public double? Price { get; set; }
@@ -26,18 +23,17 @@ namespace QuinielasApi.Models.Entities
         
         public int QuinielaPickDurationId { get; set; }
 
-        public virtual QuinielaPickDuration QuinielaPickDuration { get; set; } = default!;
+        public virtual QuinielaPickDurationDTO QuinielaPickDuration { get; set; } = default!;
 
         public int SportId { get; set; }
-        public virtual Sport Sport { get; set; } = default!;
+        public virtual SportDTO Sport { get; set; } = default!;
         public int StatusId { get; set; }
-        public virtual Status Status { get; set; } = default!;
+        public virtual StatusDTO Status { get; set; } = default!;
 
     }
     
     public class QuinielaDetailsDTO
     {
-        [Key]
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Sport { get; set; }= string.Empty;
@@ -77,7 +73,6 @@ namespace QuinielasApi.Models.Entities
     
     public class QuinielaUpdateDTO
     {
-        [Key]
         public int Id { get; set; }
 
         [Required]
@@ -99,12 +94,12 @@ namespace QuinielasApi.Models.Entities
         
         public int QuinielaPickDurationId { get; set; }
 
-        public virtual QuinielaPickDuration QuinielaPickDuration { get; set; } = default!;
+        public virtual QuinielaPickDurationUpdateDTO QuinielaPickDuration { get; set; } = default!;
 
         public int SportId { get; set; }
-        public virtual Sport Sport { get; set; } = default!;
+        public virtual SportUpdateDTO Sport { get; set; } = default!;
         public int StatusId { get; set; }
-        public virtual Status Status { get; set; } = default!;
+        public virtual StatusUpdateDTO Status { get; set; } = default!;
 
     }
 }

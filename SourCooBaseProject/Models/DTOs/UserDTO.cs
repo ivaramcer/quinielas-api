@@ -7,29 +7,25 @@ namespace QuinielasApi.Models.Entities
     public class UserDTO
     {
         public int Id { get; set; }
-        [Required]
         public string Email { get; set; } = default!;
-        [Required]
 
         public string Password { get; set; } = default!;
         public int RoleId { get; set; }
-        public Role Role { get; set; } = default!;
+        public RoleDTO Role { get; set; } = default!;
         public int PersonId { get; set; }
-        public Person Person { get; set; } = default!;
+        public PersonDTO Person { get; set; } = default!;
     }
     
     public class UserInsertDTO
     {
         public int Id { get; set; }
-        [Required]
         public string Email { get; set; } = default!;
-        [Required]
 
         public string Password { get; set; } = default!;
         public int RoleId { get; set; }
-        public Role Role { get; set; } = default!;
+        public RoleInsertDTO Role { get; set; } = default!;
         public int PersonId { get; set; }
-        public Person Person { get; set; } = default!;
+        public PersonInsertDTO Person { get; set; } = default!;
     }
     
     public class UserUpdateDTO
@@ -41,9 +37,9 @@ namespace QuinielasApi.Models.Entities
 
         public string Password { get; set; } = default!;
         public int RoleId { get; set; }
-        public Role Role { get; set; } = default!;
+        public RoleUpdateDTO Role { get; set; } = default!;
         public int PersonId { get; set; }
-        public Person Person { get; set; } = default!;
+        public PersonUpdateDTO Person { get; set; } = default!;
     }
     
     public class UserForCreation
