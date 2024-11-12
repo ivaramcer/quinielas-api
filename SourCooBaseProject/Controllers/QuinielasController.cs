@@ -30,7 +30,7 @@ namespace QuinielasApi.Controllers
         }
 
         [HttpGet("GetAll/{sportId}/{pagination}")]
-        public async Task<IActionResult> GetAllQuiniela(int sportId, int pagination, string? filter)
+        public async Task<IActionResult> GetAll(int sportId, int pagination, string? filter)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace QuinielasApi.Controllers
         }
 
         [HttpGet("GetAllByUserId/{sportId}/{userId}")]
-        public async Task<IActionResult> GetAllQuiniela(int sportId, int userId, string? filter)
+        public async Task<IActionResult> GetAllByUserId(int sportId, int userId, string? filter)
         {
             try
             {

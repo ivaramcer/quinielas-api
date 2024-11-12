@@ -15,6 +15,7 @@ namespace QuinielasApi.Models.Entities
         public string Code { get; set; } = string.Empty;
 
         public int QuotaPeople { get; set; }
+        public int QuotaPeopleFilled { get; set; }
         public double? ViudaPrice { get; set; }
         public int? Week { get; set; }
         public string? Round { get; set; } = default!;

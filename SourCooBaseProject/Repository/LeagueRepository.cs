@@ -24,6 +24,9 @@ namespace LeaguesApi.IRepository
         {
             return await FindAll()
                 .Include(l => l.Quinielas)
+                    .ThenInclude(q => q.QuinielaPickDuration)
+                        .ThenInclude(qpd => qpd.QuinielaDuration)
+                            .ThenInclude(qd => qd.QuinielaType)
                 .Where(l => l.SportId == sportId)
                 .OrderBy(p => p.Name)
                 .ToListAsync();

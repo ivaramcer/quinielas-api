@@ -12,6 +12,8 @@ public class LeagueDTO
     public int ExternalId { get; set; }
     public int SportId { get; set; }
     public SportDTO Sport { get; set; } = default!;
+    public ICollection<QuinielaDTO> Quinielas { get; set; } = new List<QuinielaDTO>();
+
 }
 
 public class LeagueInsertDTO

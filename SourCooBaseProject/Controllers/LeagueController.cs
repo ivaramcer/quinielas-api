@@ -65,6 +65,11 @@ namespace QuinielasApi.Controllers
                 foreach (var league in leagues)
                 {
                     league.Quinielas = league.Quinielas.Where(q => q.StatusId == 1).ToList();
+                    foreach (var element in league.Quinielas)
+                    {
+                        element.QuinielaPickDuration.QuinielaDuration.QuinielaPickDurations = null;
+                        element.QuinielaPickDuration.QuinielaDuration.QuinielaType.QuinielaDurations = null;
+                    }
                 }
 
                 leagues = leagues
