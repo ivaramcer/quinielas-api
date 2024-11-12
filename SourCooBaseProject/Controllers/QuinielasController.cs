@@ -363,9 +363,12 @@ namespace QuinielasApi.Controllers
                 
                 _repository.TransactionHistory.Create(transaction);
                 await _repository.SaveAsync();
-                
 
-                
+                quiniela.QuotaPeopleFilled += 1;
+                _repository.Quiniela.Update(quiniela);
+                await _repository.SaveAsync();
+
+
                 List<QuinielaGame> quinielaGames = await _repository.QuinielaGame.GetAllByQuinielaId(quiniela.Id);
                 List<UserPicks> picks = new List<UserPicks>();
 
