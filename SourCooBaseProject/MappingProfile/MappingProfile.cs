@@ -314,6 +314,19 @@ namespace QuinielasApi.MappingProfile
             CreateMap<Wallet, WalletUpdateDTO>();
             CreateMap<WalletUpdateDTO, Wallet>();
             #endregion
+            
+            #region Country
+
+            //Read
+            CreateMap<Country, CountryDTO>();
+            CreateMap<CountryDTO, Country>();
+            //Create
+            CreateMap<Country, CountryInsertDTO>();
+            CreateMap<CountryInsertDTO, Country>();
+            //Update
+            CreateMap<Country, CountryUpdateDTO>();
+            CreateMap<CountryUpdateDTO, Country>();
+            #endregion
 
 
 

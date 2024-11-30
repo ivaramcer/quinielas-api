@@ -64,5 +64,6 @@ namespace QuinielasApi.DBContext
         public DbSet<User> Users { get; set; }
         public DbSet<UserPicks> UserPicks { get; set; }
         public DbSet<Wallet> Wallets { get; set; }
+        public DbSet<Country> Countries { get; set; }
     }
 }

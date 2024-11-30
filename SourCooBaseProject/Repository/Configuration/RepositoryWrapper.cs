@@ -1,5 +1,5 @@
-﻿using GamepasssApi.IRepository;
-using Microsoft.EntityFrameworkCore;
+﻿using CountrysApi.IRepository;
+using GamepasssApi.IRepository;
 using QuinielasApi.IRepository;
 using QuinielasApi.IRepository.Configuration;
 using QuinielasApi.DBContext;
@@ -46,7 +46,20 @@ namespace QuinielasApi.Repository.Configuration
         private IUserRepository _user = default!;
         private IUserPicksRepository _userPicks = default!;
         private IWalletRepository _wallet = default!;
+        private ICountryRepository _country = default!;
 
+        public ICountryRepository Country
+        {
+            get
+            {
+                if (_country == null)
+                {
+                    _country = new CountryRepository(_dbContext);
+                }
+
+                return _country;
+            }
+        }
         public IWalletRepository Wallet
         {
             get

@@ -18,11 +18,11 @@ namespace QuinielasApi.Utils.Soccer
                 using (HttpClient client = new HttpClient())
                 {
                     client.Timeout = TimeSpan.FromSeconds(300);
-                    string apiUrl = "https://v1.american-football.api-sports.io" +
+                    string apiUrl = "https://v3.football.api-sports.io" +
                                     $"/{endpoint}";
 
                     client.DefaultRequestHeaders.Add("x-rapidapi-key", "88a41c229f0606d7c268a4db6244b052");
-                    client.DefaultRequestHeaders.Add("x-rapidapi-host", "v1.american-football.api-sports.io");
+                    client.DefaultRequestHeaders.Add("x-rapidapi-host", "v3.football.api-sports.io");
 
                     HttpResponseMessage response = await client.GetAsync(apiUrl);
 
@@ -64,11 +64,11 @@ namespace QuinielasApi.Utils.Soccer
                 using (HttpClient client = new HttpClient())
                 {
                     client.Timeout = TimeSpan.FromSeconds(300);
-                    string apiUrl = "https://v1.american-football.api-sports.io" +
+                    string apiUrl = "https://v3.football.api-sports.io" +
                                     $"/{endpoint}";
 
                     client.DefaultRequestHeaders.Add("x-rapidapi-key", "88a41c229f0606d7c268a4db6244b052");
-                    client.DefaultRequestHeaders.Add("x-rapidapi-host", "v1.american-football.api-sports.io");
+                    client.DefaultRequestHeaders.Add("x-rapidapi-host", "v3.football.api-sports.io");
 
                     HttpResponseMessage response = await client.GetAsync(apiUrl);
 
@@ -107,11 +107,11 @@ namespace QuinielasApi.Utils.Soccer
                 using (HttpClient client = new HttpClient())
                 {
                     client.Timeout = TimeSpan.FromSeconds(300);
-                    string apiUrl = "https://v1.american-football.api-sports.io" +
+                    string apiUrl = "https://v3.football.api-sports.io" +
                                     $"/{endpoint}";
 
                     client.DefaultRequestHeaders.Add("x-rapidapi-key", "88a41c229f0606d7c268a4db6244b052");
-                    client.DefaultRequestHeaders.Add("x-rapidapi-host", "v1.american-football.api-sports.io");
+                    client.DefaultRequestHeaders.Add("x-rapidapi-host", "v3.football.api-sports.io");
 
                     HttpResponseMessage response = await client.GetAsync(apiUrl);
 
@@ -139,6 +139,47 @@ namespace QuinielasApi.Utils.Soccer
             return teams;
         }
 
+        public static async Task<List<GetCountriesDTO>?> GetCountries()
+        {
+            List<GetCountriesDTO>? countries = new List<GetCountriesDTO>();
+            string endpoint = $"countries";
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    client.Timeout = TimeSpan.FromSeconds(300);
+                    string apiUrl = "https://v3.football.api-sports.io" +
+                                    $"/{endpoint}";
+
+                    client.DefaultRequestHeaders.Add("x-rapidapi-key", "88a41c229f0606d7c268a4db6244b052");
+                    client.DefaultRequestHeaders.Add("x-rapidapi-host", "v3.football.api-sports.io");
+
+                    HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        ApiResponse<GetCountriesDTO> apiResponse = JsonConvert.DeserializeObject<ApiResponse<GetCountriesDTO>>(responseBody);
+
+                        countries = apiResponse!.Response;
+
+                    }
+                    else
+                    {
+                        throw new ApiServiceException("The external system is not working");
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                throw;
+            }
+
+            return countries;
+        }
+
         public static async Task<List<LeagueInfoSoccerDto>?> GetLeagues()
         {
             List<LeagueInfoSoccerDto>? teams = new List<LeagueInfoSoccerDto>();
@@ -148,11 +189,11 @@ namespace QuinielasApi.Utils.Soccer
                 using (HttpClient client = new HttpClient())
                 {
                     client.Timeout = TimeSpan.FromSeconds(300);
-                    string apiUrl = "https://v1.american-football.api-sports.io" +
+                    string apiUrl = "https://v3.football.api-sports.io" +
                                     $"/{endpoint}";
 
                     client.DefaultRequestHeaders.Add("x-rapidapi-key", "88a41c229f0606d7c268a4db6244b052");
-                    client.DefaultRequestHeaders.Add("x-rapidapi-host", "v1.american-football.api-sports.io");
+                    client.DefaultRequestHeaders.Add("x-rapidapi-host", "v3.football.api-sports.io");
 
                     HttpResponseMessage response = await client.GetAsync(apiUrl);
 

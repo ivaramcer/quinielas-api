@@ -47,6 +47,7 @@ namespace QuinielasApi.IRepository.Configuration
         IUserRepository User { get; }
         IUserPicksRepository UserPicks { get; }
         IWalletRepository Wallet { get; }
+        ICountryRepository Country { get; }
 
 
 
