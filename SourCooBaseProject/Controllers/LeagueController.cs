@@ -182,6 +182,19 @@ namespace QuinielasApi.Controllers
                         continue;
                     }
 
+                    DateTime now = DateTime.Now.ToUniversalTime();
+                    if (item?.Seasons != null && item.Seasons.Count > 0)
+                    {
+                        now = DateTime.Parse(item.Seasons[0].Start).ToUniversalTime();
+                    }
+                    
+                    DateTime end = DateTime.Now.ToUniversalTime();
+                    if (item?.Seasons != null && item.Seasons.Count > 0)
+                    {
+                        end = DateTime.Parse(item.Seasons[0].End).ToUniversalTime();
+                    }
+                    
+
                     League newLeague = new League
                     {
                         ExternalId = item.League.Id,
@@ -189,8 +202,8 @@ namespace QuinielasApi.Controllers
                         ImageURL = string.IsNullOrEmpty(item.League.Logo) ? "" : item.League.Logo,
                         IsActive = true,
                         Type = "",
-                        StartDate = DateTime.Parse(item.Seasons[0].Start).ToUniversalTime(),
-                        EndDate = DateTime.Parse(item.Seasons[0].End).ToUniversalTime(),
+                        StartDate = now,
+                        EndDate = end,
                         SportId = 2,
                         CountryId = 846
 
@@ -240,6 +253,18 @@ namespace QuinielasApi.Controllers
                     {
                         continue;
                     }
+                    
+                    DateTime now = DateTime.Now.ToUniversalTime();
+                    if (item?.Seasons != null && item.Seasons.Count > 0)
+                    {
+                        now = DateTime.Parse(item.Seasons[0].Start).ToUniversalTime();
+                    }
+                    
+                    DateTime end = DateTime.Now.ToUniversalTime();
+                    if (item?.Seasons != null && item.Seasons.Count > 0)
+                    {
+                        end = DateTime.Parse(item.Seasons[0].End).ToUniversalTime();
+                    }
 
                     League newLeague = new League
                     {
@@ -248,8 +273,8 @@ namespace QuinielasApi.Controllers
                         ImageURL = string.IsNullOrEmpty(item.League.Logo) ? "" : item.League.Logo,
                         IsActive = true,
                         Type = item.League.Type,
-                        StartDate = DateTime.Parse(item.Seasons[0].Start).ToUniversalTime(),
-                        EndDate = DateTime.Parse(item.Seasons[0].End).ToUniversalTime(),
+                        StartDate = now,
+                        EndDate = end,
                         SportId = 1,
                         CountryId = countryEntity.Id
                     };

@@ -29,13 +29,13 @@ namespace CountrysApi.IRepository
         public async Task<Country?> GetByCodeAsync(string code)
         {
             return await FindAll()
-                .FirstOrDefaultAsync(q => q.Code.Contains(code, StringComparison.OrdinalIgnoreCase));
+                .FirstOrDefaultAsync(q => q.Code.Contains(code));
         }
         
         public async Task<Country?> GetByNameAsync(string name)
         {
             return await FindAll()
-                .FirstOrDefaultAsync(q => q.Code.Contains(name, StringComparison.OrdinalIgnoreCase));
+                .FirstOrDefaultAsync(q => q.Name.Contains(name));
         }
 
 
