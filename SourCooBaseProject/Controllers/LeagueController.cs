@@ -189,6 +189,8 @@ namespace QuinielasApi.Controllers
                         ImageURL = string.IsNullOrEmpty(item.League.Logo) ? "" : item.League.Logo,
                         IsActive = true,
                         Type = "",
+                        StartDate = DateTime.Parse(item.Seasons[0].Start),
+                        EndDate = DateTime.Parse(item.Seasons[0].End),
                         SportId = 2,
                     };
 
@@ -238,6 +240,8 @@ namespace QuinielasApi.Controllers
                         ImageURL = string.IsNullOrEmpty(item.League.Logo) ? "" : item.League.Logo,
                         IsActive = true,
                         Type = item.League.Type,
+                        StartDate = DateTime.Parse(item.Seasons[0].Start),
+                        EndDate = DateTime.Parse(item.Seasons[0].End),
                         SportId = 1,
                     };
 

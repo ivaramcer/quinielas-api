@@ -10,6 +10,8 @@ public class League
     public string ImageURL { get; set; } = string.Empty;
     public bool IsActive { get; set; }
     public string Type { get; set; } = string.Empty;
+    public DateTime StartDate { get; set; }
+    public DateTime EndDate { get; set; }
     public int ExternalId { get; set; }
     public int SportId { get; set; }
     public Sport Sport { get; set; } = default!;
