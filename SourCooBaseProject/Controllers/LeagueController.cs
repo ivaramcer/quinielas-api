@@ -189,9 +189,11 @@ namespace QuinielasApi.Controllers
                         ImageURL = string.IsNullOrEmpty(item.League.Logo) ? "" : item.League.Logo,
                         IsActive = true,
                         Type = "",
-                        StartDate = DateTime.Parse(item.Seasons[0].Start),
-                        EndDate = DateTime.Parse(item.Seasons[0].End),
+                        StartDate = DateTime.Parse(item.Seasons[0].Start).ToUniversalTime(),
+                        EndDate = DateTime.Parse(item.Seasons[0].End).ToUniversalTime(),
                         SportId = 2,
+                        CountryId = 846
+
                     };
 
                     _repository.League.Create(newLeague);
@@ -220,6 +222,12 @@ namespace QuinielasApi.Controllers
         {
             try
             {
+                Country? countryEntity = await _repository.Country.GetByNameAsync(country);
+                if (countryEntity == null)
+                {
+                    _logger.LogError($"Country with id: {country} has not been found in db.");
+                    return NotFound($"Country with id: {country} has not been found in db.");
+                }
                 List<LeagueInfoSoccerDto>? TeamsFromAPI = await APIClientSoccer.GetLeagues(country);
 
                 List<League> bulkType = new List<League>();
@@ -240,9 +248,10 @@ namespace QuinielasApi.Controllers
                         ImageURL = string.IsNullOrEmpty(item.League.Logo) ? "" : item.League.Logo,
                         IsActive = true,
                         Type = item.League.Type,
-                        StartDate = DateTime.Parse(item.Seasons[0].Start),
-                        EndDate = DateTime.Parse(item.Seasons[0].End),
+                        StartDate = DateTime.Parse(item.Seasons[0].Start).ToUniversalTime(),
+                        EndDate = DateTime.Parse(item.Seasons[0].End).ToUniversalTime(),
                         SportId = 1,
+                        CountryId = countryEntity.Id
                     };
 
 

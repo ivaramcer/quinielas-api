@@ -25,6 +25,18 @@ namespace CountrysApi.IRepository
             return await FindAll()
                 .FirstOrDefaultAsync(q => q.Id == id);
         }
+        
+        public async Task<Country?> GetByCodeAsync(string code)
+        {
+            return await FindAll()
+                .FirstOrDefaultAsync(q => q.Code.Contains(code, StringComparison.OrdinalIgnoreCase));
+        }
+        
+        public async Task<Country?> GetByNameAsync(string name)
+        {
+            return await FindAll()
+                .FirstOrDefaultAsync(q => q.Code.Contains(name, StringComparison.OrdinalIgnoreCase));
+        }
 
 
         public async Task BulkInsert(List<Country> entities)

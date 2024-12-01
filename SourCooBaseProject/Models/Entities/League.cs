@@ -13,6 +13,8 @@ public class League
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public int ExternalId { get; set; }
+    public int CountryId { get; set; }
+    public Country Country { get; set; } = default!;
     public int SportId { get; set; }
     public Sport Sport { get; set; } = default!;
     public ICollection<Quiniela> Quinielas { get; set; } = new List<Quiniela>();

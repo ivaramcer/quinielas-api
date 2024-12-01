@@ -12,6 +12,8 @@ public class LeagueDTO
     public int ExternalId { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
+    public int CountryId { get; set; }
+    public CountryDTO Country { get; set; } = default!;
     public int SportId { get; set; }
     public SportDTO Sport { get; set; } = default!;
     public ICollection<QuinielaDTO> Quinielas { get; set; } = new List<QuinielaDTO>();
@@ -27,6 +29,8 @@ public class LeagueInsertDTO
     public bool IsActive { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
+    public int CountryId { get; set; }
+
     public string Type { get; set; } = string.Empty;
     public int ExternalId { get; set; }
     public int SportId { get; set; }
@@ -41,6 +45,8 @@ public class LeagueUpdateDTO
     public bool IsActive { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
+    public int CountryId { get; set; }
+
     public string Type { get; set; } = string.Empty;
     public int ExternalId { get; set; }
     public int SportId { get; set; }
