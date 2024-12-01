@@ -182,7 +182,7 @@ namespace QuinielasApi.Controllers
             try
             {
                 List<GetCountriesDTO>? countriesFromAPI = await APIClientSoccer.GetCountries();
-                if (!countriesFromAPI.Any())
+                if (!countriesFromAPI.Any() && sportId == 1)
                 {
                     _logger.LogError($"API it's not working");
                     return StatusCode(500, "API it's not working ");
