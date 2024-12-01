@@ -16,6 +16,8 @@ namespace QuinielasApi.Utils.NFL.SoccerDto
     public class LeagueSoccerDto
     {
         public int Id { get; set; }
+        public string Type { get; set; } = string.Empty;
+
         public string Name { get; set; } = string.Empty;
         public string Logo { get; set; } = string.Empty;
     }

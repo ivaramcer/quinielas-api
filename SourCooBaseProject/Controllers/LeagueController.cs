@@ -213,19 +213,20 @@ namespace QuinielasApi.Controllers
         
         
         //SOCCER
-        [HttpPost("GetLeaguesSoccer")]
-        public async Task<IActionResult> GetLeaguesSoccer()
+        [HttpPost("GetLeaguesSoccer/{country}")]
+        public async Task<IActionResult> GetLeaguesSoccer(string country)
         {
             try
             {
-                List<LeagueInfoSoccerDto>? TeamsFromAPI = await APIClientSoccer.GetLeagues();
+                List<LeagueInfoSoccerDto>? TeamsFromAPI = await APIClientSoccer.GetLeagues(country);
 
                 List<League> bulkType = new List<League>();
                 List<League> ourLeagues = await _repository.League.GetAllAsync(UtilsVariables.SportSoccerId);
 
                 foreach (var item in TeamsFromAPI!)
                 {
-                    if (ourLeagues.Any(t => t.ExternalId == item.League.Id))
+                    League? previousLeague = ourLeagues.Find(t => t.ExternalId == item.League.Id);
+                    if (previousLeague != null)
                     {
                         continue;
                     }
@@ -236,9 +237,10 @@ namespace QuinielasApi.Controllers
                         Name = item.League.Name!,
                         ImageURL = string.IsNullOrEmpty(item.League.Logo) ? "" : item.League.Logo,
                         IsActive = true,
-                        Type = "",
+                        Type = item.League.Type,
                         SportId = 1,
                     };
+
 
                     _repository.League.Create(newLeague);
                     bulkType.Add(newLeague);
