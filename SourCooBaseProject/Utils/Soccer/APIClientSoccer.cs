@@ -76,7 +76,7 @@ namespace QuinielasApi.Utils.Soccer
                     {
 
                         string responseBody = await response.Content.ReadAsStringAsync();
-                        ApiResponse<GetGamesDTO> apiResponse = JsonConvert.DeserializeObject<ApiResponse<GetGamesDTO>>(responseBody);
+                        ApiResponseSoccer<GetGamesDTO> apiResponse = JsonConvert.DeserializeObject<ApiResponseSoccer<GetGamesDTO>>(responseBody);
 
                         games = apiResponse!.Response;
 
@@ -118,7 +118,7 @@ namespace QuinielasApi.Utils.Soccer
                     if (response.IsSuccessStatusCode)
                     {
                         string responseBody = await response.Content.ReadAsStringAsync();
-                        ApiResponse<GetTeamsSoccerDto> apiResponse = JsonConvert.DeserializeObject<ApiResponse<GetTeamsSoccerDto>>(responseBody);
+                        ApiResponseSoccer<GetTeamsSoccerDto> apiResponse = JsonConvert.DeserializeObject<ApiResponseSoccer<GetTeamsSoccerDto>>(responseBody);
 
                         teams = apiResponse!.Response;
 
@@ -142,7 +142,7 @@ namespace QuinielasApi.Utils.Soccer
         public static async Task<List<GetCountriesDTO>?> GetCountries()
         {
             List<GetCountriesDTO>? countries = new List<GetCountriesDTO>();
-            string endpoint = $"countries";
+            string endpoint = "countries";
             try
             {
                 using (HttpClient client = new HttpClient())
@@ -159,7 +159,7 @@ namespace QuinielasApi.Utils.Soccer
                     if (response.IsSuccessStatusCode)
                     {
                         string responseBody = await response.Content.ReadAsStringAsync();
-                        ApiResponse<GetCountriesDTO> apiResponse = JsonConvert.DeserializeObject<ApiResponse<GetCountriesDTO>>(responseBody);
+                        ApiResponseSoccer<GetCountriesDTO> apiResponse = JsonConvert.DeserializeObject<ApiResponseSoccer<GetCountriesDTO>>(responseBody);
 
                         countries = apiResponse!.Response;
 
@@ -200,7 +200,7 @@ namespace QuinielasApi.Utils.Soccer
                     if (response.IsSuccessStatusCode)
                     {
                         string responseBody = await response.Content.ReadAsStringAsync();
-                        ApiResponse<LeagueInfoSoccerDto> apiResponse = JsonConvert.DeserializeObject<ApiResponse<LeagueInfoSoccerDto>>(responseBody);
+                        ApiResponseSoccer<LeagueInfoSoccerDto> apiResponse = JsonConvert.DeserializeObject<ApiResponseSoccer<LeagueInfoSoccerDto>>(responseBody);
 
                         teams = apiResponse!.Response;
 
@@ -228,15 +228,21 @@ namespace QuinielasApi.Utils.Soccer
             }
         }
 
-
-        public class ApiResponse<T>
+        public class ApiResponseSoccer<T>
         {
             public string Get { get; set; } = default!;
-            public Dictionary<string, string> Parameters { get; set; } = default!;
-            public List<string> Errors { get; set; } = default!;
+            public List<string> Parameters { get; set; } = new List<string>();  // Change to List<string>
+            public List<string> Errors { get; set; } = new List<string>();
             public int Results { get; set; }
-            public List<T> Response { get; set; } = default!;
+            public Paging Paging { get; set; } = default!;
+            public List<T> Response { get; set; } = new List<T>();  // Ensure Response is a list of T (in your case, GetCountriesDTO)
         }
 
+
+        public class Paging
+        {
+            public int Total { get; set; }
+            public int Current { get; set; }
+        }
     }
 }

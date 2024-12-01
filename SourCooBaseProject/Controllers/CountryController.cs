@@ -192,6 +192,11 @@ namespace QuinielasApi.Controllers
                 foreach (var country in countriesFromAPI)
                 {
                     Country newCountry = _mapper.Map<Country>(country);
+                    if (string.IsNullOrEmpty(country.Code))
+                    {
+                        newCountry.Code = newCountry.Name;
+                        newCountry.Flag = newCountry.Name;
+                    }
                     newCountry.SportId = sportId;
                     newCountry.IsActive = false;
                     bulkCountries.Add(newCountry);
@@ -200,7 +205,8 @@ namespace QuinielasApi.Controllers
                 await _repository.Country.BulkInsert(bulkCountries);
                 await _repository.SaveAsync();
 
-                return Ok();
+                var countryDTO = _mapper.Map<List<CountryDTO>>(bulkCountries);
+                return Ok(countryDTO);
             }
             catch (Exception ex)
             {

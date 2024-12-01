@@ -2,6 +2,7 @@
 using QuinielasApi.Models.DTOs;
 using QuinielasApi.Models.Entities;
 using QuinielasApi.Utils.NFL.DTO;
+using QuinielasApi.Utils.NFL.SoccerDto;
 
 namespace QuinielasApi.MappingProfile
 {
@@ -326,6 +327,10 @@ namespace QuinielasApi.MappingProfile
             //Update
             CreateMap<Country, CountryUpdateDTO>();
             CreateMap<CountryUpdateDTO, Country>();
+            
+            CreateMap<Country, GetCountriesDTO>();
+            CreateMap<GetCountriesDTO, Country>();
+            
             #endregion
 
 
