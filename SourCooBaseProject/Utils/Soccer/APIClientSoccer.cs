@@ -9,10 +9,10 @@ namespace QuinielasApi.Utils.Soccer
         public static int currentYear = DateTime.Now.Year;
         
 
-        public static async Task<List<GetGamesDTO>?> GetGames(int leagueId)
+        public static async Task<List<FixtureSoccerDTO>?> GetGames(int leagueId)
         {
-            List<GetGamesDTO>? games = new List<GetGamesDTO>();
-            string endpoint = $"games?league={leagueId}&season={currentYear}";
+            List<FixtureSoccerDTO>? games = new List<FixtureSoccerDTO>();
+            string endpoint = $"fixtures?league={leagueId}&season={currentYear}";
             try
             {
                 using (HttpClient client = new HttpClient())
@@ -30,7 +30,7 @@ namespace QuinielasApi.Utils.Soccer
                     {
 
                         string responseBody = await response.Content.ReadAsStringAsync();
-                        ApiResponseSoccer<GetGamesDTO> apiResponse = JsonConvert.DeserializeObject<ApiResponseSoccer<GetGamesDTO>>(responseBody);
+                        ApiResponseSoccer<FixtureSoccerDTO> apiResponse = JsonConvert.DeserializeObject<ApiResponseSoccer<FixtureSoccerDTO>>(responseBody);
 
                         games = apiResponse!.Response;
 

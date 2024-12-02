@@ -1,83 +1,87 @@
-﻿public class GetGamesSoccerDTO
+﻿
+
+public class FixtureSoccerDTO
 {
-    public GameDetailDto Game { get; set; } = default!;
-    public LeagueDto League { get; set; } = default!;
-    public TeamsDto Teams { get; set; } = default!;
-    public ScoresDto Scores { get; set; } = default!;
+    public FixtureDetailSoccerDTO Fixture { get; set; } = default!;
+    public LeagueSoccerDTO League { get; set; } = default!;
+    public TeamsSoccerDTO Teams { get; set; } = default!;
+    public GoalsSoccerDTO Goals { get; set; } = default!;
+    public ScoreSoccerDTO Score { get; set; } = default!;
 }
 
-public class GameDetailSoccerDto
+public class FixtureDetailSoccerDTO
 {
     public int Id { get; set; }
-    public string Stage { get; set; } = default!;
-    public string Week { get; set; } = default!;
-    public GameDateDto Date { get; set; } = default!;
-    public VenueDto Venue { get; set; } = default!;
-    public StatusDto Status { get; set; } = default!;
-}
-
-public class GameDateSoccerDto
-{
+    public string Referee { get; set; } = default!;
     public string Timezone { get; set; } = default!;
     public string Date { get; set; } = default!;
-    public string Time { get; set; } = default!;
     public long Timestamp { get; set; }
+    public PeriodsSoccerDTO Periods { get; set; } = default!;
+    public VenueSoccerDTO Venue { get; set; } = default!;
+    public StatusSoccerDTO Status { get; set; } = default!;
 }
 
-public class VenueSoccerDto
+public class PeriodsSoccerDTO
 {
+    public long? First { get; set; }
+    public long? Second { get; set; }
+}
+
+public class VenueSoccerDTO
+{
+    public int Id { get; set; }
     public string Name { get; set; } = default!;
     public string City { get; set; } = default!;
 }
 
-public class StatusSoccerDto
+public class StatusSoccerDTO
 {
-    public string Short { get; set; } = default!;
     public string Long { get; set; } = default!;
-    public string Timer { get; set; } = default!; // Nullable, hence string
+    public string Short { get; set; } = default!;
+    public int? Elapsed { get; set; }
 }
 
-public class LeagueSoccerDto
+public class LeagueSoccerDTO
 {
     public int Id { get; set; }
     public string Name { get; set; } = default!;
-    public int Season { get; set; }
+    public string Country { get; set; } = default!;
     public string Logo { get; set; } = default!;
-    public CountryDto Country { get; set; } = default!;
-}
-
-public class CountrySoccerDto
-{
-    public string Name { get; set; } = default!;
-    public string Code { get; set; } = default!;
     public string Flag { get; set; } = default!;
+    public int Season { get; set; }
+    public string Round { get; set; } = default!;
 }
 
-public class TeamsSoccerDto
+public class TeamsSoccerDTO
 {
-    public TeamDetailDto Home { get; set; } = default!;
-    public TeamDetailDto Away { get; set; } = default!;
+    public TeamDetailSoccerDTO Home { get; set; } = default!;
+    public TeamDetailSoccerDTO Away { get; set; } = default!;
 }
 
-public class TeamDetailSoccerDto
+public class TeamDetailSoccerDTO
 {
     public int Id { get; set; }
     public string Name { get; set; } = default!;
     public string Logo { get; set; } = default!;
+    public bool? Winner { get; set; }
 }
 
-public class ScoresSoccerDto
+public class GoalsSoccerDTO
 {
-    public ScoreDetailDto Home { get; set; } = default!;
-    public ScoreDetailDto Away { get; set; } = default!;
+    public int? Home { get; set; }
+    public int? Away { get; set; }
 }
 
-public class ScoreDetailSoccerDto
+public class ScoreSoccerDTO
 {
-    public int? Quarter1 { get; set; }
-    public int? Quarter2 { get; set; }
-    public int? Quarter3 { get; set; }
-    public int? Quarter4 { get; set; }
-    public int? Overtime { get; set; }
-    public int? Total { get; set; }
+    public ScoreDetailSoccerDTO Halftime { get; set; } = default!;
+    public ScoreDetailSoccerDTO Fulltime { get; set; } = default!;
+    public ScoreDetailSoccerDTO? Extratime { get; set; }
+    public ScoreDetailSoccerDTO? Penalty { get; set; }
+}
+
+public class ScoreDetailSoccerDTO
+{
+    public int? Home { get; set; }
+    public int? Away { get; set; }
 }

@@ -464,13 +464,13 @@ namespace QuinielasApi.Controllers
                     _logger.LogError($"There is not a league with the id: {leagueId}");
                     return StatusCode(500, $"There is not a league with the id: {leagueId}");
                 }
-                List<GetGamesDTO>? teamsFromAPI = await APIClientSoccer.GetGames(league.ExternalId);
+                List<FixtureSoccerDTO>? teamsFromAPI = await APIClientSoccer.GetGames(league.ExternalId);
 
                 List<Game> bulkGames = new List<Game>();
                 List<Game> ourGames = await _repository.Game.GetAllAsync(UtilsVariables.SportSoccerId);
                 foreach (var item in teamsFromAPI!)
                 {
-                    if (ourGames.Count == 0 && ourGames.Any(t => t.Id == item.Game.Id))
+                    if (ourGames.Count == 0 && ourGames.Any(t => t.Id == item.Fixture.Id))
                     {
                         continue;
                     }
@@ -496,7 +496,7 @@ namespace QuinielasApi.Controllers
                         continue;
                     }
 
-                    var dateObj = item.Game.Date;
+                    var dateObj = item.Fixture.Date;
                     // Combine the date and time strings
                     string dateTimeString = $"{dateObj.Date} {dateObj.Time}";
 
@@ -521,7 +521,7 @@ namespace QuinielasApi.Controllers
                     int awayScore = 0;
                     int homeScore = 0;
 
-                    if (item.Scores.Home.Total.HasValue)
+                    if (item.Scores.Home.Total)
                     {
                         homeScore = item.Scores.Home.Total.Value;
                     }
@@ -575,7 +575,7 @@ namespace QuinielasApi.Controllers
                     }
                     Game newGame = new Game
                     {
-                        ExternalId = item.Game.Id,
+                        ExternalId = item.Fixture.Id,
                         Schedule = parsedDateTime,  
                         Venue = venueGame,
                         Status = statusGame,
