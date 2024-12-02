@@ -221,6 +221,8 @@ namespace QuinielasApi.Controllers
                         Name = item.Name!,
                         Abbreviation = string.IsNullOrEmpty(item.Code) ? "" : item.Code,
                         City = string.IsNullOrEmpty(item.City) ? "" : item.City,
+                        Country = "USA",
+                        IsNational = true,
                         ImageURL = string.IsNullOrEmpty(item.Logo) ? "" : item.Logo,
                         ExternalId = item.Id.Value,
                         SportId = 2,
@@ -288,12 +290,15 @@ namespace QuinielasApi.Controllers
                     
                     Team newTeam = new Team
                     {
-                        Id = item.Team.Id.Value,
+                        ExternalId = item.Team.Id.Value,
                         Name = item.Team.Name!,
                         LeagueId = leagueId,
+                        SportId = 1,
                         Abbreviation = string.IsNullOrEmpty(item.Team.Code) ? "" : item.Team.Code,
                         ImageURL = string.IsNullOrEmpty(item.Team.Logo) ? "" : item.Team.Logo,
-                        City = string.IsNullOrEmpty(item.Team.City) ? "" : item.Team.City
+                        City = string.IsNullOrEmpty(item.Team.City) ? "" : item.Team.City,
+                        Country = string.IsNullOrEmpty(item.Team.Country) ? "" : item.Team.Country,
+                        IsNational = item.Team.National.HasValue ? item.Team.National.Value : false,
                     };
 
                     _repository.Team.Create(newTeam);
