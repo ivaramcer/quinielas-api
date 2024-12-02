@@ -7,7 +7,6 @@ namespace QuinielasApi.Utils.Soccer
     public static class APIClientSoccer
     {
         public static int currentYear = DateTime.Now.Year;
-        public static int league = 1;
         
 
         public static async Task<List<GetGamesDTO>?> GetGames(int leagueId)
@@ -19,11 +18,11 @@ namespace QuinielasApi.Utils.Soccer
                 using (HttpClient client = new HttpClient())
                 {
                     client.Timeout = TimeSpan.FromSeconds(300);
-                    string apiUrl = "https://v3.football.api-sports.io" +
+                    string apiUrl = "https://api-football-v1.p.rapidapi.com/v3" +
                                     $"/{endpoint}";
 
                     client.DefaultRequestHeaders.Add("x-rapidapi-key", "6aa6001bbbmsh34b868d8d330feep10fde8jsn17d51bbd6f05");
-                    client.DefaultRequestHeaders.Add("x-rapidapi-host", "v3.football.api-sports.io");
+                    client.DefaultRequestHeaders.Add("x-rapidapi-host", "api-football-v1.p.rapidapi.com");
 
                     HttpResponseMessage response = await client.GetAsync(apiUrl);
 
@@ -53,7 +52,7 @@ namespace QuinielasApi.Utils.Soccer
 
             return games;
         }
-        public static async Task<List<GetTeamsSoccerDto>?> GetTeams()
+        public static async Task<List<GetTeamsSoccerDto>?> GetTeams(int league)
         {
             List<GetTeamsSoccerDto>? teams = new List<GetTeamsSoccerDto>();
             string endpoint = $"teams?league={league}&season={currentYear}";
@@ -62,11 +61,11 @@ namespace QuinielasApi.Utils.Soccer
                 using (HttpClient client = new HttpClient())
                 {
                     client.Timeout = TimeSpan.FromSeconds(300);
-                    string apiUrl = "https://v3.football.api-sports.io" +
+                    string apiUrl = "https://api-football-v1.p.rapidapi.com/v3" +
                                     $"/{endpoint}";
 
                     client.DefaultRequestHeaders.Add("x-rapidapi-key", "6aa6001bbbmsh34b868d8d330feep10fde8jsn17d51bbd6f05");
-                    client.DefaultRequestHeaders.Add("x-rapidapi-host", "v3.football.api-sports.io");
+                    client.DefaultRequestHeaders.Add("x-rapidapi-host", "api-football-v1.p.rapidapi.com");
 
                     HttpResponseMessage response = await client.GetAsync(apiUrl);
 

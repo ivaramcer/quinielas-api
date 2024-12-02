@@ -265,30 +265,35 @@ namespace QuinielasApi.Controllers
                     return StatusCode(500, $"There is not a league with the id: {leagueId}");
                 }
 
-                List<GetTeamsSoccerDto>? TeamsFromAPI = await APIClientSoccer.GetTeams();
+                List<GetTeamsSoccerDto>? TeamsFromAPI = await APIClientSoccer.GetTeams(league.ExternalId);
 
                 List<Team> bulkType = new List<Team>();
                 List<Team> ourTeams = await _repository.Team.GetAllAsync(UtilsVariables.SportSoccerId);
 
                 foreach (var item in TeamsFromAPI!)
                 {
-                    if (ourTeams.Any(t => t.Id == item.Id))
+                    if (item == null)
+                    {
+                        continue;
+                    }
+                    if (ourTeams.Count == 0 && ourTeams.Any(t => t.ExternalId == item.Team.Id))
                     {
                         continue;
                     }
 
-                    if (item.Id.HasValue == false)
+                    if (item.Team.Id.HasValue == false)
                     {
                         continue;
                     }
+                    
                     Team newTeam = new Team
                     {
-                        Id = item.Id.Value,
-                        Name = item.Name!,
+                        Id = item.Team.Id.Value,
+                        Name = item.Team.Name!,
                         LeagueId = leagueId,
-                        Abbreviation = string.IsNullOrEmpty(item.Code) ? "" : item.Code,
-                        ImageURL = string.IsNullOrEmpty(item.Logo) ? "" : item.Logo,
-                        City = string.IsNullOrEmpty(item.City) ? "" : item.City
+                        Abbreviation = string.IsNullOrEmpty(item.Team.Code) ? "" : item.Team.Code,
+                        ImageURL = string.IsNullOrEmpty(item.Team.Logo) ? "" : item.Team.Logo,
+                        City = string.IsNullOrEmpty(item.Team.City) ? "" : item.Team.City
                     };
 
                     _repository.Team.Create(newTeam);
