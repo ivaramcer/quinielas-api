@@ -498,7 +498,7 @@ namespace QuinielasApi.Controllers
 
                     var dateObj = item.Fixture.Date;
                     // Combine the date and time strings
-                    string dateTimeString = $"{dateObj.Date} {dateObj.Time}";
+                    string dateTimeString = dateObj;
 
                     // Parse into DateTime
                     DateTime parsedDateTime = DateTime.ParseExact(
@@ -521,53 +521,46 @@ namespace QuinielasApi.Controllers
                     int awayScore = 0;
                     int homeScore = 0;
 
-                    if (item.Scores.Home.Total)
+                    if (item.Goals.Home.HasValue)
                     {
-                        homeScore = item.Scores.Home.Total.Value;
+                        homeScore = item.Goals.Away.Value;
                     }
 
-                    if (item.Scores.Away.Total.HasValue)
+                    if (item.Goals.Away.HasValue)
                     {
-                        awayScore = item.Scores.Away.Total.Value;
+                        awayScore = item.Goals.Away.Value;
                     }
 
                     int? weekNumber = null;
 
-                    if (item.Game.Week.StartsWith("Week "))
-                    {
-                        if (int.TryParse(item.Game.Week.Substring(5), out int result) && result >= 1 && result <= 18)
-                        {
-                            weekNumber = result;
-                        }
-                    }
 
                     string statusGame = "Pending";
-                    if (item.Game.Status != null)
+                    if (item.Fixture.Status != null)
                     {
-                        if (item.Game.Status.Long != null)
+                        if (item.Fixture.Status.Long != null)
                         {
-                            statusGame = item.Game.Status.Long;
+                            statusGame = item.Fixture.Status.Long;
                         }
                     }
 
                     string venueGame = "Pending";
-                    if (item.Game.Venue != null)
+                    if (item.Fixture.Venue != null)
                     {
-                        if (item.Game.Venue.Name != null)
+                        if (item.Fixture.Venue.Name != null)
                         {
-                            venueGame = item.Game.Venue.Name;
+                            venueGame = item.Fixture.Venue.Name;
                         }
                     }
                     //Console.WriteLine($"Parsed DateTime: {parsedDateTime}");
                     //Console.WriteLine($"Parsed DateTimeOffset (UTC): {dateTimeOffset}");
                     int? WinnerId = null;
-                    if (item.Scores.Home.Total.HasValue && item.Scores.Away.Total.HasValue)
+                    if (item.Goals.Home.HasValue && item.Goals.Away.HasValue)
                     {
-                        if (item.Scores.Home.Total.Value > item.Scores.Away.Total.Value)
+                        if (item.Goals.Home.Value > item.Goals.Away.Value)
                         {
                             WinnerId = item.Teams.Home.Id;
                         }
-                        else if (item.Scores.Home.Total.Value < item.Scores.Away.Total.Value)
+                        else if (item.Goals.Home.Value < item.Goals.Away.Value)
                         {
                             WinnerId = item.Teams.Away.Id;
                         }
@@ -579,7 +572,7 @@ namespace QuinielasApi.Controllers
                         Schedule = parsedDateTime,  
                         Venue = venueGame,
                         Status = statusGame,
-                        Round = item.Game.Week,
+                        Round = item.League.Round,
                         Week = weekNumber,
                         IsDraw = null,
                         SportId = 1,
