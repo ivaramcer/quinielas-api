@@ -36,12 +36,12 @@ namespace QuinielasApi.Controllers
         }
 
 
-        [HttpGet("GetAll/{sportId}")]
-        public async Task<IActionResult> GetAllGame(int sportId)
+        [HttpGet("GetAll/{sportId}/{leagueId}")]
+        public async Task<IActionResult> GetAllGame(int sportId, int leagueId)
         {
             try
             {
-                var Games = await _repository.Game.GetAllAsync(sportId);
+                var Games = await _repository.Game.GetAllAsync(sportId, leagueId);
                 var GameDTOs = _mapper.Map<IEnumerable<GameDTO>>(Games);
                 return Ok(GameDTOs);
             }
@@ -52,12 +52,12 @@ namespace QuinielasApi.Controllers
             }
         }
 
-        [HttpGet("GetNextGames/{sportId}")]
-        public async Task<IActionResult> GetNextGames(int sportId)
+        [HttpGet("GetNextGames/{sportId}/{leagueId}")]
+        public async Task<IActionResult> GetNextGames(int sportId, int leagueId)
         {
             try
             {
-                var Games = await _repository.Game.GetAllAsync(sportId);
+                var Games = await _repository.Game.GetAllAsync(sportId, leagueId);
                 DateTime time = DateTime.Now;
 
                 var filteredGames = Games
@@ -76,13 +76,13 @@ namespace QuinielasApi.Controllers
         }
 
 
-        [HttpGet("GetFullNextGames/{pagination}/{sportId}")]
-        public async Task<IActionResult> GetFullNextGames(int pagination, int sportId)
+        [HttpGet("GetFullNextGames/{pagination}/{sportId}/{leagueId}")]
+        public async Task<IActionResult> GetFullNextGames(int pagination, int sportId, int leagueId)
         {
             try
             {
                 int pageSize = 10;
-                var Games = await _repository.Game.GetAllAsync(sportId);
+                var Games = await _repository.Game.GetAllAsync(sportId, leagueId);
                 DateTime time = DateTime.Now;
 
                 // Filter the Games for today's date and take the first 5
@@ -252,8 +252,8 @@ namespace QuinielasApi.Controllers
                 }
                 List<Game> bulkGames = new List<Game>();
                 List<Game> updateGames = new List<Game>();
-                List<Game> ourGames = await _repository.Game.GetAllAsync(UtilsVariables.SportNFLId);
-                List<Team> ourTeams = await _repository.Team.GetAllNoTrackingAsync(UtilsVariables.SportNFLId);
+                List<Game> ourGames = await _repository.Game.GetAllAsync(UtilsVariables.SportNFLId, leagueId);
+                List<Team> ourTeams = await _repository.Team.GetAllNoTrackingAsync(UtilsVariables.SportNFLId, leagueId);
 
 
                 foreach (var item in teamsFromAPI!)
@@ -467,7 +467,8 @@ namespace QuinielasApi.Controllers
                 List<FixtureSoccerDTO>? teamsFromAPI = await APIClientSoccer.GetGames(league.ExternalId);
 
                 List<Game> bulkGames = new List<Game>();
-                List<Game> ourGames = await _repository.Game.GetAllAsync(UtilsVariables.SportSoccerId);
+                List<Game> ourGames = await _repository.Game.GetAllAsync(UtilsVariables.SportSoccerId, leagueId);
+                List<Team> ourTeams = await _repository.Team.GetAllNoTrackingAsync(UtilsVariables.SportSoccerId, leagueId);
                 foreach (var item in teamsFromAPI!)
                 {
                     if (ourGames.Count == 0 && ourGames.Any(t => t.Id == item.Fixture.Id))
@@ -478,45 +479,53 @@ namespace QuinielasApi.Controllers
                     int awayId = 0;
                     int homeId = 0;
 
-                    if (item.Teams.Home.Id != 0 )
+                    if (item.Teams.Home.Id.HasValue && item.Teams.Home.Id != 0 )
                     {
-                        homeId = item.Teams.Home.Id;
+                        homeId = item.Teams.Home.Id.Value;
                     }
                     else
                     {
                         continue;
                     }
 
-                    if (item.Teams.Away.Id != 0)
+                    if (item.Teams.Away.Id.HasValue && item.Teams.Away.Id != 0)
                     {
-                        awayId = item.Teams.Away.Id;
+                        awayId = item.Teams.Away.Id.Value;
                     }
                     else
                     {
                         continue;
                     }
+
+                    Team? awayTeam = ourTeams.Find(t => t.ExternalId == awayId);
+                    Team? homeTeam = ourTeams.Find(t => t.ExternalId == homeId);
+
+                    if (awayTeam == null)
+                    {
+                        continue;
+                    }
+
+
+                    if (homeTeam == null)
+                    {
+                        continue;
+                    }
+
 
                     var dateObj = item.Fixture.Date;
                     // Combine the date and time strings
                     string dateTimeString = dateObj;
 
-                    // Parse into DateTime
-                    DateTime parsedDateTime = DateTime.ParseExact(
-                        dateTimeString,
-                        "yyyy-MM-dd HH:mm",
-                        CultureInfo.InvariantCulture,
-                        DateTimeStyles.AssumeUniversal // Treats it as UTC
-                    );
-
-                    parsedDateTime = DateTime.SpecifyKind(parsedDateTime, DateTimeKind.Utc);
-
-                    // If you need to adjust from UTC to another timezone, use DateTimeOffset
+                    // Parse the string as a DateTimeOffset
                     DateTimeOffset dateTimeOffset = DateTimeOffset.ParseExact(
                         dateTimeString,
-                        "yyyy-MM-dd HH:mm",
+                        "yyyy-MM-ddTHH:mm:sszzz", // Matches the format including time zone offset
                         CultureInfo.InvariantCulture,
-                        DateTimeStyles.AssumeUniversal
-                    ).ToOffset(TimeSpan.Zero);  // Adjust offset based on timezone if needed
+                        DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal
+                    );
+
+                    // Get the DateTime in UTC
+                    DateTime utcDateTime = dateTimeOffset.UtcDateTime;
 
                     int awayScore = 0;
                     int homeScore = 0;
@@ -568,8 +577,8 @@ namespace QuinielasApi.Controllers
                     }
                     Game newGame = new Game
                     {
-                        ExternalId = item.Fixture.Id,
-                        Schedule = parsedDateTime,  
+                        ExternalId = item.Fixture.Id.Value,
+                        Schedule = utcDateTime,  
                         Venue = venueGame,
                         Status = statusGame,
                         Round = item.League.Round,

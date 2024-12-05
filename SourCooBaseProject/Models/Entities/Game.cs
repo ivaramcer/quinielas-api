@@ -15,6 +15,8 @@ public class Game
     public int? AwayScore { get; set; }
     public bool? IsDraw { get; set; }
     public int ExternalId { get; set; }
+    public int LeagueId { get; set; }
+    public League League { get; set; } = default!;
     public int SportId { get; set; }
     public Sport Sport { get; set; }= default!;
     public int HomeTeamId { get; set; }

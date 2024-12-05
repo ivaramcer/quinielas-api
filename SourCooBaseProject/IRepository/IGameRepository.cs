@@ -4,7 +4,7 @@ namespace GamesApi.IRepository
 {
     public interface IGameRepository
     {
-        Task<List<Game>> GetAllAsync(int sportId);
+        Task<List<Game>> GetAllAsync(int sportId, int leagueId);
         Task<Game?> GetByIdAsync(int id);
         Task BulkInsert(List<Game> entities);
         Task BulkUpdate(List<Game> entities);

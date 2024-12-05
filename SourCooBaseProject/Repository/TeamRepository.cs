@@ -14,18 +14,18 @@ namespace QuinielasApi.IRepository
         public TeamRepository(DatabaseContext dbContext) : base(dbContext)
         {
         }
-        public async Task<List<Team>> GetAllAsync(int sportId)
+        public async Task<List<Team>> GetAllAsync(int sportId, int leagueId)
         {
             return await FindAll()
-                .Where(t => t.SportId == sportId)
+                .Where(t => t.SportId == sportId && t.LeagueId == leagueId)
                 .OrderBy(p => p.Name)
                 .ToListAsync();
         }
 
-        public async Task<List<Team>> GetAllNoTrackingAsync(int sportId)
+        public async Task<List<Team>> GetAllNoTrackingAsync(int sportId, int leagueId)
         {
             return await FindAll()
-                .Where(t => t.SportId == sportId)
+                .Where(t => t.SportId == sportId && t.LeagueId == leagueId)
                 .OrderBy(p => p.Name)
                 .AsNoTracking()
                 .ToListAsync();

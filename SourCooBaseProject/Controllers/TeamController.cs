@@ -33,12 +33,12 @@ namespace QuinielasApi.Controllers
         }
 
 
-        [HttpGet("GetAll/{sportId}")]
-        public async Task<IActionResult> GetAllTeam(int sportId)
+        [HttpGet("GetAll/{sportId}/{leagueId}")]
+        public async Task<IActionResult> GetAllTeam(int sportId, int leagueId)
         {
             try
             {
-                var Teams = await _repository.Team.GetAllAsync(sportId);
+                var Teams = await _repository.Team.GetAllAsync(sportId, leagueId);
                 var TeamDTOs = _mapper.Map<IEnumerable<TeamDTO>>(Teams);
                 return Ok(TeamDTOs);
             }
@@ -199,7 +199,7 @@ namespace QuinielasApi.Controllers
                 }
 
                 List<Team> bulkType = new List<Team>();
-                List<Team> ourTeams = await _repository.Team.GetAllAsync(UtilsVariables.SportNFLId);
+                List<Team> ourTeams = await _repository.Team.GetAllAsync(UtilsVariables.SportNFLId, leagueId);
 
                 foreach (var item in TeamsFromAPI!)
                 {
@@ -270,7 +270,7 @@ namespace QuinielasApi.Controllers
                 List<GetTeamsSoccerDto>? TeamsFromAPI = await APIClientSoccer.GetTeams(league.ExternalId);
 
                 List<Team> bulkType = new List<Team>();
-                List<Team> ourTeams = await _repository.Team.GetAllAsync(UtilsVariables.SportSoccerId);
+                List<Team> ourTeams = await _repository.Team.GetAllAsync(UtilsVariables.SportSoccerId, leagueId);
 
                 foreach (var item in TeamsFromAPI!)
                 {

@@ -241,11 +241,11 @@ namespace QuinielasApi.Controllers
                 switch (quinielaEntity.SportId)
                 {
                     case UtilsVariables.SportNFLId:
-                        var gamesNFL = await _repository.Game.GetAllAsync(UtilsVariables.SportNFLId);
+                        var gamesNFL = await _repository.Game.GetAllAsync(UtilsVariables.SportNFLId, quinielaEntity.LeagueId);
                         await GamesForNFL(quinielaEntity,duration!.Name,gamesNFL);
                         break;
                     case UtilsVariables.SportSoccerId:
-                        var gamesSoccer = await _repository.Game.GetAllAsync(UtilsVariables.SportSoccerId);
+                        var gamesSoccer = await _repository.Game.GetAllAsync(UtilsVariables.SportSoccerId, quinielaEntity.LeagueId);
                         await GamesForNFL(quinielaEntity,duration!.Name, gamesSoccer);
                         break;
                     default:
