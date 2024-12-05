@@ -391,7 +391,8 @@ namespace QuinielasApi.Controllers
                         AwayTeamId = awayTeam.Id,
                         HomeScore = homeScore,
                         AwayScore = awayScore,
-                        WinnerTeamId = WinnerId
+                        WinnerTeamId = WinnerId,
+                        LeagueId = leagueId
                     };
 
                     if (ourGames.Count != 0 && ourGames.Any(t => t.ExternalId == item.Game.Id))
@@ -567,11 +568,11 @@ namespace QuinielasApi.Controllers
                     {
                         if (item.Goals.Home.Value > item.Goals.Away.Value)
                         {
-                            WinnerId = item.Teams.Home.Id;
+                            WinnerId = homeTeam.Id;
                         }
                         else if (item.Goals.Home.Value < item.Goals.Away.Value)
                         {
-                            WinnerId = item.Teams.Away.Id;
+                            WinnerId = awayTeam.Id;
                         }
                         // Si son iguales, WinnerId se mantiene como null
                     }
@@ -585,11 +586,12 @@ namespace QuinielasApi.Controllers
                         Week = weekNumber,
                         IsDraw = null,
                         SportId = 1,
-                        HomeTeamId = homeId,  
-                        AwayTeamId = awayId,
+                        HomeTeamId = homeTeam.Id,  
+                        AwayTeamId = awayTeam.Id,
                         HomeScore = homeScore,
                         AwayScore = awayScore,
-                        WinnerTeamId = WinnerId
+                        WinnerTeamId = WinnerId,
+                        LeagueId = leagueId
                     };
 
                     _repository.Game.Create(newGame);
