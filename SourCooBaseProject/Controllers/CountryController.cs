@@ -46,6 +46,24 @@ namespace QuinielasApi.Controllers
             }
         }
 
+        [HttpGet("GetAllActives/{sportId}")]
+        public async Task<IActionResult> GetAllActives(int sportId)
+        {
+            try
+            {
+                var countries = await _repository.Country.GetAllAsync(sportId);
+
+                countries = countries.Where( c => c.IsActive == true).ToList();
+                var countriesDTO = _mapper.Map<IEnumerable<CountryDTO>>(countries);
+                return Ok(countriesDTO);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside GetAllCountry action: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
         [HttpGet("GetById/{id}")]
         public async Task<IActionResult> GetCountryById(int id)
         {
