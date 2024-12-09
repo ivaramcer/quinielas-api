@@ -12,7 +12,14 @@ namespace LeaguesApi.IRepository
         public LeagueRepository(DatabaseContext dbContext) : base(dbContext)
         {
         }
-        public async Task<List<League>> GetAllAsync(int sportId)
+        public async Task<List<League>> GetAllAsync()
+        {
+            return await FindAll()
+                .OrderBy(p => p.Name)
+                .ToListAsync();
+        }
+
+        public async Task<List<League>> GetAllBySportAsync(int sportId)
         {
             return await FindAll()
                 .Where(l => l.SportId == sportId)
@@ -41,6 +48,10 @@ namespace LeaguesApi.IRepository
         public async Task BulkInsert(List<League> entities)
         {
             await BulkInsertAsync(entities);
+        }
+        public async Task BulkUpdate(List<League> entities)
+        {
+            await BulkUpdateAsync(entities);
         }
 
         public new void Create(League entity)

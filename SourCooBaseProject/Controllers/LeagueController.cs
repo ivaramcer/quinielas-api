@@ -34,11 +34,17 @@ namespace QuinielasApi.Controllers
         }
 
         [HttpGet("GetAll/{sportId}")]
-        public async Task<IActionResult> GetAllLeague(int sportId)
+        public async Task<IActionResult> GetAllLeague(int sportId, bool? isActive)
         {
             try
             {
-                var Leagues = await _repository.League.GetAllAsync(sportId);
+                var Leagues = await _repository.League.GetAllBySportAsync(sportId);
+
+                if (isActive.HasValue)
+                {
+                    Leagues = Leagues.Where(l => l.IsActive == isActive.Value).ToList();
+                }
+
                 var LeagueDTOs = _mapper.Map<IEnumerable<LeagueDTO>>(Leagues);
                 return Ok(LeagueDTOs);
             }
@@ -172,7 +178,7 @@ namespace QuinielasApi.Controllers
                 List<LeagueInfoDto>? TeamsFromAPI = await APIClientNFL.GetLeagues();
 
                 List<League> bulkType = new List<League>();
-                List<League> ourLeagues = await _repository.League.GetAllAsync(UtilsVariables.SportNFLId);
+                List<League> ourLeagues = await _repository.League.GetAllBySportAsync(UtilsVariables.SportNFLId);
 
                 foreach (var item in TeamsFromAPI!)
                 {
@@ -244,7 +250,7 @@ namespace QuinielasApi.Controllers
                 List<LeagueInfoSoccerDto>? TeamsFromAPI = await APIClientSoccer.GetLeagues(country);
 
                 List<League> bulkType = new List<League>();
-                List<League> ourLeagues = await _repository.League.GetAllAsync(UtilsVariables.SportSoccerId);
+                List<League> ourLeagues = await _repository.League.GetAllBySportAsync(UtilsVariables.SportSoccerId);
 
                 foreach (var item in TeamsFromAPI!)
                 {
@@ -298,5 +304,44 @@ namespace QuinielasApi.Controllers
                 return StatusCode(500, "Internal server error ");
             }
         }
+
+        [HttpPut("SelectActivesLeagues/{sportId}")]
+        public async Task<IActionResult> SelectActivesLeagues(int sportId, List<int> activeLeagues)
+        {
+            try
+            {
+                if (activeLeagues == null || activeLeagues.Count == 0)
+                {
+                    _logger.LogError("The server didn't receive any object from the client");
+                    return BadRequest("No countries were provided.");
+                }
+
+                List<League> leagues = await _repository.League.GetAllBySportAsync(sportId);
+                HashSet<int> activeLeaguesSet = new HashSet<int>(activeLeagues);
+
+                foreach (var league in leagues)
+                {
+                    if (activeLeaguesSet.Contains(league.Id) && !league.IsActive)
+                    {
+                        league.IsActive = true;
+                    }
+                    else if (!activeLeaguesSet.Contains(league.Id) && league.IsActive)
+                    {
+                        league.IsActive = false;
+                    }
+                }
+
+                await _repository.League.BulkUpdate(leagues);
+                await _repository.SaveAsync();
+
+                return Ok(leagues);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside SelectActivesLeagues action: {ex.Message}", ex);
+                return StatusCode(500, "Internal server error.");
+            }
+        }
+
     }
 }
