@@ -34,16 +34,23 @@ namespace QuinielasApi.Controllers
         }
 
         [HttpGet("GetAll/{sportId}")]
-        public async Task<IActionResult> GetAllLeague(int sportId, bool? isActive)
+        public async Task<IActionResult> GetAllLeague(int sportId, bool? isActive, int? countryId)
         {
             try
             {
                 var Leagues = await _repository.League.GetAllBySportAsync(sportId);
 
+                if (countryId.HasValue)
+                {
+                    Leagues = Leagues.Where(l => l.CountryId == countryId.Value).ToList();
+                }
+
                 if (isActive.HasValue)
                 {
                     Leagues = Leagues.Where(l => l.IsActive == isActive.Value).ToList();
                 }
+
+
 
                 var LeagueDTOs = _mapper.Map<IEnumerable<LeagueDTO>>(Leagues);
                 return Ok(LeagueDTOs);
