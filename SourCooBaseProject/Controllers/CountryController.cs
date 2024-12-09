@@ -30,8 +30,8 @@ namespace QuinielasApi.Controllers
 
         }
 
-        [HttpGet("GetAll/{sportId}")]
-        public async Task<IActionResult> GetAll(int sportId, bool? isActive)
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll(bool? isActive)
         {
             try
             {
