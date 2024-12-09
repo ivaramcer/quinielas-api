@@ -35,7 +35,7 @@ namespace QuinielasApi.Controllers
         {
             try
             {
-                var countries = await _repository.Country.GetAllAsync(sportId);
+                var countries = await _repository.Country.GetAllAsync();
                 var countriesDTO = _mapper.Map<IEnumerable<CountryDTO>>(countries);
                 return Ok(countriesDTO);
             }
@@ -51,7 +51,7 @@ namespace QuinielasApi.Controllers
         {
             try
             {
-                var countries = await _repository.Country.GetAllAsync(sportId);
+                var countries = await _repository.Country.GetAllAsync();
 
                 countries = countries.Where( c => c.IsActive == true).ToList();
                 var countriesDTO = _mapper.Map<IEnumerable<CountryDTO>>(countries);
@@ -232,6 +232,45 @@ namespace QuinielasApi.Controllers
                 return StatusCode(500, "Internal server error ");
             }
         }
+
+        [HttpPut("SelectActivesCountries/")]
+        public async Task<IActionResult> SelectActivesCountries(List<int> activeCountries)
+        {
+            try
+            {
+                if (activeCountries == null || activeCountries.Count == 0)
+                {
+                    _logger.LogError("The server didn't receive any object from the client");
+                    return BadRequest("No countries were provided.");
+                }
+
+                List<Country> countries = await _repository.Country.GetAllAsync();
+                HashSet<int> activeCountriesSet = new HashSet<int>(activeCountries); 
+
+                foreach (var country in countries)
+                {
+                    if (activeCountriesSet.Contains(country.Id) && !country.IsActive)
+                    {
+                        country.IsActive = true; 
+                    }
+                    else if (!activeCountriesSet.Contains(country.Id) && country.IsActive)
+                    {
+                        country.IsActive = false; 
+                    }
+                }
+
+                await _repository.Country.BulkUpdate(countries);
+                await _repository.SaveAsync();
+
+                return Ok(countries);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside SelectActivesCountries action: {ex.Message}", ex);
+                return StatusCode(500, "Internal server error.");
+            }
+        }
+
 
     }
 }

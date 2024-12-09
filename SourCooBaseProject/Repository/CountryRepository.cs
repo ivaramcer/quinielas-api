@@ -12,10 +12,9 @@ namespace CountrysApi.IRepository
         public CountryRepository(DatabaseContext dbContext) : base(dbContext)
         {
         }
-        public async Task<List<Country>> GetAllAsync(int sportId)
+        public async Task<List<Country>> GetAllAsync()
         {
             return await FindAll()
-                .Where(c => c.SportId == sportId)
                 .ToListAsync();
         }
         
@@ -42,6 +41,11 @@ namespace CountrysApi.IRepository
         public async Task BulkInsert(List<Country> entities)
         {
             await BulkInsertAsync(entities);
+        }
+
+        public async Task BulkUpdate(List<Country> entities)
+        {
+            await BulkUpdateAsync(entities);
         }
 
         public new void Create(Country entity)
