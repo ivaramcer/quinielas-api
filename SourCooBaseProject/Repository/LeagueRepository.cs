@@ -34,7 +34,7 @@ namespace LeaguesApi.IRepository
                     .ThenInclude(q => q.QuinielaPickDuration)
                         .ThenInclude(qpd => qpd.QuinielaDuration)
                             .ThenInclude(qd => qd.QuinielaType)
-                .Where(l => l.SportId == sportId)
+                .Where(l => l.SportId == sportId && l.IsActive == true)
                 .OrderBy(p => p.Name)
                 .ToListAsync();
         }

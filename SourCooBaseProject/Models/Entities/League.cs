@@ -17,5 +17,5 @@ public class League
     public Country Country { get; set; } = default!;
     public int SportId { get; set; }
     public Sport Sport { get; set; } = default!;
-    public ICollection<Quiniela> Quinielas { get; set; } = new List<Quiniela>();
+    public List<Quiniela> Quinielas { get; set; } = new List<Quiniela>();
 }

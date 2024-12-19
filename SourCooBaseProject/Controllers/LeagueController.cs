@@ -85,10 +85,14 @@ namespace QuinielasApi.Controllers
                     }
                 }
 
-                leagues = leagues
-                    .Skip(pageSize * (pagination - 1))
-                    .Take(pageSize)
-                    .ToList();
+                if (pagination > 0)
+                {
+                    leagues = leagues
+                                .Skip(pageSize * (pagination - 1))
+                                .Take(pageSize)
+                                .ToList();
+                }
+
                 IEnumerable<LeagueQuinielasDTO> LeagueDTOs = _mapper.Map<IEnumerable<LeagueQuinielasDTO>>(leagues);
                 return Ok(LeagueDTOs);
             }
