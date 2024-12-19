@@ -124,6 +124,8 @@ namespace QuinielasApi.Controllers
                 }
 
                 var QuinielaDTO = _mapper.Map<QuinielaDTO>(Quiniela);
+
+                QuinielaDTO.League.Quinielas = null;
                 return Ok(QuinielaDTO);
             }
             catch (Exception ex)

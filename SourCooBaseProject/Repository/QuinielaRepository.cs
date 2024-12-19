@@ -31,6 +31,7 @@ namespace QuinielasApi.IRepository
         public async Task<Quiniela?> GetByIdAsync(int id)
         {
             return await FindAll()
+                .Include(q => q.League)
                 .FirstOrDefaultAsync(q => q.Id == id);
         }
         

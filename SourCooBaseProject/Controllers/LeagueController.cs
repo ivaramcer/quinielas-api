@@ -94,6 +94,14 @@ namespace QuinielasApi.Controllers
                 }
 
                 IEnumerable<LeagueQuinielasDTO> LeagueDTOs = _mapper.Map<IEnumerable<LeagueQuinielasDTO>>(leagues);
+
+                foreach (var item in LeagueDTOs)
+                {
+                    foreach (var element in item.Quinielas)
+                    {
+                        element.League = null;
+                    }
+                }
                 return Ok(LeagueDTOs);
             }
             catch (Exception ex)
@@ -116,6 +124,11 @@ namespace QuinielasApi.Controllers
                 }
 
                 var LeagueDTO = _mapper.Map<LeagueDTO>(League);
+
+                foreach (var item in LeagueDTO.Quinielas)
+                {
+                    item.League = null;
+                }
                 return Ok(LeagueDTO);
             }
             catch (Exception ex)

@@ -31,6 +31,9 @@ namespace QuinielasApi.Models.Entities
         public int StatusId { get; set; }
         public virtual StatusDTO Status { get; set; } = default!;
 
+        public int LeagueId { get; set; }
+        public virtual LeagueDTO League { get; set; } = default!;
+
     }
     
     public class QuinielaDetailsDTO

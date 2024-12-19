@@ -42,6 +42,8 @@ namespace LeaguesApi.IRepository
         public async Task<League?> GetByIdAsync(int id)
         {
             return await FindAll()
+                .Include(l => l.Quinielas)
+
                 .FirstOrDefaultAsync(q => q.Id == id);
         }
 
