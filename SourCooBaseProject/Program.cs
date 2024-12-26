@@ -10,6 +10,7 @@ using QuinielasApi.DBContext;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseUrls("http://0.0.0.0:5000"); // Bind to all network interfaces on port 5000
 
 // Add services to the container.
 builder.Services.AddControllers();
